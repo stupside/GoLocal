@@ -36,6 +36,8 @@ namespace GoLocal.Domain.Entities
         
         public string UserId { get; init; }
         public virtual User User { get; }
+        
+        public virtual ICollection<Employee> Employees { get; }
 
         public virtual ICollection<Opening> Openings { get; }
 

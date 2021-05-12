@@ -27,11 +27,11 @@ namespace GoLocal.Domain.Entities.Identity
         }
         
         public virtual ICollection<Shop> Shops { get; }
-        public virtual ICollection<Employee> Employees { get; }
+        public virtual ICollection<Employee> Employments { get; }
         
         public virtual ICollection<Cart> Carts { get; }
+        public virtual ICollection<Command> Commands { get; }
         
         public virtual ICollection<Invoice> Invoices { get; }
-        public virtual ICollection<Command> Commands { get; }
     }
 }

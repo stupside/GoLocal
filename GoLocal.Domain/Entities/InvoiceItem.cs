@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GoLocal.Domain.Entities
 {
@@ -39,5 +40,7 @@ namespace GoLocal.Domain.Entities
         
         public int PackageId { get; }
         public virtual Package Package { get; }
+        
+        public virtual Comment Comment { get; }
     }
 }

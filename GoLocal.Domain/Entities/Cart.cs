@@ -23,7 +23,6 @@ namespace GoLocal.Domain.Entities
         }
         
         public string UserId { get; }
-        public virtual User User { get; }
         
         public int ShopId { get; }
         public virtual Shop Shop { get; }

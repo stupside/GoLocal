@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GoLocal.Domain.Entities.Abstracts
 {
@@ -32,5 +33,9 @@ namespace GoLocal.Domain.Entities.Abstracts
         
         public int ShopId { get; }
         public virtual Shop Shop { get; }
+        
+        public virtual ICollection<Package> Packages { get; }
+        
+        public virtual ICollection<Comment> Comments { get; }
     }
 }
