@@ -15,6 +15,26 @@ namespace GoLocal.Persistence.EntityFramework.Configurations.Identity
             builder.Property(m => m.Email).IsRequired();
 
             builder.OwnsOne(m => m.Avatar);
+
+            builder.HasMany(m => m.Carts)
+                .WithOne()
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(m => m.Commands)
+                .WithOne(m => m.User)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(m => m.Employments)
+                .WithOne(m => m.User)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(m => m.Shops)
+                .WithOne(m => m.User)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
