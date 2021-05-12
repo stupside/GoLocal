@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GoLocal.Identity.Application\GoLocal.Identity.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="OpenIddict.AspNetCore" Version="3.0.4" />
+        <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.6" />
+    </ItemGroup>
+
+</Project>

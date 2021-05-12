@@ -1,0 +1,12 @@
+@page "/account/login"
+@model GoLocal.Identity.Api.Pages.Account.Login
+
+<form method="post">
+    
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <input asp-for="Username" placeholder="Username"/>
+    <input asp-for="Password" type="password" placeholder="Password"/>
+
+    <button type="submit">Login</button>
+</form>

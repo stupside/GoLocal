@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GoLocal.Artisan.Application\GoLocal.Artisan.Application.csproj" />
+      <ProjectReference Include="..\GoLocal.Shared.Accessor\GoLocal.Shared.Accessor.csproj" />
+    </ItemGroup>
+    
+</Project>
