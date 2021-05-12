@@ -10,7 +10,6 @@ namespace GoLocal.Domain.Entities
         public int Id { get; set; }
         
         public string Name { get; set; }
-        public string Tag { get; set; }
         
         public Localisation Localisation { get; }
         public Contact Contact { get; }
@@ -25,13 +24,12 @@ namespace GoLocal.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public Shop(User user, string name, string tag)
+        public Shop(User user, string name)
             : this()
         {
             UserId = user.Id;
             
             Name = name;
-            Tag = tag;
         }
         
         public string UserId { get; init; }
