@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Application.Commons.Accessor;
 using GoLocal.Identity.Domain.Entities;
-using GoLocal.Shared.Accessor.Accessors;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using MediatR;

@@ -10,6 +10,7 @@ namespace GoLocal.Domain.ValueObjects
         }
 
         public Contact(string email, string phone)
+            : this()
         {
             Email = email;
             Phone = phone;

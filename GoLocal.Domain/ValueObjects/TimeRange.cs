@@ -10,6 +10,7 @@ namespace GoLocal.Domain.ValueObjects
         public TimeRange() {}
 
         public TimeRange(TimeSpan begin, TimeSpan end)
+            : this()
         {
 
             Min = begin;

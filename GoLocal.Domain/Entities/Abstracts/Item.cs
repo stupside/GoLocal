@@ -1,0 +1,36 @@
+using System;
+
+namespace GoLocal.Domain.Entities.Abstracts
+{
+    public abstract class Item
+    {
+        public string Id { get; set; }
+        
+        public string Name { get; set; }
+        public string Description { get; set; }
+        
+        public bool Hidden { get; set; }
+        public bool Available { get; set; }
+        
+        public DateTime Creation { get; }
+
+        public Item()
+        {
+            Creation = DateTime.UtcNow;
+        }
+
+        public Item(Shop shop, string name, string description, bool hidden = false, bool available = true)
+            : this()
+        {
+            ShopId = shop.Id;
+            
+            Name = name;
+            Description = description;
+            Hidden = hidden;
+            Available = available;
+        }
+        
+        public int ShopId { get; }
+        public virtual Shop Shop { get; }
+    }
+}

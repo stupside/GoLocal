@@ -13,6 +13,7 @@ namespace GoLocal.Domain.ValueObjects
         }
 
         public Image(string value = default, ImageKind type = ImageKind.Base64)
+            : this()
         {
             Type = type;
             Value = value;
