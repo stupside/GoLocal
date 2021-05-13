@@ -50,7 +50,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
 
             builder.HasMany(m => m.Services)
                 .WithOne(m => m.Shop)
-                .HasForeignKey(m => m.Shop)
+                .HasForeignKey(m => m.ShopId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
