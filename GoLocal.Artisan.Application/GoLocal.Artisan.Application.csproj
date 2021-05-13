@@ -7,6 +7,7 @@
     <ItemGroup>
       <ProjectReference Include="..\GoLocal.Domain\GoLocal.Domain.csproj" />
       <ProjectReference Include="..\GoLocal.Persistence\GoLocal.Persistence.csproj" />
+      <ProjectReference Include="..\GoLocal.Shared.Accessor\GoLocal.Shared.Accessor.csproj" />
       <ProjectReference Include="..\GoLocal.Shared.Bus\GoLocal.Shared.Bus.csproj" />
     </ItemGroup>
 

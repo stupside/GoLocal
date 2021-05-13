@@ -18,18 +18,17 @@ namespace GoLocal.Domain.Entities
 
         public Shop()
         {
-            Localisation = new Localisation();
-            Contact = new Contact();
-            
             Creation = DateTime.UtcNow;
         }
 
-        public Shop(User user, string name)
+        public Shop(User user, string name, Contact contact, Localisation localisation)
             : this()
         {
             UserId = user.Id;
             
             Name = name;
+            Contact = contact;
+            Localisation = localisation;
         }
         
         public string UserId { get; init; }
