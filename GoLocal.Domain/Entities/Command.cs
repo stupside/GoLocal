@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Domain.Enums;
 
@@ -35,5 +36,10 @@ namespace GoLocal.Domain.Entities
         
         public int PackageId { get; }
         public virtual Package Package { get; }
+        
+        public int InvoiceId { get; set; }
+        public virtual Invoice Invoice { get; }
+        
+        public virtual ICollection<Message> Messages { get; }
     }
 }
