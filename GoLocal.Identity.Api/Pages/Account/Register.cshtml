@@ -3,12 +3,12 @@
 
 <form method="post">
     
-    <input type="hidden" asp-for="ReturnUrl" />
+    <input type="hidden" asp-for="Command.ReturnUrl" />
     
-    <input asp-for="Username" type="text" placeholder="Username"/>
-    <input asp-for="Email" type="email" placeholder="Email"/>
-    <input asp-for="Password" type="password" placeholder="Password"/>
-    <input asp-for="PasswordConfirmation" type="password" placeholder="Confirmation"/>
+    <input asp-for="Command.Username" type="text" placeholder="Username"/>
+    <input asp-for="Command.Email" type="email" placeholder="Email"/>
+    <input asp-for="Command.Password" type="password" placeholder="Password"/>
+    <input asp-for="Command.PasswordConfirmation" type="password" placeholder="Confirmation"/>
 
     <button type="submit">Register</button>
 </form>

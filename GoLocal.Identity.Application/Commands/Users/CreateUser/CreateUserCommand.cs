@@ -1,0 +1,26 @@
+﻿using GoLocal.Shared.Bus.Commons.Mediator;
+
+namespace GoLocal.Identity.Application.Commands.Users.CreateUser
+{
+    public class CreateUserCommand: AbstractRequest<string>
+    {
+        public string ReturnUrl { get; init; }
+        public string Email { get; init; }
+        public string Username { get; init; }
+        public string Password { get; init; }
+        public string PasswordConfirmation { get; init; }
+
+        public CreateUserCommand()
+        {
+        }
+
+        public CreateUserCommand(string returnUrl, string email, string username, string password, string passwordConfirmation)
+        {
+            ReturnUrl = returnUrl;
+            Email = email;
+            Username = username;
+            Password = password;
+            PasswordConfirmation = passwordConfirmation;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
-using GoLocal.Identity.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+using GoLocal.Identity.Application.Commands.Users.CreateUser;
+using GoLocal.Shared.Bus.Results.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,50 +9,29 @@ namespace GoLocal.Identity.Api.Pages.Account
 {
     public class Register : PageModel
     {
-        private readonly SignInManager<User> _sign;
-        private readonly UserManager<User> _user;
+        private readonly IMediator _mediator;
 
-        public Register(UserManager<User> user, SignInManager<User> sign)
+        public Register(IMediator mediator)
         {
-            _user = user;
-            _sign = sign;
+            _mediator = mediator;
         }
-        
-        [BindProperty(SupportsGet = true)]
-        public string ReturnUrl { get; init; }
 
         public IActionResult OnGet()
             => Page();
-        
-        [BindProperty]
-        public string Email { get; init; }
-        [BindProperty]
-        public string Username { get; init; }
-        [BindProperty]
-        public string Password { get; init; }
-        [BindProperty]
-        public string PasswordConfirmation { get; init; }
-        
+
+        [BindProperty] public CreateUserCommand Command { get; set; }
+
         public async Task<IActionResult> OnPost()
         {
-            if (Password != PasswordConfirmation)
+            var result = await _mediator.Send(Command);
+            if (result.Type == ResultType.Ok)
             {
-                ModelState.AddModelError(string.Empty, "Passwords doesn't match");
-                return RedirectToPage();
+                return RedirectToPage(nameof(Login), new
+                {
+                    Command.ReturnUrl
+                });
             }
-
-            User user = new User(Email, Username);
-            
-            var result = await _user.CreateAsync(user, Password);
-            if (result.Succeeded)
-            {
-                RedirectToPage(nameof(Login), new { ReturnUrl });
-            }
-
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(string.Empty, error.Description);
-            
-            return RedirectToPage();
+            return Page();
         }
     }
 }
