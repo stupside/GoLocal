@@ -11,19 +11,21 @@ namespace GoLocal.Domain.Entities
         public string Description { get; set; }
         
         public int Stocks { get; set; }
+        public float Price { get; set; }
         
         public bool Hidden { get; set; }
         public bool Available { get; set; }
         
         public Package(){}
 
-        public Package(Item item, string name, string description, int stocks, bool hidden = false, bool available = true)
+        public Package(Item item, string name, string description, float price, int stocks, bool hidden = false, bool available = true)
             : this()
         {
             ItemId = item.Id;
             
             Name = name;
             Description = description;
+            Price = price;
             Stocks = stocks;
             Hidden = hidden;
             Available = available;
