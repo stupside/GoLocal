@@ -20,7 +20,6 @@ namespace GoLocal.Domain.Entities
         }
         
         public string CartId { get; }
-        public virtual Cart Cart { get; }
         
         public int PackageId { get; }
         public virtual Package Package { get; }
