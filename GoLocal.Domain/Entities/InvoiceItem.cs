@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GoLocal.Domain.Enums;
 
 namespace GoLocal.Domain.Entities
 {
@@ -11,6 +12,7 @@ namespace GoLocal.Domain.Entities
         public float Price { get; }
         
         public string Description { get; }
+        public InvoiceItemStatus Status { get; set; }
         
         public DateTime Creation { get; }
 
@@ -19,7 +21,7 @@ namespace GoLocal.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description = null)
+        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description = null, InvoiceItemStatus status = InvoiceItemStatus.Pending)
             : this()
         {
             InvoiceId = invoice.Id;
@@ -28,6 +30,7 @@ namespace GoLocal.Domain.Entities
             Quantity = quantity;
             Price = price;
             Description = description;
+            Status = status;
         }
         
         public InvoiceItem(Invoice invoice, Package package, int quantity, float price, string description = null)

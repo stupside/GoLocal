@@ -16,6 +16,11 @@ namespace GoLocal.Persistence.EntityFramework.Configurations.Identity
 
             builder.OwnsOne(m => m.Avatar);
 
+            builder.HasMany(m => m.Invoices)
+                .WithOne(m => m.User)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasMany(m => m.Carts)
                 .WithOne()
                 .HasForeignKey(m => m.UserId)
@@ -24,7 +29,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations.Identity
             builder.HasMany(m => m.Commands)
                 .WithOne(m => m.User)
                 .HasForeignKey(m => m.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(m => m.Employments)
                 .WithOne(m => m.User)

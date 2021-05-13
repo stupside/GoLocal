@@ -33,7 +33,7 @@ namespace GoLocal.Domain.Entities
 
             InvoiceItems = new List<InvoiceItem>
             {
-                new InvoiceItem(this, command.PackageId, 1, command.Price, command.Specification)
+                new(this, command.PackageId, 1, command.Price, command.Specification)
             };
 
         }
