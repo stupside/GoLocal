@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
 {
-    [Route("api/shops/{sid:int}")]
+    [Route("api/shops/{sid:int}/items")]
     public class ItemController : ApiController
     {
         public ItemController(IMediator mediator) : base(mediator)

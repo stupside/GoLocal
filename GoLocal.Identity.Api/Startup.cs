@@ -27,7 +27,7 @@ namespace GoLocal.Identity.Api
             services.AddCors(options =>
                 options.AddPolicy(
                     "Clients", p => 
-                        p.WithOrigins("https://localhost:8011", "https://localhost:8002", "https://localhost:8012")
+                        p.WithOrigins("https://localhost:5002")
                             .AllowAnyMethod().AllowAnyMethod())
             );
             
