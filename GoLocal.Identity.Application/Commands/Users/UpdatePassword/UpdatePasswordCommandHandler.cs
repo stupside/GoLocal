@@ -22,14 +22,13 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdatePassword
         public override async Task<Result<Unit>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
-
-            if (request.Password == request.Current)
-                return BadRequest("New password shouldn't be equal");
             
-            IdentityResult result = await _user.Manager.ChangePasswordAsync(user, request.Current, request.Password);
+            IdentityResult result = await _user.Manager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
 
             if (!result.Succeeded)
-                return BadRequest(result.Errors.First().Description);
+                return BadRequest(string.Join(',', result.Errors.SelectMany(m => m.Description)));
+            
+            await _user.Manager.UpdateSecurityStampAsync(user);
             
             return Ok();
         }

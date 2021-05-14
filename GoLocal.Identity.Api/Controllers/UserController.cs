@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
 using GoLocal.Identity.Api.Controllers.Commons;
-using GoLocal.Identity.Application.Commands.Users.ConfirmEmail;
+using GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation;
 using GoLocal.Identity.Application.Commands.Users.UpdateEmail;
+using GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation;
 using GoLocal.Identity.Application.Commands.Users.UpdatePassword;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,9 +26,12 @@ namespace GoLocal.Identity.Api.Controllers
         public async Task<IActionResult> UpdateEmail(UpdateEmailCommand command)
             => await this.Send(command);
 
-        [HttpPost("{uid}/email/confirmation/{token}")]
-        public async Task<IActionResult> ConfirmEmail(string uid, string token)
-            => await this.Send(new ConfirmEmailCommand(token, uid));
-
+        [HttpGet("confirmation/register")]
+        public async Task<IActionResult> CreateUserConfirmation(string uid, string token)
+            => await this.Send(new CreateUserConfirmationCommand(token, uid));
+        
+        [HttpGet("confirmation/email")]
+        public async Task<IActionResult> ConfirmUpdateEmail(string email, string token)
+            => await this.Send(new UpdateEmailConfirmationCommand(email, token));
     }
 }

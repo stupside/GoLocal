@@ -38,7 +38,6 @@ namespace GoLocal.Shared.Mailing.Implementations
 
             await client.SendAsync(mail, cancellationToken);
             await client.DisconnectAsync(true, cancellationToken);
-
         }
     }
 }

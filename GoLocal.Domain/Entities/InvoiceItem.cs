@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using GoLocal.Domain.Enums;
 
 namespace GoLocal.Domain.Entities

@@ -4,13 +4,15 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdatePassword
 {
     public class UpdatePasswordCommand : AbstractRequest
     {
-        public string Current { get; init; }
-        public string Password { get; init; }
+        public string OldPassword { get; init; }
+        public string NewPassword { get; init; }
+        public string NewPasswordConfirmation { get; init; }
 
-        public UpdatePasswordCommand(string current, string password)
+        public UpdatePasswordCommand(string oldPassword, string newPassword, string newPasswordConfirmation)
         {
-            Current = current;
-            Password = password;
+            OldPassword = oldPassword;
+            NewPassword = newPassword;
+            NewPasswordConfirmation = newPasswordConfirmation;
         }
     }
 }

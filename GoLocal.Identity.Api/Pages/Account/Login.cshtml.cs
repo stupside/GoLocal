@@ -28,31 +28,41 @@ namespace GoLocal.Identity.Api.Pages.Account
 
         public IActionResult OnGet()
         {
-            if (string.IsNullOrEmpty(ReturnUrl))
-                return NotFound();
-            
             return Page();
         }
         
         public async Task<IActionResult> OnPost()
         {
-            var result = await _sign.PasswordSignInAsync(Username, Password, false, true);
+            User user = await _sign.UserManager.FindByNameAsync(Username);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return RedirectToPage();
+            }
 
+            if (!await _sign.UserManager.IsEmailConfirmedAsync(user))
+            {
+                ModelState.AddModelError(string.Empty, "Email not confirmed");
+                return RedirectToPage();
+            }
+            
+            var result = await _sign.PasswordSignInAsync(Username, Password, false, true);
+            
             if (result.Succeeded)
             {
                 return Redirect(ReturnUrl);
             }
             if (result.IsLockedOut)
             {
-                return NotFound();
+                return RedirectToPage(nameof(LoginTfa), new {ReturnUrl});
             }
             if (result.IsNotAllowed)
             {
-                return Forbid();
+                return Unauthorized();
             }
             if (result.RequiresTwoFactor)
             {
-                return RedirectToPage("TwoFactor", ReturnUrl);
+                return RedirectToPage(nameof(LoginTfa), new {ReturnUrl});
             }
 
             ModelState.AddModelError(string.Empty, "Invalid username or password");

@@ -6,26 +6,23 @@ using GoLocal.Shared.Bus.Results;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace GoLocal.Identity.Application.Commands.Users.ConfirmEmail
+namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation
 {
-    public class ConfirmEmailCommandHandler: AbstractRequestHandler<ConfirmEmailCommand>
+    public class CreateUserConfirmationCommandHandler : AbstractRequestHandler<CreateUserConfirmationCommand>
     {        
         private readonly UserManager<User> _user;
         
-        public ConfirmEmailCommandHandler(UserManager<User> user)
+        public CreateUserConfirmationCommandHandler(UserManager<User> user)
         {
             _user = user;
         }
 
-        public override async Task<Result<Unit>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+        public override async Task<Result<Unit>> Handle(CreateUserConfirmationCommand request, CancellationToken cancellationToken)
         {
             var user = await _user.FindByIdAsync(request.Uid);
             var result = await _user.ConfirmEmailAsync(user, request.Token);
 
-            if (result.Succeeded)
-                return Ok();
-
-            return BadRequest("Email confirmation failed");
+            return !result.Succeeded ? BadRequest("Email confirmation failed") : Ok();
         }
     }
 }

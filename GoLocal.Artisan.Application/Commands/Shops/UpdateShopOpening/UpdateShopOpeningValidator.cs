@@ -1,6 +1,5 @@
 using System;
 using FluentValidation;
-using GoLocal.Domain.ValueObjects;
 
 namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening
 {
