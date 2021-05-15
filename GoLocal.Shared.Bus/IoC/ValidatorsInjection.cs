@@ -11,7 +11,7 @@ namespace GoLocal.Shared.Bus.IoC
         internal static void SetupValidators(this IServiceCollection services, Assembly assembly)
         {
             services.AddValidatorsFromAssembly(assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
     }
 }
