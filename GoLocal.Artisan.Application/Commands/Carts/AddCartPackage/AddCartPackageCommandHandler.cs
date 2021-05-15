@@ -26,6 +26,7 @@ namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
         {
             User user = await _user.GetUserAsync();
 
+            //TODO : Check if item is product
             Package package = await _context.Packages.Include(m => m.Item).ThenInclude(m => m.Shop)
                 .SingleOrDefaultAsync(m => m.Id == request.PackageId &&
                 m.ItemId == request.ItemId &&

@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
+using GoLocal.Artisan.Application.Commands.Items.CreateItem;
+using GoLocal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +20,19 @@ namespace GoLocal.Artisan.Api.Controllers
             => throw new NotImplementedException();
 
         [HttpPut("products")]
-        public async Task<IActionResult> CreateProduct(int sid)
-            => throw new NotImplementedException();
-        
+        public async Task<IActionResult> CreateProduct(int sid, CreateItemCommand command)
+        {
+            command.SetType<Product>();
+            return await Handle(command);
+
+        }
+
         [HttpPut("services")]
-        public async Task<IActionResult> CreateService(int sid)
-            => throw new NotImplementedException();
+        public async Task<IActionResult> CreateService(int sid, CreateItemCommand command)
+        {
+            command.SetType<Service>();
+            return await Handle(command);
+        }
         
         [HttpPost]
         public async Task<IActionResult> Update(int sid)
