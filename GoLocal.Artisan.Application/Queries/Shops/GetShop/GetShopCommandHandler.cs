@@ -20,18 +20,18 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShop
 
         public override async Task<Result<GetShopResponse>> Handle(GetShopCommand request, CancellationToken cancellationToken)
         {
-            GetShopResponse shop = await _context.Shops
+            Shop shop = await _context.Shops
                 .Include(m => m.Services)
                 .Include(m => m.Products)
                 .Include(m => m.Employees)
                 .Include(m => m.Openings)
-                .ProjectToType<GetShopResponse>()
+                .Include(m => m.User)
                 .SingleOrDefaultAsync(m => m.Id == request.ShopId, cancellationToken);
             
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
 
-            return Ok(shop);
+            return Ok(shop.Adapt<GetShopResponse>());
         }
     }
 }
