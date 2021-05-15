@@ -36,7 +36,7 @@ namespace GoLocal.Shared.Bus.Behaviours
                 .Where(f => f != null).ToList();
 
             if (failures.Count != 0)
-                return new Result<List<ValidationFailure>>(ResultType.Unauthorized, failures) as TResponse;
+                return new Result<List<ValidationFailure>>(ResultType.BadRequest, failures) as TResponse;
 
             return await next();
         }
