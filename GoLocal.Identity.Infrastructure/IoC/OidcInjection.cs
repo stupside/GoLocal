@@ -2,6 +2,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using GoLocal.Identity.Infrastructure.Commons.Oidc;
 using GoLocal.Identity.Infrastructure.Persistence.EntityFramework;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,11 +25,13 @@ namespace GoLocal.Identity.Infrastructure.IoC
                 options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+            
             services.AddOpenIddict()
                 .AddCore(options =>
                 {
-                    options.UseEntityFrameworkCore()
-                        .UseDbContext<OidcContext>();
+                    options.UseEntityFrameworkCore().UseDbContext<OidcContext>();
                 })
                 .AddServer(options =>
                 {
@@ -36,12 +39,10 @@ namespace GoLocal.Identity.Infrastructure.IoC
                         .SetLogoutEndpointUris("/connect/logout")
                         .SetTokenEndpointUris("/connect/token")
                         .SetUserinfoEndpointUris("/connect/userinfo")
+                        .SetIntrospectionEndpointUris("/connect/introspection")
                         .SetAccessTokenLifetime(TimeSpan.FromMinutes(30));
 
                     options.AllowPasswordFlow()
-                        .AcceptAnonymousClients();
-
-                    options
                         .AllowAuthorizationCodeFlow()
                         .RequireProofKeyForCodeExchange();
 
@@ -60,10 +61,8 @@ namespace GoLocal.Identity.Infrastructure.IoC
                         .EnableUserinfoEndpointPassthrough();
                     
                 })
-                .AddValidation(options =>
-                {
-                    options.UseLocalServer();
-                    options.UseAspNetCore();
+                .AddValidation(m => {
+                    //m.EnableAuthorizationEntryValidation();
                 });
             
             services.AddAuthentication();

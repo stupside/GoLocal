@@ -2,10 +2,12 @@ using System;
 using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
 {
+    [Authorize]
     [Route("api/shops/{sid:int}/items")]
     public class ItemController : ApiController
     {

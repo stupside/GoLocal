@@ -23,21 +23,16 @@ namespace GoLocal.Identity.Api
             
             services.SetupApplication();
             services.SetupInfrastructure(_configuration);
-            
-            services.AddCors(options =>
-                options.AddPolicy(
-                    "Clients", p => 
-                        p.WithOrigins("https://localhost:5002")
-                            .AllowAnyMethod().AllowAnyMethod())
-            );
-            
-            services.AddControllers();
-            services.AddRazorPages();
+
+            services.AddCors();
             
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Identity.Api", Version = "v1"});
             });
+            
+            services.AddControllers();
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,7 +48,12 @@ namespace GoLocal.Identity.Api
 
             app.UseRouting();
 
-            app.UseCors("Clients");
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.WithOrigins("https://localhost:5002");
+            });
             
             app.UseAuthorization();
             app.UseAuthentication();

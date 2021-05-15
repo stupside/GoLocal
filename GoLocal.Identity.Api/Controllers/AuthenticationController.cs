@@ -1,9 +1,12 @@
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
+using GoLocal.Identity.Infrastructure.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +20,7 @@ namespace GoLocal.Identity.Api.Controllers
     [Route("/connect")]
     public class AuthenticationController : ControllerBase
     {
+        private readonly IOpenIddictScopeManager _scope;
         private readonly IOpenIddictApplicationManager _application;
         private readonly IOpenIddictAuthorizationManager _authorization;
         
@@ -25,29 +29,28 @@ namespace GoLocal.Identity.Api.Controllers
         
         public AuthenticationController(
             SignInManager<User> sign,
-            UserManager<User> user, IOpenIddictAuthorizationManager authorization, IOpenIddictApplicationManager application)
+            UserManager<User> user, IOpenIddictAuthorizationManager authorization, IOpenIddictApplicationManager application, IOpenIddictScopeManager scope)
         {
             _sign = sign;
             _user = user;
             _authorization = authorization;
             _application = application;
+            _scope = scope;
         }
-
-        [HttpPost("authorize")]
+        
         [HttpGet("authorize")]
+        [HttpPost("authorize")]
         public async Task<IActionResult> Authorize()
         {
-
             var request = HttpContext.GetOpenIddictServerRequest() ??
                           throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
             
-            if (request.ClientId == null)
+            if (string.IsNullOrEmpty(request.ClientId))
                 throw new InvalidOperationException("Details concerning the calling client application are not valid.");
             
             var result = await HttpContext.AuthenticateAsync(IdentityConstants.ApplicationScheme);
             
             if (!result.Succeeded || (request.MaxAge != null && result.Properties?.IssuedUtc != null && DateTimeOffset.UtcNow - result.Properties.IssuedUtc > TimeSpan.FromSeconds(request.MaxAge.Value)))
-            {
                 return Challenge(
                     authenticationSchemes: IdentityConstants.ApplicationScheme,
                     properties: new AuthenticationProperties
@@ -55,7 +58,6 @@ namespace GoLocal.Identity.Api.Controllers
                         RedirectUri = Request.PathBase + Request.Path + QueryString.Create(
                             Request.HasFormContentType ? Request.Form.ToList() : Request.Query.ToList())
                     });
-            }
 
             var user = await _user.GetUserAsync(result.Principal) ??
                        throw new InvalidOperationException("The user details cannot be retrieved.");
@@ -63,29 +65,28 @@ namespace GoLocal.Identity.Api.Controllers
             var application = await _application.FindByClientIdAsync(request.ClientId);
             if(application == null)
                 throw new InvalidOperationException("Details concerning the calling client application cannot be found.");
-                
             
             var principal = await _sign.CreateUserPrincipalAsync(user) ??
                             throw new InvalidOperationException("Cannot construct principal for the current user.");
             
             principal.SetScopes(request.GetScopes());
-            //TODO: principal.SetResources(await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            principal.SetResources(
+                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            
+            foreach (var claim in principal.Claims)
+                claim.SetDestinations(GetDestinations(claim, principal));
             
             var authorization = await _authorization.CreateAsync(
                 principal: principal,
                 subject  : user.Id,
                 client   : await _application.GetIdAsync(application) ?? throw new InvalidOperationException(),
                 type     : OpenIddictConstants.AuthorizationTypes.Permanent,
-                scopes   : principal.GetScopes());
+                scopes   : request.GetScopes());
 
             principal.SetAuthorizationId(await _authorization.GetIdAsync(authorization));
 
-            foreach (var claim in principal.Claims)
-                claim.SetDestinations(GetDestinations(claim, principal));
-
             return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
-
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
@@ -99,7 +100,6 @@ namespace GoLocal.Identity.Api.Controllers
                 });
         }
 
-
         [HttpPost("token")]
         public async Task<IActionResult> Exchange()
         {
@@ -110,13 +110,10 @@ namespace GoLocal.Identity.Api.Controllers
             {
                 return await this.PasswordFlow(request);
             }
-            else
-            {
-                return await this.CodeFlow(request);
-            }
+
+            return await this.CodeFlow(request);
         }
-
-
+        
         [HttpGet("userinfo")]
         public async Task<IActionResult> UserInfo()
         {
@@ -156,7 +153,6 @@ namespace GoLocal.Identity.Api.Controllers
             }
 
             if (!await _sign.CanSignInAsync(user))
-            {
                 return Forbid(
                     authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
                     properties: new AuthenticationProperties(new Dictionary<string, string>
@@ -164,8 +160,11 @@ namespace GoLocal.Identity.Api.Controllers
                         [OpenIddictServerAspNetCoreConstants.Properties.Error] = OpenIddictConstants.Errors.InvalidGrant,
                         [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The user is no longer allowed to sign in."
                     }));
-            }
 
+            principal.SetScopes(request.GetScopes());
+            principal.SetResources(
+                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            
             foreach (var claim in principal.Claims)
                 claim.SetDestinations(GetDestinations(claim, principal));
 
@@ -206,17 +205,12 @@ namespace GoLocal.Identity.Api.Controllers
             
             var principal = await _sign.CreateUserPrincipalAsync(user);
 
-            principal.SetScopes(new[]
-            {
-                OpenIddictConstants.Permissions.Scopes.Email,
-                OpenIddictConstants.Permissions.Scopes.Profile,
-                OpenIddictConstants.Permissions.Scopes.Roles
-            }.Intersect(request.GetScopes()));
-
+            principal.SetScopes(request.GetScopes());
+            principal.SetResources(
+                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            
             foreach (var claim in principal.Claims)
-            {
                 claim.SetDestinations(GetDestinations(claim, principal));
-            }
 
             return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }

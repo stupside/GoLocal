@@ -1,12 +1,18 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using GoLocal.Artisan.Application;
 using GoLocal.Artisan.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Abstractions;
+using OpenIddict.Validation.AspNetCore;
 
 namespace GoLocal.Artisan.Api
 {
@@ -24,14 +30,34 @@ namespace GoLocal.Artisan.Api
         {
             services.SetupInfrastructure(_configuration);
             services.SetupApplication();
-            
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
-            services.AddControllers();
+            services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
+                options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
+            });
+            
+            services.AddOpenIddict()
+                .AddValidation(m => {
+                    m.SetIssuer("https://localhost:5000");
+                    m.AddAudiences("account.api");
+
+                    m.UseAspNetCore();
+                    m.UseSystemNetHttp();
+                });
+
+            services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Artisan.Api", Version = "v1"});
             });
+            
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +73,13 @@ namespace GoLocal.Artisan.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
