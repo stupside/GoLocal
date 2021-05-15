@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Carts.AddCartPackage;
 using GoLocal.Artisan.Application.Commands.Carts.RemoveCartPackage;
-using GoLocal.Artisan.Application.Queries.Shops.GetShop;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
