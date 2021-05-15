@@ -30,7 +30,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop
             if (await _context.Shops.AnyAsync(m => m.Name == request.Name, cancellationToken))
                 return BadRequest($"A shop named {request.Name} already exists");
 
-            Shop shop = new Shop(user, request.Name, request.Localisation.Adapt<Contact>(), request.Localisation.Adapt<Localisation>());
+            Shop shop = new Shop(user, request.Name, request.Contact.Adapt<Contact>(), request.Localisation.Adapt<Localisation>());
 
             // TODO: Get X, Y from localisation
             

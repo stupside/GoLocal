@@ -8,12 +8,10 @@ using GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation;
 using GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening;
 using GoLocal.Artisan.Application.Queries.Shops.GetShop;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
 {
-    [Authorize]
     [Route("api/shops")]
     public class ShopController : ApiController
     {

@@ -26,7 +26,7 @@ namespace GoLocal.Artisan.Infrastructure.Accessors
                 throw new NullReferenceException();
 
             if (!_http.HttpContext.User.Identity.IsAuthenticated)
-                throw new InvalidConstraintException();//TODO : Fix Not authenticated
+                throw new InvalidConstraintException();
 
             string uid = _http.HttpContext.User.Claims.First(m => m.Type == "sub").Value;
             if (string.IsNullOrEmpty(uid))
@@ -36,7 +36,6 @@ namespace GoLocal.Artisan.Infrastructure.Accessors
             if (user != null) return user;
 
             string email = _http.HttpContext.User.Claims.First(m => m.Type == "email").Value;
-
             if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(email))
                 throw new ArgumentNullException();
 

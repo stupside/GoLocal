@@ -4,12 +4,10 @@ using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Carts.AddCartPackage;
 using GoLocal.Artisan.Application.Commands.Carts.RemoveCartPackage;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
 {
-    [Authorize]
     [Route("api/shops/{sid:int}/carts")]
     public class CartController : ApiController
     {

@@ -31,6 +31,8 @@ namespace GoLocal.Artisan.Api
             services.SetupInfrastructure(_configuration);
             services.SetupApplication();
 
+            services.AddControllers();
+            
             services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 
             services.Configure<IdentityOptions>(options =>
@@ -44,7 +46,7 @@ namespace GoLocal.Artisan.Api
             services.AddOpenIddict()
                 .AddValidation(m => {
                     m.SetIssuer("https://localhost:5000");
-                    m.AddAudiences("account.api");
+                    m.AddAudiences("golocal.artisan.api");
 
                     m.UseAspNetCore();
                     m.UseSystemNetHttp();
@@ -55,9 +57,31 @@ namespace GoLocal.Artisan.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Artisan.Api", Version = "v1"});
+                
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer",
+                    Description = "Insert your authorization token"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
-            
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

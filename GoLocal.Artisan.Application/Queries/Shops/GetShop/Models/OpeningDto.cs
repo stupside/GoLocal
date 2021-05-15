@@ -5,8 +5,8 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShop.Models
 {
     public class OpeningDto
     {
-        public Day Day { get; set; }
-        public TimeRange Morning { get; set; }
-        public TimeRange Evening { get; set; }
+        public Day Day { get; init; }
+        public TimeRange Morning { get; init; }
+        public TimeRange Evening { get; init; }
     }
 }

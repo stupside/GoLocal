@@ -70,8 +70,7 @@ namespace GoLocal.Identity.Api.Controllers
                             throw new InvalidOperationException("Cannot construct principal for the current user.");
             
             principal.SetScopes(request.GetScopes());
-            principal.SetResources(
-                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            principal.SetResources(await _scope.ListResourcesAsync(request.GetScopes()).ToListAsync());
             
             foreach (var claim in principal.Claims)
                 claim.SetDestinations(GetDestinations(claim, principal));
@@ -81,7 +80,7 @@ namespace GoLocal.Identity.Api.Controllers
                 subject  : user.Id,
                 client   : await _application.GetIdAsync(application) ?? throw new InvalidOperationException(),
                 type     : OpenIddictConstants.AuthorizationTypes.Permanent,
-                scopes   : request.GetScopes());
+                scopes   : principal.GetScopes());
 
             principal.SetAuthorizationId(await _authorization.GetIdAsync(authorization));
 
@@ -162,8 +161,7 @@ namespace GoLocal.Identity.Api.Controllers
                     }));
 
             principal.SetScopes(request.GetScopes());
-            principal.SetResources(
-                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            principal.SetResources(await _scope.ListResourcesAsync(request.GetScopes()).ToListAsync());
             
             foreach (var claim in principal.Claims)
                 claim.SetDestinations(GetDestinations(claim, principal));
@@ -206,8 +204,7 @@ namespace GoLocal.Identity.Api.Controllers
             var principal = await _sign.CreateUserPrincipalAsync(user);
 
             principal.SetScopes(request.GetScopes());
-            principal.SetResources(
-                await _scope.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+            principal.SetResources(await _scope.ListResourcesAsync(request.GetScopes()).ToListAsync());
             
             foreach (var claim in principal.Claims)
                 claim.SetDestinations(GetDestinations(claim, principal));
