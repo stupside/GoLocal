@@ -6,7 +6,7 @@ namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
     {
         public int ShopId { get; init; }
         public int PackageId { get; init; }
-        public string ItemId { get; init; }
+        public int ItemId { get; init; }
         public int Quantity { get; init; }
         
     }

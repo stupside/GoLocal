@@ -22,7 +22,7 @@ namespace GoLocal.Artisan.Api.Controllers
         [HttpPut("products")]
         public async Task<IActionResult> CreateProduct(int sid, CreateItemCommand command)
         {
-            command.SetType<Product>();
+            command.SetItemType<Product>();
             return await Handle(command);
 
         }
@@ -30,7 +30,7 @@ namespace GoLocal.Artisan.Api.Controllers
         [HttpPut("services")]
         public async Task<IActionResult> CreateService(int sid, CreateItemCommand command)
         {
-            command.SetType<Service>();
+            command.SetItemType<Service>();
             return await Handle(command);
         }
         

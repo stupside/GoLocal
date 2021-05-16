@@ -31,7 +31,7 @@ namespace GoLocal.Domain.Entities
             Available = available;
         }
 
-        public string ItemId { get; }
+        public int ItemId { get; }
         public virtual Item Item { get; }
         
         public virtual ICollection<InvoiceItem> InvoiceItems { get; }
