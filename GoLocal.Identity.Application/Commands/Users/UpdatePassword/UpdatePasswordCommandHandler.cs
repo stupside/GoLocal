@@ -5,7 +5,6 @@ using GoLocal.Identity.Application.Commons.Accessor;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace GoLocal.Identity.Application.Commands.Users.UpdatePassword
@@ -19,7 +18,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdatePassword
             _user = user;
         }
 
-        public override async Task<Result<Unit>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
             

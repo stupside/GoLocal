@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
@@ -17,7 +16,7 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
             _user = user;
         }
 
-        public override async Task<Result<Unit>> Handle(ResetPasswordConfirmationCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(ResetPasswordConfirmationCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.FindByEmailAsync(request.Email);
             if (user == null)

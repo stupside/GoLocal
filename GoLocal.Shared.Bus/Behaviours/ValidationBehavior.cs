@@ -1,22 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using FluentValidation.Results;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Bus.Results.Enums;
-using GoLocal.Shared.Bus.Results.Interfaces;
 using MediatR;
 
 namespace GoLocal.Shared.Bus.Behaviours
 {
-    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
-        where TResponse : class, IResult
+    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TResponse : AbstractResult
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
@@ -25,20 +24,28 @@ namespace GoLocal.Shared.Bus.Behaviours
         {
             if (!_validators.Any())
                 return await next();
-            
+
             var context = new ValidationContext<TRequest>(request);
 
             var results = await Task.WhenAll(_validators
                 .Select(v => v.ValidateAsync(context, cancellationToken)));
-            
+
             var failures = results
                 .SelectMany(r => r.Errors)
-                .Where(f => f != null).ToList();
+                .Where(f => f != null)
+                .ToList();
 
-            if (failures.Count != 0)
-                return new Result<List<ValidationFailure>>(ResultType.BadRequest, failures) as TResponse;
 
-            return await next();
+            if (!failures.Any()) return await next();
+            
+            TResponse response = (TResponse)Activator.CreateInstance(typeof(TResponse));
+            if (response == null)
+                throw new NullReferenceException();
+
+            response.Errors = new List<object>(failures.Select(m => m.ErrorMessage));
+            response.Status = ResultStatus.BadRequest;
+
+            return response;
         }
     }
 }

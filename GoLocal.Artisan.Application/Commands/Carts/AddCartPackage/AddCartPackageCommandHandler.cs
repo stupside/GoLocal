@@ -6,7 +6,6 @@ using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Accessor.Accessors;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
@@ -22,7 +21,7 @@ namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
             _user = user;
         }
 
-        public override async Task<Result<Unit>> Handle(AddCartPackageCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(AddCartPackageCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
 

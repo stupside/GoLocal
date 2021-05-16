@@ -20,18 +20,18 @@ namespace GoLocal.Identity.Api.Controllers
 
         [HttpPatch("password")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command)
-            => await this.Send(command);
+            => await this.Handle(command);
 
         [HttpPatch("email")]
         public async Task<IActionResult> UpdateEmail(UpdateEmailCommand command)
-            => await this.Send(command);
+            => await this.Handle(command);
 
         [HttpGet("confirmation/register")]
         public async Task<IActionResult> CreateUserConfirmation(string uid, string token)
-            => await this.Send(new CreateUserConfirmationCommand(token, uid));
+            => await this.Handle(new CreateUserConfirmationCommand(token, uid));
         
         [HttpGet("confirmation/email")]
         public async Task<IActionResult> ConfirmUpdateEmail(string email, string token)
-            => await this.Send(new UpdateEmailConfirmationCommand(email, token));
+            => await this.Handle(new UpdateEmailConfirmationCommand(email, token));
     }
 }

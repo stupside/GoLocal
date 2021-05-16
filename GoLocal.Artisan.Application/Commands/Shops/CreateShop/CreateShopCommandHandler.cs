@@ -36,7 +36,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop
             
             await _context.Shops.AddAsync(shop, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-
+            
             return Ok(shop.Id);
         }
     }

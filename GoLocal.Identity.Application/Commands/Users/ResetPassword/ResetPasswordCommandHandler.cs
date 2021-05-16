@@ -5,7 +5,6 @@ using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Mailing.Commons.Models;
 using GoLocal.Shared.Mailing.Interfaces;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
@@ -21,7 +20,7 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
             _email = email;
         }
 
-        public override async Task<Result<Unit>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.FindByEmailAsync(request.Email);
             if (user == null)

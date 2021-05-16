@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 
 namespace GoLocal.Shared.Bus.Behaviours
 {
-    public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
+    public class LoggingBehavior<TRequest> : IRequestPreProcessor<TRequest>
     {
-        private readonly ILogger<LoggingBehaviour<TRequest>> _logger;
+        private readonly ILogger<LoggingBehavior<TRequest>> _logger;
 
-        public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest>> logger)
+        public LoggingBehavior(ILogger<LoggingBehavior<TRequest>> logger)
         {
             _logger = logger;
         }

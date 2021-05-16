@@ -1,35 +1,39 @@
+using System;
 using GoLocal.Shared.Bus.Results.Enums;
-using MediatR;
 
 namespace GoLocal.Shared.Bus.Results
 {
-    public class Result<TEntity> : AbstractResult<TEntity>
+    public class Result : AbstractResult<Result>
     {
-        public Result(ResultType type, string message) : base(type, message)
+        public Result<TResult> ToResult<TResult>()
         {
-        }
-
-        public Result(ResultType type, TEntity entity = default) : base(type, entity)
-        {
-        }
-
-        public Result(TEntity entity = default) : base(entity)
-        {
+            return new Result<TResult>()
+                .WithMessage(Message);
         }
     }
 
-    public class Result : Result<Unit>
+    public class Result<TEntity> : AbstractResult<Result<TEntity>>
     {
-        public Result(ResultType type, string message) : base(type, message)
-        {
-        }
+        private object _entity;
+        public override object Entity {
+            get
+            {
+                if (Status != ResultStatus.Ok)
+                    throw new InvalidOperationException(
+                        $"The entity is not accessible. Status of the result was set to {this.Status}");
 
-        public Result(ResultType type, Unit entity = default) : base(type, entity)
-        {
+                return _entity;
+            }
         }
+        public TEntity TypedEntity => (TEntity)_entity;
 
-        public Result(Unit entity = default) : base(entity)
+        public Result<TEntity> WithEntity(object entity)
         {
+            _entity = entity;
+            return this;
         }
+        
+        public Result ToResult()
+            => new Result().WithMessage(Message).WithStatus(Status).WithErrors(Errors);
     }
 }

@@ -1,5 +1,6 @@
+using System;
 using System.Threading.Tasks;
-using GoLocal.Shared.Bus.Commons.Mediator;
+using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Bus.Results.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,23 +17,27 @@ namespace GoLocal.Identity.Api.Controllers.Commons
             _mediator = mediator;
         }
 
-        protected async Task<IActionResult> Send<TResponse>(AbstractRequest<TResponse> request)
+        protected async Task<IActionResult> Handle<TResponse>(IRequest<TResponse> request)
+            where TResponse : AbstractResult
         {
-            var response = await _mediator.Send(request);
-
-            switch (response.Type)
+            TResponse response;
+            try
             {
-                case ResultType.Ok:
-                    return Ok(new { response.Entity, response.Message });
-                case ResultType.Unauthorized:
-                    return Unauthorized(response.Message);
-                case ResultType.BadRequest:
-                    return BadRequest(response.Message);
-                case ResultType.NotFound:
-                    return NotFound(response.Message);
-                default:
-                    return NoContent();
+                response = await _mediator.Send(request);
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return response.Status switch
+            {
+                ResultStatus.Ok => Ok(response.Entity),
+                ResultStatus.Unauthorized => Unauthorized(response.Message),
+                ResultStatus.BadRequest => BadRequest(new { response.Errors, response.Message }),
+                ResultStatus.NotFound => NotFound(response.Message),
+                _ => NotFound()
+            };
         }
     }
 }

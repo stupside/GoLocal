@@ -33,7 +33,7 @@ namespace GoLocal.Identity.Api.Pages.Account
         public async Task<IActionResult> OnPost()
         {
             var result = await _mediator.Send(Command);
-            if (result.Type != ResultType.Ok)
+            if (result.Status != ResultStatus.Ok)
                 return BadRequest(result.Message);
 
             return RedirectToPage(nameof(Login));

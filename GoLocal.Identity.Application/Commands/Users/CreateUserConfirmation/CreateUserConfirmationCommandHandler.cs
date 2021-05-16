@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation
@@ -17,7 +16,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation
             _user = user;
         }
 
-        public override async Task<Result<Unit>> Handle(CreateUserConfirmationCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(CreateUserConfirmationCommand request, CancellationToken cancellationToken)
         {
             var user = await _user.FindByIdAsync(request.Uid);
             var result = await _user.ConfirmEmailAsync(user, request.Token);

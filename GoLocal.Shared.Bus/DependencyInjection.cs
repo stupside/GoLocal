@@ -11,8 +11,7 @@ namespace GoLocal.Shared.Bus
     {
         public static void SetupBus(this IServiceCollection services, Assembly assembly)
         {
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionBehavior<,>));
-            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
+            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehavior<>));
             
             services.AddMediatR(assembly);
             

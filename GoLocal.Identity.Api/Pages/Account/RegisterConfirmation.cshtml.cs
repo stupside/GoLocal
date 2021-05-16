@@ -25,7 +25,7 @@ namespace GoLocal.Identity.Api.Pages.Account
         public async Task<IActionResult> OnGet()
         {
             var result = await _mediator.Send(new CreateUserConfirmationCommand(Token, Uid));
-            if (result.Type != ResultType.Ok)
+            if (result.Status != ResultStatus.Ok)
                 return BadRequest(result.Message);
 
             return RedirectToPage();

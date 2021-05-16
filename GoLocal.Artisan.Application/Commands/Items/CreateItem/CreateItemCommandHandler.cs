@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Domain.Entities;
-using GoLocal.Domain.Entities.Abstracts;
 using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;

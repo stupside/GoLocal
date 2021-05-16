@@ -1,6 +1,6 @@
 namespace GoLocal.Shared.Bus.Results.Enums
 {
-    public enum ResultType
+    public enum ResultStatus
     {
         NotFound,
         BadRequest,

@@ -4,7 +4,6 @@ using GoLocal.Domain.Entities;
 using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShop
@@ -18,7 +17,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShop
             _context = context;
         }
 
-        public override async Task<Result<Unit>> Handle(UpdateShopCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateShopCommand request, CancellationToken cancellationToken)
         {
             Shop shop = await _context.Shops.SingleOrDefaultAsync(m => m.Id == request.ShopId, cancellationToken);
             if (shop == null)

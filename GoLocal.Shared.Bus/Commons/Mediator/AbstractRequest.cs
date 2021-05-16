@@ -7,7 +7,7 @@ namespace GoLocal.Shared.Bus.Commons.Mediator
     {
     }
     
-    public abstract class AbstractRequest : AbstractRequest<Unit>
+    public abstract class AbstractRequest : IRequest<Result>
     {
     }
 }

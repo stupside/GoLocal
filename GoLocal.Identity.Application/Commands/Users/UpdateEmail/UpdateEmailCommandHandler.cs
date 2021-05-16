@@ -6,7 +6,6 @@ using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Mailing.Commons.Models;
 using GoLocal.Shared.Mailing.Interfaces;
-using MediatR;
 
 namespace GoLocal.Identity.Application.Commands.Users.UpdateEmail
 {
@@ -20,7 +19,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmail
             _email = email;
         }
 
-        public override async Task<Result<Unit>> Handle(UpdateEmailCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateEmailCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
 
