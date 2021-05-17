@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GoLocal.Domain\GoLocal.Domain.csproj" />
+        <ProjectReference Include="..\GoLocal.Persistence\GoLocal.Persistence.csproj" />
+        <ProjectReference Include="..\GoLocal.Shared.Accessor\GoLocal.Shared.Accessor.csproj" />
+        <ProjectReference Include="..\GoLocal.Shared.Bus\GoLocal.Shared.Bus.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mapster" Version="7.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\Carts" />
+      <Folder Include="Commands\Commands" />
+      <Folder Include="Commands\Invoices" />
+      <Folder Include="Commands\Items" />
+      <Folder Include="Commands\Shops" />
+    </ItemGroup>
+    
+</Project>

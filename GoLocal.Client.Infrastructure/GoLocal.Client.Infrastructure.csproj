@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GoLocal.Artisan.Application\GoLocal.Artisan.Application.csproj" />
+        <ProjectReference Include="..\GoLocal.Client.Application\GoLocal.Client.Application.csproj" />
     </ItemGroup>
     
 </Project>

@@ -6,7 +6,7 @@ namespace GoLocal.Persistence.EntityFramework
 {
     public static class EntityFrameworkInjection
     {
-        public static void SetupEfContext(this IServiceCollection services, IConfiguration configuration)
+        internal static void SetupEfContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<Context>(options =>
                 options.UseNpgsql(configuration.GetConnectionString(nameof(Context)),

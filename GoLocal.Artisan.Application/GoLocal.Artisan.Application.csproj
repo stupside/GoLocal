@@ -15,4 +15,12 @@
       <PackageReference Include="Mapster" Version="7.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\Commands" />
+      <Folder Include="Commands\Invoices" />
+      <Folder Include="Queries\Commands" />
+      <Folder Include="Queries\Invoices" />
+      <Folder Include="Queries\Items" />
+    </ItemGroup>
+
 </Project>

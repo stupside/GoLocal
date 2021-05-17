@@ -1,11 +1,11 @@
-using GoLocal.Artisan.Infrastructure.Accessors;
+using GoLocal.Client.Infrastructure.Accessors;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence;
 using GoLocal.Shared.Accessor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GoLocal.Artisan.Infrastructure
+namespace GoLocal.Client.Infrastructure
 {
     public static class DependencyInjection
     {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using GoLocal.Artisan.Api.Controllers.Base;
-using GoLocal.Artisan.Application.Commands.Carts.AddCartPackage;
-using GoLocal.Artisan.Application.Commands.Carts.RemoveCartPackage;
+﻿using System.Threading.Tasks;
+using GoLocal.Client.Api.Controllers.Base;
+using GoLocal.Client.Application.Commands.Carts.AddCartPackage;
+using GoLocal.Client.Application.Commands.Carts.RemoveCartPackage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GoLocal.Artisan.Api.Controllers
+namespace GoLocal.Client.Api.Controllers
 {
     [Route("api/shops/{sid:int}/carts")]
     public class CartController : ApiController
@@ -20,13 +19,17 @@ namespace GoLocal.Artisan.Api.Controllers
         {
             if (sid != command.ShopId)
                 return BadRequest();
+            
             return await Handle(command);
         }
         
         [HttpDelete("package")]
         public async Task<IActionResult> Remove(int sid, RemoveCartPackageCommand command)
         {
-            throw new NotImplementedException();
+            if (sid != command.ShopId)
+                return BadRequest();
+            
+            return await Handle(command);
         }
     }
 }

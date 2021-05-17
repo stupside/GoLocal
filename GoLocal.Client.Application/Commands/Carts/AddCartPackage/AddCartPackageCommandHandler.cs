@@ -8,7 +8,7 @@ using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
+namespace GoLocal.Client.Application.Commands.Carts.AddCartPackage
 {
     public class AddCartPackageCommandHandler : AbstractRequestHandler<AddCartPackageCommand>
     {        

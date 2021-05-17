@@ -6,7 +6,7 @@ namespace GoLocal.Persistence
 {
     public static class DependencyInjection
     {
-        public static void SetupInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static void SetupPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.SetupEfContext(configuration);
         }

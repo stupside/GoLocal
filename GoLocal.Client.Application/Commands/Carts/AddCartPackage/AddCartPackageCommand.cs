@@ -1,6 +1,6 @@
 ﻿using GoLocal.Shared.Bus.Commons.Mediator;
 
-namespace GoLocal.Artisan.Application.Commands.Carts.AddCartPackage
+namespace GoLocal.Client.Application.Commands.Carts.AddCartPackage
 {
     public class AddCartPackageCommand : AbstractRequest
     {
