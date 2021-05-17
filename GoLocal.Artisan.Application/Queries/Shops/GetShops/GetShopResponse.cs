@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 
-namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
+namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
 {
     public class ShopDto
     {
@@ -13,9 +14,7 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
 
         public ICollection<OpeningDto> Openings { get; init; }
         
-        public ICollection<UserDto> Employees { get; init; }
-        
-        public GetShop.Models.UserDto User { get; init; }
+        public UserDto User { get; init; }
         
         public DateTime Creation { get; init; }
     }
