@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Items.CreateItem;
+using GoLocal.Artisan.Application.Commands.Items.UpdateItem;
 using GoLocal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,10 +34,18 @@ namespace GoLocal.Artisan.Api.Controllers
             command.SetItemType<Service>();
             return await Handle(command);
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> Update(int sid)
-            => throw new NotImplementedException();
+
+        [HttpPost("{iid:int}")]
+        public async Task<IActionResult> Update(int sid, int iid, UpdateItemCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+
+            if (iid != command.ItemId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
         
         [HttpDelete]
         public async Task<IActionResult> Delete(int sid)
