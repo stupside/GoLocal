@@ -17,8 +17,6 @@
 
     <ItemGroup>
       <Folder Include="Commands\Carts" />
-      <Folder Include="Commands\Invoices" />
-      <Folder Include="Commands\Items" />
     </ItemGroup>
     
 </Project>

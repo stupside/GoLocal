@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence.EntityFramework;
@@ -16,18 +15,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
 {
-    public class GetShopsCommandHandler : AbstractPagedRequestHandler<GetShopsCommand, ShopDto>
+    public class GetShopsQueryHandler : AbstractPagedRequestHandler<GetShopsQuery, ShopDto>
     {
         private readonly Context _context;
         private readonly IUserAccessor<User> _user;
 
-        public GetShopsCommandHandler(IUserAccessor<User> user, Context context)
+        public GetShopsQueryHandler(IUserAccessor<User> user, Context context)
         {
             _user = user;
             _context = context;
         }
 
-        public override async Task<Result<Page<ShopDto>>> Handle(GetShopsCommand request, CancellationToken cancellationToken)
+        public override async Task<Result<Page<ShopDto>>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
 
@@ -42,7 +41,7 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
                 .ComputeLimit(request)
                 .ToListAsync(cancellationToken);
 
-            return Ok(shops.Adapt<IEnumerable<ShopDto>>(), count);
+            return Ok(shops.Adapt<List<ShopDto>>(), count);
         }
     }
 }

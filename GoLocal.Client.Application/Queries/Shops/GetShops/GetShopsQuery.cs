@@ -1,12 +1,12 @@
-using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
+using GoLocal.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 
-namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
+namespace GoLocal.Client.Application.Queries.Shops.GetShops
 {
-    public class GetShopsCommand : AbstractPagedRequest<Shop, ShopDto>
+    public class GetShopsQuery : AbstractPagedRequest<Shop, ShopDto>
     {
-        public GetShopsCommand()
+        public GetShopsQuery()
         {
             this.ConfigureSearch(m =>
             {

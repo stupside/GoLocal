@@ -7,9 +7,9 @@ using GoLocal.Shared.Bus.Results;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Client.Application.Queries.GetShop
+namespace GoLocal.Client.Application.Queries.Shops.GetShop
 {
-    public class GetShopCommandHandler : AbstractRequestHandler<GetShopCommand, GetShopResponse>
+    public class GetShopCommandHandler : AbstractRequestHandler<GetShopQuery, GetShopResponse>
     {
         private readonly Context _context;
 
@@ -18,7 +18,7 @@ namespace GoLocal.Client.Application.Queries.GetShop
             _context = context;
         }
 
-        public override async Task<Result<GetShopResponse>> Handle(GetShopCommand request, CancellationToken cancellationToken)
+        public override async Task<Result<GetShopResponse>> Handle(GetShopQuery request, CancellationToken cancellationToken)
         {
             Shop shop = await _context.Shops
                 .Include(m => m.Services)

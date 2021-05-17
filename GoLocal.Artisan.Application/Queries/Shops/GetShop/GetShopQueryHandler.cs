@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Artisan.Application.Queries.Shops.GetShop
 {
-    public class GetShopCommandHandler : AbstractRequestHandler<GetShopCommand, GetShopResponse>
+    public class GetShopQueryHandler : AbstractRequestHandler<GetShopQuery, GetShopResponse>
     {
         private readonly Context _context;
 
-        public GetShopCommandHandler(Context context)
+        public GetShopQueryHandler(Context context)
         {
             _context = context;
         }
 
-        public override async Task<Result<GetShopResponse>> Handle(GetShopCommand request, CancellationToken cancellationToken)
+        public override async Task<Result<GetShopResponse>> Handle(GetShopQuery request, CancellationToken cancellationToken)
         {
             Shop shop = await _context.Shops
                 .Include(m => m.Services)

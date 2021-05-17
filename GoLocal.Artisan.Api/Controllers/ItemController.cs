@@ -2,7 +2,10 @@ using System;
 using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Items.CreateItem;
+using GoLocal.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Artisan.Application.Commands.Items.UpdateItem;
+using GoLocal.Artisan.Application.Queries.Items.GetItem;
+using GoLocal.Artisan.Application.Queries.Items.GetItems;
 using GoLocal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,26 +18,65 @@ namespace GoLocal.Artisan.Api.Controllers
         public ItemController(IMediator mediator) : base(mediator)
         {
         }
-        
-        [HttpGet]
-        public async Task<IActionResult> Get(int sid)
-            => throw new NotImplementedException();
 
+        [HttpGet("{iid:int}")]
+        public async Task<IActionResult> Get(int sid, int iid)
+            => await Handle(new GetItemQuery(sid, iid));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpPost("paged")]
+        public async Task<IActionResult> Get(int sid, GetItemsQuery query)
+        {
+            if (sid != query.ShopId)
+                return BadRequest();
+
+            return await Handle(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("products")]
         public async Task<IActionResult> CreateProduct(int sid, CreateItemCommand command)
         {
+            if (sid != command.ShopId)
+                return BadRequest();
+            
             command.SetItemType<Product>();
             return await Handle(command);
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("services")]
         public async Task<IActionResult> CreateService(int sid, CreateItemCommand command)
         {
+            if (sid != command.ShopId)
+                return BadRequest();
+            
             command.SetItemType<Service>();
             return await Handle(command);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="iid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("{iid:int}")]
         public async Task<IActionResult> Update(int sid, int iid, UpdateItemCommand command)
         {
@@ -46,9 +88,25 @@ namespace GoLocal.Artisan.Api.Controllers
             
             return await Handle(command);
         }
-        
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int sid)
-            => throw new NotImplementedException();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="iid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [HttpDelete("{iid:int}")]
+        public async Task<IActionResult> Delete(int sid, int iid, DeleteItemCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+
+            if (iid != command.ItemId)
+                return BadRequest();
+
+            return await Handle(command);
+        }
     }
 }

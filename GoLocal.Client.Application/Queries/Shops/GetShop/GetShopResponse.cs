@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using GoLocal.Client.Application.Queries.GetShop.Models;
+using GoLocal.Client.Application.Queries.Shops.GetShop.Models;
 
-namespace GoLocal.Client.Application.Queries.GetShop
+namespace GoLocal.Client.Application.Queries.Shops.GetShop
 {
     public class GetShopResponse
     {

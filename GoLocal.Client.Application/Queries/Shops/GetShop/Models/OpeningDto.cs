@@ -1,7 +1,7 @@
 using GoLocal.Domain.Enums;
 using GoLocal.Domain.ValueObjects;
 
-namespace GoLocal.Client.Application.Queries.GetShop.Models
+namespace GoLocal.Client.Application.Queries.Shops.GetShop.Models
 {
     public class OpeningDto
     {

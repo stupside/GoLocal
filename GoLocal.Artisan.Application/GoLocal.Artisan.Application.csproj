@@ -20,7 +20,6 @@
       <Folder Include="Commands\Invoices" />
       <Folder Include="Queries\Commands" />
       <Folder Include="Queries\Invoices" />
-      <Folder Include="Queries\Items" />
     </ItemGroup>
 
 </Project>

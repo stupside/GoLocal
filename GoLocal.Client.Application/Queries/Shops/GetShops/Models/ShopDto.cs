@@ -1,14 +1,11 @@
 using System;
 
-namespace GoLocal.Client.Application.Queries.GetShop.Models
+namespace GoLocal.Client.Application.Queries.Shops.GetShops.Models
 {
-    public class ItemDto
+    public class ShopDto
     {
         public int Id { get; init; }
-        
         public string Name { get; init; }
-        public string Description { get; init; }
-        
         public DateTime Creation { get; init; }
     }
 }

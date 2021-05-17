@@ -8,9 +8,9 @@ namespace GoLocal.Shared.Bus.Results.Pages
     {
         public int Filtered { get; }
         public int Total { get; }
-        public IEnumerable<T> List { get; }
+        public List<T> List { get; }
 
-        public Page(IEnumerable<T> list, int total)
+        public Page(List<T> list, int total)
         {
             if(list == null)
                 throw new ArgumentNullException(nameof(list));
