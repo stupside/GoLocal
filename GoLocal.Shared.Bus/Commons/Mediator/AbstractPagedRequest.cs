@@ -6,10 +6,10 @@ namespace GoLocal.Shared.Bus.Commons.Mediator
 {
     public abstract class AbstractPagedRequest<TEntity, TResponse> : AbstractRequest<Page<TResponse>>, IFilter<TEntity>
     {
-        public int Take { get; }
-        public int Skip { get; }
-        public Search<TEntity> Search { get; }
-        public Order<TEntity> Order { get; }
+        public int Take { get; init; }
+        public int Skip { get; init; }
+        public Search<TEntity> Search { get; init; }
+        public Order<TEntity> Order { get; init; }
 
         protected AbstractPagedRequest()
         {

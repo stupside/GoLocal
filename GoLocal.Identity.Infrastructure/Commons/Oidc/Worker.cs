@@ -28,9 +28,8 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
                 
                 m.PostLogoutRedirectUris.Add(new Uri("https://account.golocal.com/login"));
                 
-                m.RedirectUris.Add(new Uri("https://account.spa.com/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("https://account.spa.com/authentication/callback"));
-                
+                m.RedirectUris.Add(new Uri("http://localhost:3000/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("http://localhost:3000/authentication/callback"));
                 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
@@ -50,6 +49,7 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
                 m.ClientId = "golocal.artisan";
                 
                 m.PostLogoutRedirectUris.Add(new Uri("https://account.golocal.com/login"));
+                
                 m.RedirectUris.Add(new Uri("https://artisan.spa.com/authentication/silent_callback"));
                 m.RedirectUris.Add(new Uri("https://artisan.spa.com/authentication/callback"));
                 

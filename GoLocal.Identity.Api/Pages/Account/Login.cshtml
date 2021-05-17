@@ -2,7 +2,7 @@
 @model GoLocal.Identity.Api.Pages.Account.Login
 
 <form method="post">
-    
+    <div asp-validation-summary="All"></div>
     <input type="hidden" asp-for="ReturnUrl" />
 
     <input asp-for="Username" placeholder="Username"/>
