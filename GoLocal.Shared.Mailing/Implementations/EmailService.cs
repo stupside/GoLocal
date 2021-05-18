@@ -23,7 +23,10 @@ namespace GoLocal.Shared.Mailing.Implementations
         {
             var mail = new MimeMessage();
             mail.From.Add(new MailboxAddress(_configuration.SmtpUsername, _configuration.SmtpEmail));
-            mail.To.Add(new MailboxAddress(message.UserName, message.Recipient));
+            
+            foreach (string recipient in message.Recipients)
+                mail.To.Add(new MailboxAddress(message.UserName, recipient));
+            
             mail.Subject = message.Object;
 
             mail.Body = new TextPart(TextFormat.Plain)
