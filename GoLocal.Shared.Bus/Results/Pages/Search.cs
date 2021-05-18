@@ -5,10 +5,16 @@ namespace GoLocal.Shared.Bus.Results.Pages
 {
     public class Search<TEntity>
     {
-        public IDictionary<string, object> Values { get; set; }
-        private IDictionary<string, Func<TEntity, dynamic>> Maps { get; }
+        public IDictionary<string, string> Values { get; set; }
+        private IDictionary<string, Func<TEntity, object>> Maps { get; }
+
+        public Search()
+        {
+            Values = new Dictionary<string, string>();
+            Maps = new Dictionary<string, Func<TEntity, object>>();
+        }
         
-        public void MapFor(string name, Func<TEntity, dynamic> map)
+        public void MapFor(string name, Func<TEntity, object> map)
             => Maps.Add(name, map);
         
         /// <summary>

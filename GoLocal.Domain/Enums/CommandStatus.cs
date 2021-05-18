@@ -4,6 +4,7 @@ namespace GoLocal.Domain.Enums
     {
         Pending,
         Accepted,
-        Rejected
+        Rejected,
+        Canceled
     }
 }

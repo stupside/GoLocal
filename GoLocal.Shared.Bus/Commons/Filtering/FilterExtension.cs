@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using GoLocal.Shared.Bus.Results.Pages;
 
 namespace GoLocal.Shared.Bus.Commons.Filtering
@@ -17,12 +19,18 @@ namespace GoLocal.Shared.Bus.Commons.Filtering
             => query.Skip(filter.Skip).Take(filter.Take);
 
         public static IQueryable<TEntity> ComputeSearch<TEntity>(this IQueryable<TEntity> query,
-            IFilter<TEntity> filter)
+            IFilter<TEntity> filter) where TEntity : new()
         {
 
+            Type type = typeof(TEntity);
+
             foreach (var (key, value) in filter.Search.Values)
-                query = query.Where(m => filter.Search.GetMap(key).Invoke(m)
-                    .ToString().Contains(value.ToString()));
+            {
+                TEntity test = new TEntity();
+                var t = filter.Search.GetMap(key)(test).ToString();
+                
+                query = query.Where(m => filter.Search.GetMap(key)(m).ToString() == value); // TODO: Fix
+            }
 
             return query;
         }
