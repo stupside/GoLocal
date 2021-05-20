@@ -26,14 +26,15 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
             await manager.AddClient(m => {
                 m.ClientId = "golocal.account";
                 
-                m.PostLogoutRedirectUris.Add(new Uri("https://account.golocal.com/login"));
+                m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
                 
-                m.RedirectUris.Add(new Uri("http://localhost:3000/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("http://localhost:3000/authentication/callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3000/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3000/authentication/callback"));
                 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Token);
+                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.Password);
                 m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.AuthorizationCode);
                 m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.RefreshToken);
                 m.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.Code);
@@ -48,10 +49,10 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
             await manager.AddClient(m => {
                 m.ClientId = "golocal.artisan";
                 
-                m.PostLogoutRedirectUris.Add(new Uri("https://account.golocal.com/login"));
+                m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
                 
-                m.RedirectUris.Add(new Uri("https://artisan.spa.com/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("https://artisan.spa.com/authentication/callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/callback"));
                 
                 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
@@ -72,14 +73,15 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
             await manager.AddClient(m => {
                 m.ClientId = "golocal.client";
 
-                m.PostLogoutRedirectUris.Add(new Uri("https://account.golocal.com/login"));
+                m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
                 
-                m.RedirectUris.Add(new Uri("https://client.spa.com/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("https://client.spa.com/authentication/callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/callback"));
                 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Token);
+                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.Password);
                 m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.AuthorizationCode);
                 m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.RefreshToken);
                 m.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.Code);

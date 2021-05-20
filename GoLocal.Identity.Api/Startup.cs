@@ -52,7 +52,7 @@ namespace GoLocal.Identity.Api
             {
                 builder.AllowAnyHeader();
                 builder.AllowAnyMethod();
-                builder.WithOrigins("https://localhost:5002", "https://localhost:5001", "http://localhost:3000");
+                builder.WithOrigins("https://localhost:5002", "https://localhost:5001", "https://localhost:3000", "https://localhost:3001", "https://localhost:3002");
             });
             
             app.UseAuthorization();
