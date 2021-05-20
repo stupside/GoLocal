@@ -1,0 +1,23 @@
+using System;
+using GoLocal.Domain.Enums;
+
+namespace GoLocal.Artisan.Application.Queries.Invoices.GetInvoice.Models
+{
+    public class InvoiceItemDto
+    {
+        public string Id { get; init; }
+        
+        public int Quantity { get; init; }
+        public float Price { get; init; }
+        public float Total => Quantity * Price;
+        
+        public string Description { get; init; }
+        public InvoiceItemStatus Status { get; init; }
+
+        public PackageDto Package { get; init; }
+        
+        public CommentDto Comment { get; init; }
+
+        public DateTime Creation { get; init; }
+    }
+}
