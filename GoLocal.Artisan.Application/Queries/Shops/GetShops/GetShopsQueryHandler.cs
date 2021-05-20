@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence.EntityFramework;

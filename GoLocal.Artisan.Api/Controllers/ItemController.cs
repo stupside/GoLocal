@@ -5,7 +5,6 @@ using GoLocal.Artisan.Application.Commands.Items.CreateItem;
 using GoLocal.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Artisan.Application.Commands.Items.UpdateItem;
 using GoLocal.Artisan.Application.Queries.Items.GetItem;
-using GoLocal.Artisan.Application.Queries.Items.GetItems;
 using GoLocal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,22 +27,7 @@ namespace GoLocal.Artisan.Api.Controllers
         [HttpGet("{iid:int}")]
         public async Task<IActionResult> Get(int sid, int iid)
             => await Handle(new GetItemQuery(sid, iid));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sid"></param>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        [HttpPost("paged")]
-        public async Task<IActionResult> Get(int sid, GetItemsQuery query)
-        {
-            if (sid != query.ShopId)
-                return BadRequest();
-
-            return await Handle(query);
-        }
-
+        
         /// <summary>
         /// 
         /// </summary>

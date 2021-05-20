@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 
-namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
+namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
 {
     public class ShopDto
     {

@@ -38,7 +38,6 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopContact
             _context.Shops.Update(shop);
             await _context.SaveChangesAsync(cancellationToken);
 
-            // TODO: Send an email to the user
             await _email.SendAsync(new EmailMessage(new HashSet<string>{user.Email, shop.Contact.Email}, $"Shop {shop.Name} updated",
                 $@"
 Dear {user.UserName}, 
