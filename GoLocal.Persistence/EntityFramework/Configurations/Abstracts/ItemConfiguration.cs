@@ -21,7 +21,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations.Abstracts
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(m => m.Packages)
-                .WithOne()
+                .WithOne(m => m.Item)
                 .HasForeignKey(m => m.ItemId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
