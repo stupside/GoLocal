@@ -27,7 +27,7 @@ namespace GoLocal.Artisan.Api.Controllers
             if (sid != command.ShopId)
                 return BadRequest();
 
-            if (iid == command.ItemId)
+            if (iid != command.ItemId)
                 return BadRequest();
 
             return await Handle(command);
@@ -47,10 +47,10 @@ namespace GoLocal.Artisan.Api.Controllers
             if (sid != command.ShopId)
                 return BadRequest();
 
-            if (iid == command.ItemId)
+            if (iid != command.ItemId)
                 return BadRequest();
             
-            if (pid == command.PackageId)
+            if (pid != command.PackageId)
                 return BadRequest();
             
             return await Handle(command);

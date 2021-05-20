@@ -127,6 +127,10 @@ namespace GoLocal.Identity.Api.Controllers
                 user.Id,
                 user.UserName,
                 user.Email,
+                user.Avatar,
+                user.PhoneNumber,
+                user.TwoFactorEnabled,
+                user.PhoneNumberConfirmed
             });
         }
 
