@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Domain.Entities;
+using GoLocal.Domain.Entities.Abstracts;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Accessor.Accessors;
@@ -25,8 +26,8 @@ namespace GoLocal.Client.Application.Commands.Carts.AddCartPackage
         {
             User user = await _user.GetUserAsync();
 
-            if (!await _context.Services.AnyAsync(m => m.Id == request.ItemId, cancellationToken))
-                return NotFound<Service>(request.ItemId);
+            if (await _context.Services.AnyAsync(m => m.Id == request.ItemId, cancellationToken))
+                return NotFound<Item>(request.ItemId);
             
             Package package = await _context.Packages.Include(m => m.Item).ThenInclude(m => m.Shop)
                 .SingleOrDefaultAsync(m => m.Id == request.PackageId &&
