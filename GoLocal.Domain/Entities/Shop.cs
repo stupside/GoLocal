@@ -39,7 +39,6 @@ namespace GoLocal.Domain.Entities
 
         public virtual ICollection<Opening> Openings { get; }
 
-        public virtual ICollection<Item> Items { get; }
         public virtual ICollection<Service> Services { get; }
         public virtual ICollection<Product> Products { get; }
         

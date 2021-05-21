@@ -43,17 +43,12 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
                 .HasForeignKey(m => m.ShopId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(m => m.Products)
+           builder.HasMany(m => m.Products)
                 .WithOne(m => m.Shop)
                 .HasForeignKey(m => m.ShopId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(m => m.Services)
-                .WithOne(m => m.Shop)
-                .HasForeignKey(m => m.ShopId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasMany(m => m.Items)
                 .WithOne(m => m.Shop)
                 .HasForeignKey(m => m.ShopId)
                 .OnDelete(DeleteBehavior.NoAction);
