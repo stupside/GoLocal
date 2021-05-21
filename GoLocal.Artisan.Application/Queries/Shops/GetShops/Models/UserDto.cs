@@ -1,4 +1,4 @@
-namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
+﻿namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
 {
     public class UserDto
     {
