@@ -9,8 +9,8 @@ namespace GoLocal.Domain.Entities
     {
         public string Id { get; set; }
         
-        public float Price { get; set; }
         public string Specification { get; set; }
+        public float Price { get; set; }
         
         public CommandStatus Status { get; set; }
 
@@ -21,14 +21,16 @@ namespace GoLocal.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public Command(User user, Package package, string specification)
+        public Command(User user, Package package, float price, string specification)
             : this()
         {
             UserId = user.Id;
             PackageId = package.Id;
+
+            CommandProposals = new List<CommandProposal>();
+            CommandProposals.Add(new CommandProposal(this, user, price, specification));
             
-            Specification = specification;
-            Status = CommandStatus.Pending;
+            Status = CommandStatus.PendingPrice;
         }
 
         public string UserId { get; }
@@ -41,5 +43,7 @@ namespace GoLocal.Domain.Entities
         public virtual Invoice Invoice { get; }
         
         public virtual ICollection<Message> Messages { get; }
+        
+        public virtual ICollection<CommandProposal> CommandProposals { get; }
     }
 }

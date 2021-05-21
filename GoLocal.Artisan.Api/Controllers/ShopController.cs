@@ -34,7 +34,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        [HttpPost("paged")]
+        [HttpPost]
         public async Task<IActionResult> Get(GetShopsQuery query)
             => await Handle(query);
 
@@ -79,7 +79,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPatch("opening")]
+        [HttpPatch("openings")]
         public async Task<IActionResult> UpdateOpening(UpdateShopOpeningCommand command)
             => await Handle(command);
         

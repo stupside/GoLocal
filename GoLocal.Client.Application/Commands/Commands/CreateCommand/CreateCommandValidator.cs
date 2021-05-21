@@ -9,6 +9,7 @@ namespace GoLocal.Client.Application.Commands.Commands.CreateCommand
             RuleFor(m => m.ServiceId).NotEmpty();
             RuleFor(m => m.PackageId).NotEmpty();
             RuleFor(m => m.Specifications).NotEmpty();
+            RuleFor(m => m.Price).NotEmpty().InclusiveBetween(1, 10000);
         }
     }
 }

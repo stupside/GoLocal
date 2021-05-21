@@ -26,14 +26,14 @@ namespace GoLocal.Domain.Entities
                 InvoiceItems.Add(new InvoiceItem(this, package.PackageId, package.Quantity, package.Price*package.Quantity));
         }
 
-        public Invoice(Command command)
+        public Invoice(Command command, CommandProposal proposal)
             : this()
         {
             UserId = command.UserId;
 
             InvoiceItems = new List<InvoiceItem>
             {
-                new(this, command.PackageId, 1, command.Price, command.Specification)
+                new(this, command.PackageId, 1, proposal.Price, proposal.Specification)
             };
 
         }

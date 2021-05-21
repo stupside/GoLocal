@@ -13,6 +13,12 @@ namespace GoLocal.Client.Api.Controllers
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="iid"></param>
+        /// <returns></returns>
         [HttpGet("{iid:int}")]
         public async Task<IActionResult> Get(int sid, int iid)
             => await Handle(new GetItemQuery(sid, iid));

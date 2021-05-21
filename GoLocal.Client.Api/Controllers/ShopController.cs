@@ -28,7 +28,7 @@ namespace GoLocal.Client.Api.Controllers
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        [HttpPost("paged")]
+        [HttpPost]
         public async Task<IActionResult> Get(GetShopsQuery query)
             => await Handle(query);
     }

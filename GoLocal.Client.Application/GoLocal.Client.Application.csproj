@@ -14,9 +14,5 @@
     <ItemGroup>
         <PackageReference Include="Mapster" Version="7.2.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Commands\Carts" />
-    </ItemGroup>
     
 </Project>

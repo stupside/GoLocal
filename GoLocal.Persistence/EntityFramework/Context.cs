@@ -24,6 +24,7 @@ namespace GoLocal.Persistence.EntityFramework
         public DbSet<Package> Packages { get; set; }
 
         public DbSet<Command> Commands { get; set; }
+        public DbSet<CommandProposal> CommandProposals { get; set; }
         public DbSet<Message> Messages { get; set; }
         
         public DbSet<Cart> Carts { get; set; }

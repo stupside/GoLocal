@@ -34,7 +34,7 @@ namespace GoLocal.Client.Application.Commands.Commands.CreateCommand
 
             User user = await _user.GetUserAsync();
 
-            Command command = new Command(user, package, request.Specifications);
+            Command command = new Command(user, package, request.Price, request.Specifications);
 
             await _context.Commands.AddAsync(command, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);

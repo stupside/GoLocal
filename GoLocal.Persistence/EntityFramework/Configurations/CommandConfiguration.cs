@@ -28,6 +28,11 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
             builder.HasOne(m => m.Invoice)
                 .WithOne()
                 .HasForeignKey<Command>(m => m.InvoiceId);
+
+            builder.HasMany(m => m.CommandProposals)
+                .WithOne()
+                .HasForeignKey(m => m.CommandId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

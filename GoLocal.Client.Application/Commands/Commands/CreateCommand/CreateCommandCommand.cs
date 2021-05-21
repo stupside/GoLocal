@@ -6,6 +6,7 @@ namespace GoLocal.Client.Application.Commands.Commands.CreateCommand
     {
         public int ServiceId { get; init; }
         public int PackageId { get; init; }
+        public float Price { get; init; }
         public string Specifications { get; init; }
     }
 }

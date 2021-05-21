@@ -14,7 +14,13 @@ namespace GoLocal.Client.Api.Controllers
         {
         }
         
-        [HttpPut("package")]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut("packages")]
         public async Task<IActionResult> Add(int sid, AddCartPackageCommand command)
         {
             if (sid != command.ShopId)
@@ -23,7 +29,13 @@ namespace GoLocal.Client.Api.Controllers
             return await Handle(command);
         }
         
-        [HttpDelete("package")]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpDelete("packages")]
         public async Task<IActionResult> Remove(int sid, RemoveCartPackageCommand command)
         {
             if (sid != command.ShopId)

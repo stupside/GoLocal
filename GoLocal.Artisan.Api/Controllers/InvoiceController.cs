@@ -13,6 +13,11 @@ namespace GoLocal.Artisan.Api.Controllers
         {
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="iid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get(int iid)
             => await Handle(new GetInvoiceQuery(iid));

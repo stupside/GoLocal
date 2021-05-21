@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using GoLocal.Client.Api.Controllers.Base;
+using GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal;
 using GoLocal.Client.Application.Commands.Commands.CreateCommand;
+using GoLocal.Client.Application.Commands.Commands.CreateCommandProposal;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,8 +15,43 @@ namespace GoLocal.Client.Api.Controllers
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Create(CreateCommandCommand command)
             => await Handle(command);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut("{cid}/proposals")]
+        public async Task<IActionResult> CreateProposal(string cid, CreateCommandProposalCommand command)
+        {
+            if (cid != command.CommandId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPatch("{cid}/proposals")]
+        public async Task<IActionResult> ApproveProposal(string cid, ApproveCommandProposalCommand command)
+        {
+            if (cid != command.CommandId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
     }
 }

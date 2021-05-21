@@ -7,31 +7,29 @@ using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Client.Application.Commands.Commands.CancelCommand
+namespace GoLocal.Artisan.Application.Commands.Commands.RejectCommand
 {
-    public class CancelCommandCommandHandler : AbstractRequestHandler<CancelCommandCommand>
+    public class RejectCommandCommandHandler : AbstractRequestHandler<RejectCommandCommand>
     {
         private readonly Context _context;
 
-        public CancelCommandCommandHandler(Context context)
+        public RejectCommandCommandHandler(Context context)
         {
             _context = context;
         }
 
-        public override async Task<Result> Handle(CancelCommandCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(RejectCommandCommand request, CancellationToken cancellationToken)
         {
-            Command command = await _context.Commands
-                .SingleOrDefaultAsync(m => m.Id == request.CommandId, cancellationToken);
+            Command command = await _context.Commands.SingleOrDefaultAsync(m => m.Id == request.CommandId, cancellationToken);
 
             if (command == null)
                 return NotFound<Command>(request.CommandId);
 
-            if (command.Status == CommandStatus.Rejected || 
-                command.Status == CommandStatus.Accepted ||
+            if (command.Status == CommandStatus.Rejected ||
                 command.Status == CommandStatus.Canceled)
                 return BadRequest($"You can't cancel this command. The status of the command was '{command.Status}'");
 
-            command.Status = CommandStatus.Canceled;
+            command.Status = CommandStatus.Rejected;
             
             _context.Commands.Update(command);
             await _context.SaveChangesAsync(cancellationToken);
