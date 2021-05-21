@@ -27,29 +27,33 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening
             Opening opening =
                 await _context.Openings.SingleOrDefaultAsync(m => m.Day == request.Day && m.ShopId == request.ShopId,
                     cancellationToken);
-
-            if (request.Evening.GetDifference() == request.Morning.GetDifference() &&
-                request.Evening.GetDifference() == TimeSpan.Zero)
+            
+            if (request.Evening.GetDifference() <= TimeSpan.Zero && request.Evening == request.Morning) 
+                // At this point, Zero for morning and zero for evening
+                // Means not opened
             {
-                if (opening is not null)
+                if (opening != null)
                 {
+                    // Day was stored, so we delete
                     _context.Openings.Remove(opening);
                 }
                 else
                 {
-                    return BadRequest("To add an opening, the shop have to be opened the morning or the evening");
+                    // Day doesn't exist, so nothing to do.
+                    return BadRequest($"No configuration found for {request.Day}");
                 }
             }
             else
             {
-                if (opening is null)
+                if (opening == null)
+                    // The configuration doesn't exist
                 {
                     opening = new Opening(shop, request.Day, request.Morning, request.Evening);
                     await _context.Openings.AddAsync(opening, cancellationToken);
                 }
                 else
                 {
-                    if (opening.Evening == request.Evening && opening.Morning == request.Morning)
+                    if (request.Evening.GetDifference() <= TimeSpan.Zero && request.Evening == request.Morning)
                         return Ok();
                     
                     opening.Evening = request.Evening;
@@ -60,7 +64,6 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening
             }
 
             await _context.SaveChangesAsync(cancellationToken);
-
             return Ok();
         }
         

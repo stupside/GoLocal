@@ -4,8 +4,8 @@ namespace GoLocal.Domain.ValueObjects
 {
     public class TimeRange
     {
-        public TimeSpan Max { get; set; }
-        public TimeSpan Min { get; set; }
+        public TimeSpan Max { get; }
+        public TimeSpan Min { get; }
 
         public TimeRange() {}
 
@@ -16,7 +16,7 @@ namespace GoLocal.Domain.ValueObjects
             Min = begin;
             Max = end;
         }
-        
+
         public TimeSpan GetDifference()
             => Max - Min;
     }

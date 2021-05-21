@@ -29,9 +29,10 @@ namespace GoLocal.Client.Application.Commands.Carts.AddCartPackage
             if (await _context.Services.AnyAsync(m => m.Id == request.ItemId, cancellationToken))
                 return NotFound<Item>(request.ItemId);
             
-            Package package = await _context.Packages.Include(m => m.Item).ThenInclude(m => m.Shop)
-                .SingleOrDefaultAsync(m => m.Id == request.PackageId &&
-                m.ItemId == request.ItemId &&
+            Package package = await _context.Packages
+                .Include(m => m.Item)
+                .ThenInclude(m => m.Shop)
+                .SingleOrDefaultAsync(m => m.Id == request.PackageId && m.ItemId == request.ItemId &&
                 m.Item.ShopId == request.ShopId, cancellationToken);
             
             if (package == null)

@@ -13,13 +13,15 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening
             RuleFor(m => m.Morning).ChildRules(m =>
             {
                 m.RuleFor(r => r.Max).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12));
-                m.RuleFor(r => r.Min).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12)).LessThanOrEqualTo(r => r.Max);
+                m.RuleFor(r => r.Min).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12))
+                    .LessThanOrEqualTo(r => r.Max);
             });
             
             RuleFor(m => m.Evening).ChildRules(m =>
             {
                 m.RuleFor(r => r.Max).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12));
-                m.RuleFor(r => r.Min).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12)).LessThanOrEqualTo(r => r.Max);
+                m.RuleFor(r => r.Min).InclusiveBetween(TimeSpan.Zero, TimeSpan.FromHours(12))
+                    .LessThanOrEqualTo(r => r.Max);
             });
         }
     }
