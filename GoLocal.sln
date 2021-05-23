@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Client.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Client.Api", "GoLocal.Client.Api\GoLocal.Client.Api.csproj", "{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Shared.Locate", "GoLocal.Shared.Locate\GoLocal.Shared.Locate.csproj", "{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,7 @@ Global
 		{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518} = {4E8750E4-BD2A-4033-9472-D63727B853E6}
 		{F1782B68-BD82-4380-8691-9C73D71047BC} = {4E8750E4-BD2A-4033-9472-D63727B853E6}
 		{4CA274AF-A905-4B7C-90C2-27456F1BCDF5} = {4E8750E4-BD2A-4033-9472-D63727B853E6}
+		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4} = {855D90DE-4A4F-47AF-AE10-02798BDA7B6E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE47B743-B13D-42A1-B2F7-82097C09B896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -125,5 +128,9 @@ Global
 		{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

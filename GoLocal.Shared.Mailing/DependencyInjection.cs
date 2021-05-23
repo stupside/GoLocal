@@ -10,7 +10,6 @@ namespace GoLocal.Shared.Mailing
     {
         public static void SetupMailing(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.Configure<EmailConfiguration>(m => configuration.GetSection(nameof(EmailConfiguration)).Bind(m));
             services.Configure<EmailConfiguration>(configuration.GetSection(nameof(EmailConfiguration)));
             services.AddScoped<IEmailService, EmailService>();
         }
