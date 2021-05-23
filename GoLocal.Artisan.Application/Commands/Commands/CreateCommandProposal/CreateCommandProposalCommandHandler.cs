@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
+using GoLocal.Domain.Enums;
 using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Accessor.Accessors;
 using GoLocal.Shared.Bus.Commons.Mediator;
@@ -23,12 +24,16 @@ namespace GoLocal.Artisan.Application.Commands.Commands.CreateCommandProposal
 
         public override async Task<Result<int>> Handle(CreateCommandProposalCommand request, CancellationToken cancellationToken)
         {
-            Command command = await _context.Commands.SingleOrDefaultAsync(m => m.Id == request.CommandId, cancellationToken);
+            Command command = await _context.Commands
+                .SingleOrDefaultAsync(m => m.Id == request.CommandId, cancellationToken);
 
             if (command == null)
                 return NotFound<Command>(request.CommandId);
+
+            if (command.Status != CommandStatus.Accepted)
+                return BadRequest($"The status of the command was {command.Status}");
             
-            if (await _context.CommandProposals.AnyAsync(m => m.Accepted && m.CommandId == request.CommandId,
+            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
                 cancellationToken))
                 return BadRequest("You can't change the specifications, One proposal have been validated");
 

@@ -1,27 +1,45 @@
-using System;
-using GoLocal.Shared.Bus.Commons.Filtering;
+using System.Collections.Generic;
+using FluentValidation;
 using GoLocal.Shared.Bus.Results.Pages;
 
 namespace GoLocal.Shared.Bus.Commons.Mediator
 {
-    public abstract class AbstractPagedRequest<TEntity, TResponse> : AbstractRequest<Page<TResponse>>, IFilter<TEntity>
+    public abstract class AbstractPagedRequest<TEntity, TResponse> : AbstractRequest<Page<TResponse>>
     {
+        
         public int Take { get; init; }
         public int Skip { get; init; }
-        public Search<TEntity> Search { get; init; }
-        public Order<TEntity> Order { get; init; }
+        
+        public Order Order { get; init; }
+        public IDictionary<string, string> Search { get; init; }
+
+        internal PageRequestConfiguration<TEntity> Configuration { get; }
 
         protected AbstractPagedRequest()
         {
-            Order = new Order<TEntity>();
-            Search = new Search<TEntity>();
+            Take = Take switch
+            {
+                < 10 => 10,
+                > 100 => 100,
+                _ => Take
+            };
+
+            Skip = Skip switch
+            {
+                < 0 => 0,
+                _ => Skip
+            };
+
+            Configuration = new PageRequestConfiguration<TEntity>();
+            
+            Build();
         }
 
-        protected void ConfigureOrder(Action<Order<TEntity>> configuration)
-            => configuration.Invoke(Order);
+        protected abstract void ConfigurePaging(PageRequestConfiguration<TEntity> paging);
         
-        protected void ConfigureSearch(Action<Search<TEntity>> configuration)
-            => configuration.Invoke(Search);
-        
+        private void Build()
+        {
+            ConfigurePaging(Configuration);
+        }
     }
 }

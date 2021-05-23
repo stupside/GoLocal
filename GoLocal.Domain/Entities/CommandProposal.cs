@@ -8,12 +8,12 @@ namespace GoLocal.Domain.Entities
         public int Id { get; set; }
         public float Price { get; set; }
         public string Specification { get; set; }
-        public bool Accepted { get; set; }
+        public bool Approved { get; set; }
         public DateTime Created { get; set; }
         
         public CommandProposal()
         {
-            Accepted = false;
+            Approved = false;
             Created = DateTime.UtcNow;
         }
         

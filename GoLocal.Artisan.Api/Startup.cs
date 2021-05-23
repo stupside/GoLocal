@@ -42,7 +42,7 @@ namespace GoLocal.Artisan.Api
             services.AddOpenIddict()
                 .AddValidation(m => {
                     m.SetIssuer("https://localhost:5000");
-                    m.AddAudiences("golocal.artisan.api");
+                    m.AddAudiences("artisan.api");
 
                     m.UseAspNetCore();
                     m.UseSystemNetHttp();

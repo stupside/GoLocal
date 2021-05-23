@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Infrastructure.Helpers;
@@ -23,13 +24,20 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
 
             var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
+            // TODO: Get from configuration
             await manager.AddClient(m => {
-                m.ClientId = "golocal.account";
+                m.ClientId = "golocal";
                 
                 m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
                 
                 m.RedirectUris.Add(new Uri("https://localhost:3000/authentication/silent_callback"));
                 m.RedirectUris.Add(new Uri("https://localhost:3000/authentication/callback"));
+                
+                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/callback"));
+                
+                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/silent_callback"));
+                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/callback"));
                 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
                 m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
@@ -42,104 +50,34 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
                 m.Permissions.Add(OpenIddictConstants.Permissions.Scopes.Roles);
 
                 m.Permissions.Add(OpenIddictConstants.Permissions.Prefixes.Scope + "account.api");
-
-                m.Requirements.Add(OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange);
-            }, cancellationToken);
-
-            await manager.AddClient(m => {
-                m.ClientId = "golocal.artisan";
-                
-                m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
-                
-                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("https://localhost:3002/authentication/callback"));
-                
-                
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Token);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.Password);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.AuthorizationCode);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.RefreshToken);
-                m.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.Code);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Scopes.Profile);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Scopes.Roles);
-
+                m.Permissions.Add(OpenIddictConstants.Permissions.Prefixes.Scope + "client.api");
                 m.Permissions.Add(OpenIddictConstants.Permissions.Prefixes.Scope + "artisan.api");
 
                 m.Requirements.Add(OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange);
             }, cancellationToken);
-            
-            await manager.AddClient(m => {
-                m.ClientId = "golocal.client";
 
-                m.PostLogoutRedirectUris.Add(new Uri("https://localhost:5000"));
-                
-                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/silent_callback"));
-                m.RedirectUris.Add(new Uri("https://localhost:3001/authentication/callback"));
-                
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Logout);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Token);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.Password);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.AuthorizationCode);
-                m.Permissions.Add(OpenIddictConstants.Permissions.GrantTypes.RefreshToken);
-                m.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.Code);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Scopes.Profile);
-                m.Permissions.Add(OpenIddictConstants.Permissions.Scopes.Roles);
-
-                m.Permissions.Add(OpenIddictConstants.Permissions.Prefixes.Scope + "client.api");
-
-                m.Requirements.Add(OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange);
-            }, cancellationToken);
-            
             await CreateScopesAsync(scope, cancellationToken);
         }
 
         private static async Task CreateScopesAsync(IServiceScope scope, CancellationToken cancellationToken)
         {
-            var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
-
-            if (await manager.FindByNameAsync("artisan.api", cancellationToken) == null)
+            HashSet<string> scopes = new HashSet<string>
             {
-                var descriptor = new OpenIddictScopeDescriptor
-                {
-                    Name = "artisan.api",
-                    Description = "API used by artisans",
-                    Resources =
-                    {
-                        "golocal.artisan.api"
-                    }
-                };
-
-                await manager.CreateAsync(descriptor, cancellationToken);
-            }
-
-            if (await manager.FindByNameAsync("client.api", cancellationToken) == null)
-            {
-                var descriptor = new OpenIddictScopeDescriptor
-                {
-                    Name = "client.api",
-                    Description = "API used by clients",
-                    Resources =
-                    {
-                        "golocal.client.api"
-                    }
-                };
-
-                await manager.CreateAsync(descriptor, cancellationToken);
-            }
+                "account.api",
+                "client.api",
+                "artisan.api"
+            };
             
-            if (await manager.FindByNameAsync("account.api", cancellationToken) == null)
+            var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
+            
+            foreach (string s in scopes)
             {
+                if (await manager.FindByNameAsync(s, cancellationToken) != null) continue;
+                
                 var descriptor = new OpenIddictScopeDescriptor
                 {
-                    Name = "account.api",
-                    Description = "API used by clients to manage their accounts",
-                    Resources =
-                    {
-                        "golocal.account.api"
-                    }
+                    Name = s,
+                    Resources = { s }
                 };
 
                 await manager.CreateAsync(descriptor, cancellationToken);

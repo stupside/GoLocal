@@ -42,7 +42,7 @@ namespace GoLocal.Client.Api
             services.AddOpenIddict()
                 .AddValidation(m => {
                     m.SetIssuer("https://localhost:5000");
-                    m.AddAudiences("golocal.client.api");
+                    m.AddAudiences("client.api");
 
                     m.UseAspNetCore();
                     m.UseSystemNetHttp();

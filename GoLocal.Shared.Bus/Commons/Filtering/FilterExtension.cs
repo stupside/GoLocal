@@ -1,35 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using System.Linq.Expressions;
+using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results.Pages;
 
 namespace GoLocal.Shared.Bus.Commons.Filtering
 {
     public static class FilterExtension
     {
-        public static IEnumerable<TEntity> ComputeOrder<TEntity>(this IEnumerable<TEntity> query, IFilter<TEntity> filter)
+        public static IEnumerable<TEntity> ApplyOrder<TEntity, TResponse>(this IEnumerable<TEntity> query, AbstractPagedRequest<TEntity, TResponse> request)
         {
-            return filter.Order.Direction == Order<TEntity>.Dir.Ascending 
-                ? query.OrderBy(filter.Order.GetMap())
-                : query.OrderByDescending(filter.Order.GetMap());
+            var selector = request.Configuration.GetMap(request.Order.Name).Compile();
+
+            return request.Order.Direction == Order.Dir.Ascending 
+                ? query.OrderBy(selector)
+                : query.OrderByDescending(selector);
         }
 
-        public static IQueryable<TEntity> ComputeLimit<TEntity>(this IQueryable<TEntity> query, IFilter<TEntity> filter)
-            => query.Skip(filter.Skip).Take(filter.Take);
+        public static IQueryable<TEntity> ApplyLimit<TEntity, TResponse>(this IQueryable<TEntity> query, AbstractPagedRequest<TEntity, TResponse> request)
+            => query.Skip(request.Skip).Take(request.Take);
 
-        public static IQueryable<TEntity> ComputeSearch<TEntity>(this IQueryable<TEntity> query,
-            IFilter<TEntity> filter) where TEntity : new()
+        public static IQueryable<TEntity> ApplySearch<TEntity, TResponse>(this IQueryable<TEntity> query, AbstractPagedRequest<TEntity, TResponse> request)
+            where TEntity : new()
         {
-
-            Type type = typeof(TEntity);
-
-            foreach (var (key, value) in filter.Search.Values)
+            foreach (var (key, value) in request.Search)
             {
-                TEntity test = new TEntity();
-                var t = filter.Search.GetMap(key)(test).ToString();
-                
-                query = query.Where(m => filter.Search.GetMap(key)(m).ToString() == value); // TODO: Fix
+                try
+                {
+                    var map = request.Configuration.GetMap(key);
+
+                    var body = map.Body;
+                    ParameterExpression parameter = map.Parameters[0];
+                    
+                    var lambda = Expression.Lambda<Func<TEntity, bool>>(
+                        Expression.Equal((UnaryExpression)body,Expression.Constant(value)), 
+                        parameter);
+
+                    query = query.Where(lambda);
+                }
+                catch (NotSupportedException)
+                {
+                }
             }
 
             return query;

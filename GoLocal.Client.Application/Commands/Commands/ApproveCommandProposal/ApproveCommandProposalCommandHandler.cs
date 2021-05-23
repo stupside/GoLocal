@@ -23,7 +23,7 @@ namespace GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal
 
         public override async Task<Result> Handle(ApproveCommandProposalCommand request, CancellationToken cancellationToken)
         {
-            if (await _context.CommandProposals.AnyAsync(m => m.Accepted && m.CommandId == request.CommandId,
+            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
                 cancellationToken))
                 return BadRequest("You can't change the specifications, One proposal have been validated");
             
@@ -33,7 +33,7 @@ namespace GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal
             if (proposal == null)
                 return NotFound<CommandProposal>(request.CommandProposalId);
 
-            if (proposal.Accepted)
+            if (proposal.Approved)
                 return BadRequest("This specification is already accepted");
 
             User user = await _user.GetUserAsync();
@@ -41,7 +41,7 @@ namespace GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal
             if (proposal.UserId == user.Id)
                 return BadRequest("You can't approve your own proposal");
 
-            proposal.Accepted = true;
+            proposal.Approved = true;
             
             _context.Update(proposal);
             await _context.SaveChangesAsync(cancellationToken);

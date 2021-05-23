@@ -1,24 +1,16 @@
 using GoLocal.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
+using GoLocal.Shared.Bus.Results.Pages;
 
 namespace GoLocal.Client.Application.Queries.Shops.GetShops
 {
     public class GetShopsQuery : AbstractPagedRequest<Shop, ShopDto>
     {
-        public GetShopsQuery()
+        protected override void ConfigurePaging(PageRequestConfiguration<Shop> paging)
         {
-            this.ConfigureSearch(m =>
-            {
-                m.MapFor("id", r => r.Id);
-                m.MapFor("name", r => r.Name);
-            });
-            
-            this.ConfigureOrder(m =>
-            {
-                m.MapFor("id", r => r.Id);
-                m.MapFor("name", r => r.Name);
-            });
+            paging.MapFor("id", r => r.Id);
+            paging.MapFor("name", r => r.Name);   
         }
     }
 }

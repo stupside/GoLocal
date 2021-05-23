@@ -26,10 +26,13 @@ namespace GoLocal.Artisan.Application.Commands.Commands.GenerateCommandInvoice
             if (command == null)
                 return NotFound<Command>(request.CommandId);
 
+            if (command.InvoiceId != 0)
+                return BadRequest("An invoice already exists for this command");
+
             CommandProposal proposal =
                 await _context.CommandProposals
                     .SingleOrDefaultAsync(
-                    m => m.Accepted && m.CommandId == request.CommandId, cancellationToken);
+                    m => m.Approved && m.CommandId == request.CommandId, cancellationToken);
 
             if (proposal == null)
                 return BadRequest("You can't generate an invoice for this command");

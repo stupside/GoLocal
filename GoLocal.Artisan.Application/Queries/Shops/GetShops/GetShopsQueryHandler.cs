@@ -38,8 +38,8 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .Where(m => m.UserId == user.Id)
-                .ComputeSearch(request)
-                .ComputeLimit(request)
+                .ApplySearch(request)
+                .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
 
             return Ok(shops.Adapt<List<ShopDto>>(), count);

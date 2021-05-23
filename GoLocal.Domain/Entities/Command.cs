@@ -30,7 +30,7 @@ namespace GoLocal.Domain.Entities
             CommandProposals = new List<CommandProposal>();
             CommandProposals.Add(new CommandProposal(this, user, price, specification));
             
-            Status = CommandStatus.PendingPrice;
+            Status = CommandStatus.Pending;
         }
 
         public string UserId { get; }

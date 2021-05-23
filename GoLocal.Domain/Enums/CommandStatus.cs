@@ -2,8 +2,7 @@ namespace GoLocal.Domain.Enums
 {
     public enum CommandStatus
     {
-        PendingSpecification,
-        PendingPrice,
+        Pending,
         Accepted,
         Rejected,
         Canceled
