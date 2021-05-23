@@ -1,6 +1,6 @@
-namespace GoLocal.Client.Application.Queries.Shops.GetShop.Models
+namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
 {
-    public class LocalisationDto
+    public class LocationDto
     {
         public string Street { get; init; }
         public string Zip { get; init; }

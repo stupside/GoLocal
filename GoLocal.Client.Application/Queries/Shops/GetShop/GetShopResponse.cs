@@ -9,7 +9,7 @@ namespace GoLocal.Client.Application.Queries.Shops.GetShop
         public int Id { get; init; }
         public string Name { get; init; }
         
-        public LocalisationDto Localisation { get; init; }
+        public LocationDto Location { get; init; }
         public ContactDto Contact { get; init; }
         
         public ICollection<ItemDto> Products { get; init; }

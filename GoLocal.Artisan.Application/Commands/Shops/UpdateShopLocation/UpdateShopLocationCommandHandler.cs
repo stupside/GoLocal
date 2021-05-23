@@ -12,21 +12,21 @@ using GoLocal.Shared.Mailing.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation
+namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
 {
-    public class UpdateShopLocalisationCommandHandler : AbstractRequestHandler<UpdateShopLocalisationCommand>
+    public class UpdateShopLocationCommandHandler : AbstractRequestHandler<UpdateShopLocationCommand>
     {
         private readonly Context _context;
         private readonly IEmailService _email;
         private readonly IUserAccessor<User> _user;
-        public UpdateShopLocalisationCommandHandler(Context context, IEmailService email, IUserAccessor<User> user)
+        public UpdateShopLocationCommandHandler(Context context, IEmailService email, IUserAccessor<User> user)
         {
             _context = context;
             _email = email;
             _user = user;
         }
         
-        public override async Task<Result> Handle(UpdateShopLocalisationCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateShopLocationCommand request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
             
@@ -34,7 +34,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
 
-            request.Adapt(shop.Localisation);
+            request.Adapt(shop.Location);
             
             _context.Shops.Update(shop);
             await _context.SaveChangesAsync(cancellationToken);

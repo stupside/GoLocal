@@ -4,7 +4,7 @@ using GoLocal.Artisan.Application.Commands.Shops.CreateShop;
 using GoLocal.Artisan.Application.Commands.Shops.DeleteShop;
 using GoLocal.Artisan.Application.Commands.Shops.UpdateShop;
 using GoLocal.Artisan.Application.Commands.Shops.UpdateShopContact;
-using GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation;
+using GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation;
 using GoLocal.Artisan.Application.Commands.Shops.UpdateShopOpening;
 using GoLocal.Artisan.Application.Queries.Shops.GetShop;
 using GoLocal.Artisan.Application.Queries.Shops.GetShops;
@@ -66,12 +66,12 @@ namespace GoLocal.Artisan.Api.Controllers
             => await Handle(command);
         
         /// <summary>
-        /// Update localisation information for the desired shop
+        /// Update the location of the desired shop
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPatch("localisation")]
-        public async Task<IActionResult> UpdateLocalisation(UpdateShopLocalisationCommand command)
+        [HttpPatch("location")]
+        public async Task<IActionResult> UpdateShopLocation(UpdateShopLocationCommand command)
             => await Handle(command);
         
         /// <summary>

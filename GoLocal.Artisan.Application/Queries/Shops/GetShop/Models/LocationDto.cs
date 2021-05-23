@@ -1,10 +1,7 @@
-using GoLocal.Shared.Bus.Commons.Mediator;
-
-namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation
+namespace GoLocal.Artisan.Application.Queries.Shops.GetShop.Models
 {
-    public class UpdateShopLocalisationCommand : AbstractRequest
+    public class LocationDto
     {
-        public int ShopId { get; init; }
         public string Street { get; init; }
         public string Zip { get; init; }
         public string Country { get; init; }

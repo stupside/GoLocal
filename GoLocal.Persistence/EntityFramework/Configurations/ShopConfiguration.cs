@@ -12,7 +12,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
 
             builder.HasIndex(m => m.Name).IsUnique();
 
-            builder.OwnsOne(m => m.Localisation, m =>
+            builder.OwnsOne(m => m.Location, m =>
             {
                 m.Property(r => r.Street).IsRequired();
                 m.Property(r => r.Zip).IsRequired();

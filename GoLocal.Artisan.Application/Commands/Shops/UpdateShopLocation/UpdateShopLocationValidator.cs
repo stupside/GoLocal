@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocalisation
+namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
 {
-    public class UpdateShopLocalisationValidator : AbstractValidator<UpdateShopLocalisationCommand>
+    public class UpdateShopLocationValidator : AbstractValidator<UpdateShopLocationCommand>
     {
-        public UpdateShopLocalisationValidator()
+        public UpdateShopLocationValidator()
         {
             RuleFor(m => m.ShopId).NotEmpty();
             RuleFor(m => m.Address).NotEmpty();

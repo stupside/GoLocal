@@ -1,6 +1,6 @@
 namespace GoLocal.Domain.ValueObjects
 {
-    public class Localisation
+    public class Location
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -11,6 +11,6 @@ namespace GoLocal.Domain.ValueObjects
         public string Address { get; set; }
         public string Region { get; set; }
         
-        public Localisation(){}
+        public Location(){}
     }
 }
