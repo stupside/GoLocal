@@ -23,7 +23,7 @@ namespace GoLocal.Identity.Api.Pages.Account
         
         public async Task<IActionResult> OnPost()
         {
-            var result = await _mediator.Send(Command);
+            var result = await _mediator.Send(Command.SetCallback(Url.PageLink(nameof(ResetPasswordConfirmation))));
             if (result.Status != ResultStatus.Ok)
                 return BadRequest(result.Message);
 

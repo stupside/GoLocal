@@ -10,5 +10,12 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmail
         {
             Email = email;
         }
+        
+        public string Callback { get; private set; }
+        public UpdateEmailCommand SetCallback(string url)
+        {
+            Callback = url;
+            return this;
+        }
     }
 }

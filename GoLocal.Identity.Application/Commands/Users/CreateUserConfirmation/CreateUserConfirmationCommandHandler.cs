@@ -19,6 +19,12 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation
         public override async Task<Result> Handle(CreateUserConfirmationCommand request, CancellationToken cancellationToken)
         {
             var user = await _user.FindByIdAsync(request.Uid);
+            if (user == null)
+                return BadRequest("Email confirmation failed");
+
+            if (user.EmailConfirmed)
+                return BadRequest("Email confirmation failed");
+            
             var result = await _user.ConfirmEmailAsync(user, request.Token);
 
             return !result.Succeeded ? BadRequest("Email confirmation failed") : Ok();

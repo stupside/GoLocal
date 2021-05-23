@@ -21,6 +21,11 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
             PasswordConfirmation = passwordConfirmation;
         }
         
-        
+        public string Callback { get; private set; }
+        public CreateUserCommand SetCallback(string url)
+        {
+            Callback = url;
+            return this;
+        }
     }
 }

@@ -27,9 +27,8 @@ namespace GoLocal.Identity.Api.Pages.Account
         public string Password { get; init; }
 
         public IActionResult OnGet()
-        {
-            return Page();
-        }
+            => Page();
+
         
         public async Task<IActionResult> OnPost()
         {

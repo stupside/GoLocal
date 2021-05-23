@@ -1,3 +1,5 @@
+using System.Net;
+using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
@@ -27,15 +29,10 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
                 return Ok();
 
             var token = await _user.GeneratePasswordResetTokenAsync(user);
+            token = WebUtility.UrlEncode(token);
+            
             await _email.SendAsync(new EmailMessage(user.Email, "Password reset", 
-                $@"
-Welcome {user.UserName},
-    You tried to reset your password.
-    To complete, please click on the link bellow :
-
-    ?token={token}
-
-"), cancellationToken);
+                $"Welcome {user.UserName},\nYou tried to reset your password.\nTo complete, please click : {request.Callback}?token={token}"), cancellationToken);
 
             return Ok();
         }

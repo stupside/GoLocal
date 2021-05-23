@@ -24,14 +24,10 @@ namespace GoLocal.Identity.Api.Controllers
 
         [HttpPatch("email")]
         public async Task<IActionResult> UpdateEmail(UpdateEmailCommand command)
-            => await this.Handle(command);
+            => await this.Handle(command.SetCallback(Url.Action("UpdateEmailConfirmation")));
 
-        [HttpGet("confirmation/register")]
-        public async Task<IActionResult> CreateUserConfirmation(string uid, string token)
-            => await this.Handle(new CreateUserConfirmationCommand(token, uid));
-        
         [HttpGet("confirmation/email")]
-        public async Task<IActionResult> ConfirmUpdateEmail(string email, string token)
-            => await this.Handle(new UpdateEmailConfirmationCommand(email, token));
+        public async Task<IActionResult> UpdateEmailConfirmation(string uid, string email, string token)
+            => await this.Handle(new UpdateEmailConfirmationCommand(uid, email, token));
     }
 }

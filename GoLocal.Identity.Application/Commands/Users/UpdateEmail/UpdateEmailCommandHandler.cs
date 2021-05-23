@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Application.Commons.Accessor;
@@ -24,19 +25,13 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmail
             User user = await _user.GetUserAsync();
 
             string token = await _user.Manager.GenerateChangeEmailTokenAsync(user, request.Email);
+            token = WebUtility.UrlEncode(token);
+            
             await _email.SendAsync(new EmailMessage(user.Email, "Email reset", 
-                $@"
-Welcome {user.UserName},
-    You tried to change your email.
-    To complete, please click on the link bellow :
-
-    ?token={token}&email={request.Email}
-
-"), cancellationToken);
+                $"Welcome {user.UserName},\nYou tried to change your email.\nTo complete, please click : {request.Callback}?token={token}&email={request.Email}"), cancellationToken);
 
             await _user.Manager.UpdateSecurityStampAsync(user);
 
-            
             return Ok();
         }
     }

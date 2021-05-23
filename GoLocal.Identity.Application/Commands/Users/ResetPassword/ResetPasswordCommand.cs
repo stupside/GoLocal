@@ -10,5 +10,12 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
         {
             Email = email;
         }
+        
+        public string Callback { get; private set; }
+        public ResetPasswordCommand SetCallback(string url)
+        {
+            Callback = url;
+            return this;
+        }
     }
 }

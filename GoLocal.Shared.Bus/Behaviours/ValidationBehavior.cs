@@ -42,7 +42,7 @@ namespace GoLocal.Shared.Bus.Behaviours
             if (response == null)
                 throw new NullReferenceException();
 
-            response.Errors = new List<object>(failures.Select(m => m.ErrorMessage));
+            response.Errors = new List<object>(failures.Select(m => new { m.ErrorMessage, m.PropertyName, m.AttemptedValue }));
             response.Status = ResultStatus.BadRequest;
 
             return response;

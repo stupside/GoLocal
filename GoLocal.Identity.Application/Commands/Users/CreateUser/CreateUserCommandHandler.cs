@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
@@ -30,17 +32,10 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
                 return BadRequest(string.Join(',', result.Errors.SelectMany(m => m.Description)));
             
             var token = await _user.GenerateEmailConfirmationTokenAsync(user);
-            await _email.SendAsync(new EmailMessage(user.Email, "Email Confirmation", 
-                $@"
-Welcome {user.UserName},
-    Thanks for your registering to our platform.
-    To complete your registration, please click on the link bellow :
-
-    ?token={token}&uid={user.Id}
-
-"), cancellationToken);
+            token = WebUtility.UrlEncode(token);
             
-            await _user.UpdateSecurityStampAsync(user);
+            await _email.SendAsync(new EmailMessage(user.Email, "Email Confirmation", 
+                $"Welcome {user.UserName},\nTo complete your registration, please click : {request.Callback}?token={token}&uid={user.Id}"), cancellationToken);
             
             return Ok(user.Id);
         }

@@ -33,7 +33,7 @@ namespace GoLocal.Shared.Bus.Commons.Mediator
         protected Result<TResponse> Ok(TResponse entity)
             => ResultFactory.Ok(entity);
 
-        protected Result<TResponse> BadRequest(string message, List<object> errors = null)
+        protected Result<TResponse> BadRequest(string message = default, List<object> errors = null)
             => ResultFactory.BadRequest<TResponse>(message, errors);
 
         protected Result<TResponse> Unauthorized()

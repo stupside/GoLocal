@@ -1,3 +1,4 @@
+using System.Net;
 using GoLocal.Shared.Bus.Commons.Mediator;
 
 namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation

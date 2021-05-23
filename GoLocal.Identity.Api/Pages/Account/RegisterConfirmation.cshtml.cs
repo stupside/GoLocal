@@ -28,7 +28,7 @@ namespace GoLocal.Identity.Api.Pages.Account
             if (result.Status != ResultStatus.Ok)
                 return BadRequest(result.Message);
 
-            return RedirectToPage();
+            return Page();
         }
     }
 }

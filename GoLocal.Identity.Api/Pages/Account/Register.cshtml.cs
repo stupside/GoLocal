@@ -24,10 +24,11 @@ namespace GoLocal.Identity.Api.Pages.Account
 
         public async Task<IActionResult> OnPost()
         {
-            var result = await _mediator.Send(Command);
+            var result = await _mediator.Send(Command.SetCallback(Url.PageLink(nameof(RegisterConfirmation))));
+            
             if (result.Status != ResultStatus.Ok)
                 return RedirectToPage();
-            
+
             return RedirectToPage(nameof(Login), new { ReturnUrl });
         }
     }
