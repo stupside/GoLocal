@@ -29,12 +29,6 @@ namespace GoLocal.Shared.Bus.Results
     public abstract class AbstractResult<TEntity> : AbstractResult
         where TEntity : AbstractResult<TEntity>
     {
-        public TEntity WithError(object error)
-        {
-            Errors.Add(error);
-            return (TEntity)this;
-        }
-        
         public TEntity WithErrors(IEnumerable<object> errors)
         {
             if(errors != null)

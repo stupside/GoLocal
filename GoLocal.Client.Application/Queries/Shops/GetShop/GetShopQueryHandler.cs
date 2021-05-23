@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Client.Application.Queries.Shops.GetShop
 {
-    public class GetShopCommandHandler : AbstractRequestHandler<GetShopQuery, GetShopResponse>
+    public class GetShopQueryHandler : AbstractRequestHandler<GetShopQuery, GetShopResponse>
     {
         private readonly Context _context;
 
-        public GetShopCommandHandler(Context context)
+        public GetShopQueryHandler(Context context)
         {
             _context = context;
         }

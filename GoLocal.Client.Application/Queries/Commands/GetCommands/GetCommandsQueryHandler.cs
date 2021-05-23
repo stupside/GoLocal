@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
+using GoLocal.Client.Application.Queries.Commands.GetCommands.Models;
+using GoLocal.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence.EntityFramework;
@@ -14,33 +15,31 @@ using GoLocal.Shared.Bus.Results.Pages;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
+namespace GoLocal.Client.Application.Queries.Commands.GetCommands
 {
-    public class GetShopsQueryHandler : AbstractPagedRequestHandler<GetShopsQuery, ShopDto>
+    public class GetCommandsQueryHandler : AbstractPagedRequestHandler<GetCommandsQuery, CommandDto>
     {
         private readonly Context _context;
         private readonly IUserAccessor<User> _user;
 
-        public GetShopsQueryHandler(IUserAccessor<User> user, Context context)
+        public GetCommandsQueryHandler(Context context, IUserAccessor<User> user)
         {
-            _user = user;
             _context = context;
+            _user = user;
         }
 
-        public override async Task<Result<Page<ShopDto>>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
+        public override async Task<Result<Page<CommandDto>>> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
-
-            int count = await _context.Shops
-                .CountAsync(m => m.UserId == user.Id, cancellationToken);
-
-            IEnumerable<Shop> shops = await _context.Shops
+            int count = await _context.Commands.CountAsync(m => m.UserId == user.Id, cancellationToken);
+            
+            List<Command> commands = await _context.Commands
                 .Where(m => m.UserId == user.Id)
                 .ApplySearch(request)
                 .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
-
-            return Ok(shops.Adapt<List<ShopDto>>(), count);
+            
+            return Ok(commands.Adapt<List<CommandDto>>(), count);      
         }
     }
 }

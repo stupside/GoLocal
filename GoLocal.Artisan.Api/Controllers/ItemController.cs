@@ -4,7 +4,6 @@ using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Items.CreateItem;
 using GoLocal.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Artisan.Application.Commands.Items.UpdateItem;
-using GoLocal.Artisan.Application.Queries.Items.GetItem;
 using GoLocal.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +16,6 @@ namespace GoLocal.Artisan.Api.Controllers
         public ItemController(IMediator mediator) : base(mediator)
         {
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sid"></param>
-        /// <param name="iid"></param>
-        /// <returns></returns>
-        [HttpGet("{iid:int}")]
-        public async Task<IActionResult> Get(int sid, int iid)
-            => await Handle(new GetItemQuery(sid, iid));
         
         /// <summary>
         /// 
@@ -86,7 +75,6 @@ namespace GoLocal.Artisan.Api.Controllers
         /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         [HttpDelete("{iid:int}")]
         public async Task<IActionResult> Delete(int sid, int iid, DeleteItemCommand command)
         {

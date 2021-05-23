@@ -7,14 +7,7 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShops.Models
     {
         public int Id { get; init; }
         public string Name { get; init; }
-        
         public LocationDto Location { get; init; }
-        public ContactDto Contact { get; init; }
-
-        public ICollection<OpeningDto> Openings { get; init; }
-        
-        public UserDto User { get; init; }
-        
         public DateTime Creation { get; init; }
     }
 }

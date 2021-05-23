@@ -12,7 +12,8 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
 
             builder.HasIndex(m => new {m.UserId, m.PackageId});
 
-            builder.Property(m => m.Specification).IsRequired();
+            builder.Property(m => m.Price);
+            builder.Property(m => m.Specification);
             builder.Property(m => m.Status).IsRequired();
 
             builder.HasOne(m => m.Package)
