@@ -106,7 +106,6 @@ namespace GoLocal.Identity.Api.Controllers
             return SignOut(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
         
-        [Authorize]
         [HttpGet("userinfo")]
         public async Task<IActionResult> UserInfo()
         {

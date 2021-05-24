@@ -53,7 +53,7 @@ namespace GoLocal.Artisan.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Artisan.Api", Version = "v1"});
-                
+                c.CustomSchemaIds(x => x.FullName);
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,

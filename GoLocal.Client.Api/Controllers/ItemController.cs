@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using GoLocal.Client.Api.Controllers.Base;
 using GoLocal.Client.Application.Queries.Items.GetItem;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers
@@ -19,6 +20,7 @@ namespace GoLocal.Client.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="iid"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(GetItemResponse), StatusCodes.Status200OK)]
         [HttpGet("{iid:int}")]
         public async Task<IActionResult> Get(int sid, int iid)
             => await Handle(new GetItemQuery(sid, iid));

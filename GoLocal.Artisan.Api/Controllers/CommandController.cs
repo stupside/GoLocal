@@ -3,6 +3,7 @@ using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Commands.GenerateCommandInvoice;
 using GoLocal.Artisan.Application.Queries.Commands.GetCommands;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
@@ -19,6 +20,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPost]
         public async Task<IActionResult> Get(GetCommandsQuery query)
             => await Handle(query);

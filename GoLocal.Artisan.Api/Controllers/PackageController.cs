@@ -2,7 +2,9 @@ using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Packages.CreatePackage;
 using GoLocal.Artisan.Application.Commands.Packages.UpdatePackageStocks;
+using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
@@ -21,6 +23,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPut]
         public async Task<IActionResult> Create(int sid, int iid, CreatePackageCommand command)
         {

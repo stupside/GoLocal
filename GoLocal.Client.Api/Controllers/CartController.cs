@@ -3,6 +3,7 @@ using GoLocal.Client.Api.Controllers.Base;
 using GoLocal.Client.Application.Commands.Carts.AddCartPackage;
 using GoLocal.Client.Application.Commands.Carts.RemoveCartPackage;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers
@@ -20,6 +21,7 @@ namespace GoLocal.Client.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPut("packages")]
         public async Task<IActionResult> Add(int sid, AddCartPackageCommand command)
         {

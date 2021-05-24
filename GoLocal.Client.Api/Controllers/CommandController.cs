@@ -4,6 +4,7 @@ using GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal;
 using GoLocal.Client.Application.Commands.Commands.CreateCommand;
 using GoLocal.Client.Application.Commands.Commands.CreateCommandProposal;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers
@@ -20,6 +21,7 @@ namespace GoLocal.Client.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [HttpPut]
         public async Task<IActionResult> Create(CreateCommandCommand command)
             => await Handle(command);
@@ -30,6 +32,7 @@ namespace GoLocal.Client.Api.Controllers
         /// <param name="cid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPut("{cid}/proposals")]
         public async Task<IActionResult> CreateProposal(string cid, CreateCommandProposalCommand command)
         {

@@ -6,6 +6,7 @@ using GoLocal.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Artisan.Application.Commands.Items.UpdateItem;
 using GoLocal.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Artisan.Api.Controllers
@@ -23,6 +24,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPut("products")]
         public async Task<IActionResult> CreateProduct(int sid, CreateItemCommand command)
         {
@@ -39,6 +41,7 @@ namespace GoLocal.Artisan.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPut("services")]
         public async Task<IActionResult> CreateService(int sid, CreateItemCommand command)
         {

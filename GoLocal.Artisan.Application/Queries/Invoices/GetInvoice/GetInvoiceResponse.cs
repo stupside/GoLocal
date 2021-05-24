@@ -9,7 +9,7 @@ namespace GoLocal.Artisan.Application.Queries.Invoices.GetInvoice
     {
         public int Id { get; set; }
 
-        public Shop Shop { get; init; }
+        public ShopDto Shop { get; init; }
         public ICollection<InvoiceItemDto> InvoiceItems { get; init; }
         public UserDto User { get; init; }
         
