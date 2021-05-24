@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoLocal.Identity.Api.Controllers
 {
     [Authorize]
-    [Route("/users")]
-    public class UserController : ApiController
+    [Route("/security")]
+    public class SecurityController : ApiController
     {
-        public UserController(IMediator mediator) : base(mediator)
+        public SecurityController(IMediator mediator) : base(mediator)
         {
         }
 

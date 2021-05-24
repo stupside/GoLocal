@@ -13,7 +13,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
         {
         }
 
-        public CreateUserCommand(string returnUrl, string email, string username, string password, string passwordConfirmation)
+        public CreateUserCommand(string email, string username, string password, string passwordConfirmation)
         {
             Email = email;
             Username = username;

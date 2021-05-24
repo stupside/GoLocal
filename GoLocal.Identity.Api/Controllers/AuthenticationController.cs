@@ -86,7 +86,18 @@ namespace GoLocal.Identity.Api.Controllers
 
             return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
+        
+        [HttpPost("token")]
+        public async Task<IActionResult> Exchange()
+        {
+            var request = HttpContext.GetOpenIddictServerRequest() ??
+                throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
 
+            return await PasswordFlow(request);
+
+            //return await CodeFlow(request);
+        }
+        
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
@@ -97,20 +108,6 @@ namespace GoLocal.Identity.Api.Controllers
                 {
                     RedirectUri = "/"
                 });
-        }
-
-        [HttpPost("token")]
-        public async Task<IActionResult> Exchange()
-        {
-            var request = HttpContext.GetOpenIddictServerRequest() ??
-                throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
-
-            if (request.IsPasswordGrantType())
-            {
-                return await this.PasswordFlow(request);
-            }
-
-            return await this.CodeFlow(request);
         }
         
         [HttpGet("userinfo")]
