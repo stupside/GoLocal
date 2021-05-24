@@ -23,7 +23,6 @@ namespace GoLocal.Identity.Infrastructure.Commons.Oidc
             using var scope = _provider.CreateScope();
 
             var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
-
             // TODO: Get from configuration
             await manager.AddClient(m => {
                 m.ClientId = "golocal";

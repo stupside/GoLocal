@@ -9,6 +9,7 @@ using GoLocal.Identity.Domain.Entities;
 using GoLocal.Identity.Infrastructure.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -102,14 +103,10 @@ namespace GoLocal.Identity.Api.Controllers
         public async Task<IActionResult> Logout()
         {
             await _sign.SignOutAsync();
-            return SignOut(
-                authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                properties: new AuthenticationProperties
-                {
-                    RedirectUri = "/"
-                });
+            return SignOut(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
         
+        [Authorize]
         [HttpGet("userinfo")]
         public async Task<IActionResult> UserInfo()
         {
@@ -173,7 +170,7 @@ namespace GoLocal.Identity.Api.Controllers
         private async Task<IActionResult> PasswordFlow(OpenIddictRequest request)
         {
             if(!request.IsPasswordGrantType()) 
-                throw new NotImplementedException("The specified grant type is not implemented.");
+                return BadRequest("The specified grant type is not implemented.");
             
             var user = await _user.FindByNameAsync(request.Username);
             if (user == null)
@@ -181,29 +178,37 @@ namespace GoLocal.Identity.Api.Controllers
                 var properties = new AuthenticationProperties(new Dictionary<string, string>
                 {
                     [OpenIddictServerAspNetCoreConstants.Properties.Error] = OpenIddictConstants.Errors.InvalidGrant,
-                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                        "The username/password couple is invalid."
+                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The username/password couple is invalid"
                 });
 
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
 
+            if (!user.EmailConfirmed)
+            {
+                var properties = new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = OpenIddictConstants.Errors.InvalidGrant,
+                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "Email not verified"
+                });
+                return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+            }
+
             // Validate the username/password parameters and ensure the account is not locked out.
-            var result = await _sign.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
+            var result = await _sign.CheckPasswordSignInAsync(user, request.Password, true);
             if (!result.Succeeded)
             {
                 var properties = new AuthenticationProperties(new Dictionary<string, string>
                 {
                     [OpenIddictServerAspNetCoreConstants.Properties.Error] = OpenIddictConstants.Errors.InvalidGrant,
                     [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                        "The username/password couple is invalid."
+                        "The username/password couple is invalid"
                 });
 
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
-            
-            var principal = await _sign.CreateUserPrincipalAsync(user);
 
+            var principal = await _sign.CreateUserPrincipalAsync(user);
             principal.SetScopes(request.GetScopes());
             principal.SetResources(await _scope.ListResourcesAsync(request.GetScopes()).ToListAsync());
             

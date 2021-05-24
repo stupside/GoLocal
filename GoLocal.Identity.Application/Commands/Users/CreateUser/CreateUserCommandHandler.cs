@@ -29,7 +29,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
             
             var result = await _user.CreateAsync(user, request.Password);
             if (!result.Succeeded)
-                return BadRequest(string.Join(',', result.Errors.SelectMany(m => m.Description)));
+                return BadRequest(string.Join(',', result.Errors.Select(m => m.Description)));
             
             var token = await _user.GenerateEmailConfirmationTokenAsync(user);
             token = WebUtility.UrlEncode(token);

@@ -5,8 +5,6 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
 {
     public class ResetPasswordConfirmationCommand : AbstractRequest
     {
-        public string Email { get; init; }
-        public string Token { get; init; }
         public string OldPassword { get; init; }
         public string NewPassword { get; init; }
         public string NewPasswordConfirmation { get; init; }
@@ -15,13 +13,18 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
         {
         }
 
-        public ResetPasswordConfirmationCommand(string email, string token, string oldPassword, string newPassword, string newPasswordConfirmation)
+        public string Email { get; private set; }
+        public ResetPasswordConfirmationCommand WithEmail(string email)
         {
             Email = email;
+            return this;
+        }
+        
+        public string Token { get; private set; }
+        public ResetPasswordConfirmationCommand WithToken(string token)
+        {
             Token = token;
-            OldPassword = oldPassword;
-            NewPassword = newPassword;
-            NewPasswordConfirmation = newPasswordConfirmation;
+            return this;
         }
     }
 }

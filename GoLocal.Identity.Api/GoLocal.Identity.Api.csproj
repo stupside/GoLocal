@@ -18,4 +18,16 @@
       <ProjectReference Include="..\GoLocal.Identity.Infrastructure\GoLocal.Identity.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Account\LoginTfa.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Account\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Account\RegisterConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Account\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Account\ResetPasswordConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+
 </Project>

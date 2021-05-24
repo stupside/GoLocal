@@ -18,6 +18,6 @@ namespace GoLocal.Domain.ValueObjects
         }
 
         public TimeSpan GetDifference()
-            => Max - Min;
+            => Max.Subtract(Min);
     }
 }

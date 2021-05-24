@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using GoLocal.Identity.Api.Controllers.Commons;
-using GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation;
 using GoLocal.Identity.Application.Commands.Users.UpdateEmail;
 using GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation;
 using GoLocal.Identity.Application.Commands.Users.UpdatePassword;
@@ -20,14 +19,14 @@ namespace GoLocal.Identity.Api.Controllers
 
         [HttpPatch("password")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command)
-            => await this.Handle(command);
+            => await Handle(command);
 
         [HttpPatch("email")]
         public async Task<IActionResult> UpdateEmail(UpdateEmailCommand command)
-            => await this.Handle(command.SetCallback(Url.Action("UpdateEmailConfirmation")));
+            => await Handle(command.SetCallback(Url.Action("UpdateEmailConfirmation")));
 
         [HttpGet("confirmation/email")]
         public async Task<IActionResult> UpdateEmailConfirmation(string uid, string email, string token)
-            => await this.Handle(new UpdateEmailConfirmationCommand(uid, email, token));
+            => await Handle(new UpdateEmailConfirmationCommand(uid, email, token));
     }
 }

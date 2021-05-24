@@ -15,7 +15,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
             builder.HasOne(m => m.User)
                 .WithMany()
                 .HasForeignKey(m => m.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

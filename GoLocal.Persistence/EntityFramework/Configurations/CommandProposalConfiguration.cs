@@ -10,13 +10,13 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
         {
             builder.HasKey(m => m.Id);
 
+            builder.Property(m => m.Specification).IsRequired();
+            builder.Property(m => m.Price).IsRequired();
+            
             builder.HasOne(m => m.User)
                 .WithMany()
                 .HasForeignKey(m => m.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
-            builder.Property(m => m.Specification).IsRequired();
-            builder.Property(m => m.Price).IsRequired();
         }
     }
 }

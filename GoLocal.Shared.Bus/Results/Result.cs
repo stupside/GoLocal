@@ -32,8 +32,5 @@ namespace GoLocal.Shared.Bus.Results
             _entity = entity;
             return this;
         }
-        
-        public Result ToResult()
-            => new Result().WithMessage(Message).WithStatus(Status).WithErrors(Errors);
     }
 }
