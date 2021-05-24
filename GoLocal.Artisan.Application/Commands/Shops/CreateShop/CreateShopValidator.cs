@@ -12,7 +12,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop
                 m.RuleFor(r => r.Email).NotEmpty().EmailAddress();
                 m.RuleFor(r => r.Phone).NotEmpty();
             });
-            RuleFor(m => m.Localisation).ChildRules(m =>
+            RuleFor(m => m.Location).ChildRules(m =>
             {
                 m.RuleFor(r => r.Address).NotEmpty();
                 m.RuleFor(r => r.City).NotEmpty();

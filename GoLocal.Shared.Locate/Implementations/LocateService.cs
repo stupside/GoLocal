@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Web;
 using GoLocal.Shared.Locate.Configuration;
@@ -12,25 +14,28 @@ namespace GoLocal.Shared.Locate.Implementations
     public class LocateService : ILocateService
     {
         private readonly LocateConfiguration _configuration;
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _client;
         
         public LocateService(IOptions<LocateConfiguration> configuration)
         {
             _configuration = configuration.Value;
-            _httpClient = new HttpClient();
+
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(_configuration.Url)
+            };
         }
 
-        public async Task<Place> GetPosition(string query, int limit = 1)
+        public async Task<Place> GetPosition(params string[] query)
         {
-            string url = $"{_configuration.Url}/mapbox.places/{HttpUtility.HtmlEncode(query)}.json?access_token={_configuration.Token}&limit={limit}";
+            string url = $"mapbox.places/{HttpUtility.HtmlEncode(string.Join(' ', query))}.json?access_token={_configuration.Token}&limit={1}";
             
-            var response = await _httpClient.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                var result= response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Place>(result);
-            }
-            return null;
+            var response = await _client.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            string body = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Place>(body);
         }
     }
 }

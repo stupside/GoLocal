@@ -1,6 +1,6 @@
 namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop.Models
 {
-    public class LocalisationDto
+    public class LocationDto
     {
         public string Street { get; init; }
         public string Zip { get; init; }
