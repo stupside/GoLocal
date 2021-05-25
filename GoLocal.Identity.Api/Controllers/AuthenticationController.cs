@@ -171,7 +171,7 @@ namespace GoLocal.Identity.Api.Controllers
                 return BadRequest("The specified grant type is not implemented.");
             
             var user = await _user.FindByNameAsync(request.Username);
-            if (user == null)
+            if (user == null || !await _sign.CanSignInAsync(user))
             {
                 var properties = new AuthenticationProperties(new Dictionary<string, string>
                 {
@@ -181,16 +181,7 @@ namespace GoLocal.Identity.Api.Controllers
 
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
-
-            if (!user.EmailConfirmed)
-            {
-                var properties = new AuthenticationProperties(new Dictionary<string, string>
-                {
-                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = OpenIddictConstants.Errors.InvalidGrant,
-                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "Email not verified"
-                });
-                return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-            }
+                
 
             // Validate the username/password parameters and ensure the account is not locked out.
             var result = await _sign.CheckPasswordSignInAsync(user, request.Password, true);
