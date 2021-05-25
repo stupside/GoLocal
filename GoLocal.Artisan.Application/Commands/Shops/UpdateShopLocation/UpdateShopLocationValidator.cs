@@ -12,7 +12,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
             RuleFor(m => m.Country).NotEmpty();
             RuleFor(m => m.Region).NotEmpty();
             RuleFor(m => m.Street).NotEmpty();
-            RuleFor(m => m.Zip).NotEmpty();
+            RuleFor(m => m.PostCode).NotEmpty();
         }
     }
 }

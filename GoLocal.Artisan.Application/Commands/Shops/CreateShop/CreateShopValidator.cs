@@ -19,7 +19,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop
                 m.RuleFor(r => r.Country).NotEmpty();
                 m.RuleFor(r => r.Region).NotEmpty();
                 m.RuleFor(r => r.Street).NotEmpty();
-                m.RuleFor(r => r.Zip).NotEmpty();
+                m.RuleFor(r => r.PostCode).NotEmpty();
             });
         }
     }

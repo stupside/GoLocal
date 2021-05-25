@@ -15,7 +15,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations
             builder.OwnsOne(m => m.Location, m =>
             {
                 m.Property(r => r.Street).IsRequired();
-                m.Property(r => r.Zip).IsRequired();
+                m.Property(r => r.PostCode).IsRequired();
                 m.Property(r => r.Country).IsRequired();
                 m.Property(r => r.City).IsRequired();
                 m.Property(r => r.Address).IsRequired();

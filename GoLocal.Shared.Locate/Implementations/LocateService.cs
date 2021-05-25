@@ -5,6 +5,7 @@ using System.Web;
 using GoLocal.Shared.Locate.Configuration;
 using GoLocal.Shared.Locate.Interfaces;
 using GoLocal.Shared.Locate.Models;
+using GoLocal.Shared.Locate.Models.Search;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 

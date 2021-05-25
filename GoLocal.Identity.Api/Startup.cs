@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using GoLocal.Identity.Application;
 using GoLocal.Identity.Infrastructure;
 using Microsoft.AspNetCore.Builder;

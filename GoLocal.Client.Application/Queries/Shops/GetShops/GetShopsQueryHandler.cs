@@ -5,14 +5,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
-using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Bus.Results.Pages;
 using GoLocal.Shared.Locate.Interfaces;
 using GoLocal.Shared.Locate.Models;
+using GoLocal.Shared.Locate.Models.Search;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Context = GoLocal.Persistence.EntityFramework.Context;
 
 namespace GoLocal.Client.Application.Queries.Shops.GetShops
 {

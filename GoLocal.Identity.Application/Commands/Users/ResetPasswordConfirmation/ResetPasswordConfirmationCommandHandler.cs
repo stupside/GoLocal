@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;
@@ -25,9 +26,9 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
             if (await _user.CheckPasswordAsync(user, request.OldPassword))
                 return Ok();
 
-            var result = await _user.ResetPasswordAsync(user, request.Token, request.NewPassword);
+            var result = await _user.ResetPasswordAsync(user, WebUtility.UrlDecode(request.Token), request.NewPassword);
 
-            return !result.Succeeded ? BadRequest("Password reset failed") : Ok();
+            return result.Succeeded ? Ok() : BadRequest("Password reset failed");
         }
     }
 }

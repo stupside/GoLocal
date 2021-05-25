@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using GoLocal.Shared.Locate.Models;
+using GoLocal.Shared.Locate.Models.Search;
 
 namespace GoLocal.Shared.Locate.Interfaces
 {

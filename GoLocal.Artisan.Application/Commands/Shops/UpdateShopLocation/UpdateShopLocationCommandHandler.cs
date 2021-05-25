@@ -4,16 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
-using GoLocal.Persistence.EntityFramework;
 using GoLocal.Shared.Accessor.Accessors;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Locate.Interfaces;
 using GoLocal.Shared.Locate.Models;
+using GoLocal.Shared.Locate.Models.Search;
 using GoLocal.Shared.Mailing.Commons.Models;
 using GoLocal.Shared.Mailing.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Context = GoLocal.Persistence.EntityFramework.Context;
 
 namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
 {
@@ -39,7 +40,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
             
-            Place place = await _locate.GetPosition(request.Address, request.Street, request.City, request.Zip,
+            Place place = await _locate.GetPosition(request.Address, request.Street, request.City, request.PostCode,
                 request.Country);
             
             if (place == null || !place.Features.Any())
@@ -47,10 +48,7 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
             
             Feature feature = place.Features.First();
             
-            request.Adapt(shop.Location);
-            
-            shop.Location.Longitude = feature.Longitude;
-            shop.Location.Latitude = feature.Latitude;
+            feature.Adapt(shop.Location);
             
             _context.Shops.Update(shop);
             await _context.SaveChangesAsync(cancellationToken);

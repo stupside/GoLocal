@@ -32,6 +32,8 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
             
             await _email.SendAsync(new EmailMessage(user.Email, "Password reset", 
                 $"Welcome {user.UserName},\nYou tried to reset your password.\nTo complete, please click : {request.Callback}?token={token}"), cancellationToken);
+            
+            await _user.UpdateSecurityStampAsync(user);
 
             return Ok();
         }
