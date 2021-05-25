@@ -7,10 +7,13 @@ namespace GoLocal.Client.Application.Queries.Shops.GetShops
 {
     public class GetShopsQuery : AbstractPagedRequest<Shop, ShopDto>
     {
+        public int Range { get; init; }
+        public string Location { get; init; }
+        public string Name { get; init; }
+        
         protected override void ConfigurePaging(PageRequestConfiguration<Shop> paging)
         {
-            paging.MapFor("id", r => r.Id);
-            paging.MapFor("name", r => r.Name);   
+            paging.MapFor("name", r => r.Name);
         }
     }
 }

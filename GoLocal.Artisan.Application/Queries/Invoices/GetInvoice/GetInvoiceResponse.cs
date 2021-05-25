@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using GoLocal.Artisan.Application.Queries.Invoices.GetInvoice.Models;
-using GoLocal.Domain.Entities;
 
 namespace GoLocal.Artisan.Application.Queries.Invoices.GetInvoice
 {

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Packages.CreatePackage;
 using GoLocal.Artisan.Application.Commands.Packages.UpdatePackageStocks;
-using GoLocal.Artisan.Application.Queries.Shops.GetShops.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

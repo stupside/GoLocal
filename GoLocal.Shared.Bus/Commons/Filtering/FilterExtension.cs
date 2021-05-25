@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results.Pages;
 
@@ -21,6 +19,7 @@ namespace GoLocal.Shared.Bus.Commons.Filtering
         public static IQueryable<TEntity> ApplyLimit<TEntity, TResponse>(this IQueryable<TEntity> query, AbstractPagedRequest<TEntity, TResponse> request)
             => query.Skip(request.Skip).Take(request.Take);
 
+        /*
         public static IQueryable<TEntity> ApplySearch<TEntity, TResponse>(this IQueryable<TEntity> query, AbstractPagedRequest<TEntity, TResponse> request)
             where TEntity : new()
         {
@@ -46,5 +45,6 @@ namespace GoLocal.Shared.Bus.Commons.Filtering
 
             return query;
         }
+        */
     }
 }

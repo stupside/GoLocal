@@ -9,6 +9,8 @@ namespace GoLocal.Client.Application.Queries.Shops.GetShop
         public int Id { get; init; }
         public string Name { get; init; }
         
+        public double Rate { get; set; }
+        
         public LocationDto Location { get; init; }
         public ContactDto Contact { get; init; }
         

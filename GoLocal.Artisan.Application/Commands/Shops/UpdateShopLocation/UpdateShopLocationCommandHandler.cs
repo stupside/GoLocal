@@ -42,12 +42,10 @@ namespace GoLocal.Artisan.Application.Commands.Shops.UpdateShopLocation
             Place place = await _locate.GetPosition(request.Address, request.Street, request.City, request.Zip,
                 request.Country);
             
-            if (place == null)
+            if (place == null || !place.Features.Any())
                 return BadRequest("Something went wrong when we tried to localize your shop");
-
-            Feature feature = place.Features.FirstOrDefault();
-            if (feature == null)
-                return BadRequest("We didn't found anything at this address");
+            
+            Feature feature = place.Features.First();
             
             request.Adapt(shop.Location);
             

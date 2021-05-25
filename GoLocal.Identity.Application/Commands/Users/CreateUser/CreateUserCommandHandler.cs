@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Identity.Domain.Entities;

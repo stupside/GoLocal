@@ -16,7 +16,7 @@ namespace GoLocal.Persistence.EntityFramework.Configurations.Abstracts
             builder.Property(m => m.Description).IsRequired();
 
             builder.HasMany(m => m.Comments)
-                .WithOne()
+                .WithOne(m => m.Item)
                 .HasForeignKey(m => m.ItemId)
                 .OnDelete(DeleteBehavior.Cascade);
 

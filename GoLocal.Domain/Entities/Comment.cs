@@ -28,6 +28,7 @@ namespace GoLocal.Domain.Entities
         }
 
         public int ItemId { get; }
+        public virtual Item Item { get; }
         
         public string InvoiceItemId { get; }
         public virtual InvoiceItem InvoiceItem { get; }

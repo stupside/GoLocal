@@ -9,7 +9,6 @@ using GoLocal.Identity.Domain.Entities;
 using GoLocal.Identity.Infrastructure.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

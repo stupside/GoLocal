@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
 namespace GoLocal.Shared.Bus.Results.Pages
 {
     public class Order

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Client.Application.Queries.Commands.GetCommands.Models;
-using GoLocal.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Domain.Entities;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Persistence.EntityFramework;
@@ -35,7 +34,6 @@ namespace GoLocal.Client.Application.Queries.Commands.GetCommands
             
             List<Command> commands = await _context.Commands
                 .Where(m => m.UserId == user.Id)
-                .ApplySearch(request)
                 .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
             

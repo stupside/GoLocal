@@ -3,11 +3,13 @@ using GoLocal.Client.Api.Controllers.Base;
 using GoLocal.Client.Application.Commands.Carts.AddCartPackage;
 using GoLocal.Client.Application.Commands.Carts.RemoveCartPackage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers
 {
+    [Authorize]
     [Route("api/shops/{sid:int}/carts")]
     public class CartController : ApiController
     {

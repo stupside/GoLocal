@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using FluentValidation;
 using GoLocal.Shared.Bus.Results.Pages;
 
 namespace GoLocal.Shared.Bus.Commons.Mediator
@@ -11,7 +9,6 @@ namespace GoLocal.Shared.Bus.Commons.Mediator
         public int Skip { get; init; }
         
         public Order Order { get; init; }
-        public IDictionary<string, string> Search { get; init; }
 
         internal PageRequestConfiguration<TEntity> Configuration { get; }
 

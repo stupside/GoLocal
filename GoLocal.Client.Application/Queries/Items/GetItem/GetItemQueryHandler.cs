@@ -22,6 +22,7 @@ namespace GoLocal.Client.Application.Queries.Items.GetItem
         {
             Item item = await _context.Items
                 .Include(m => m.Packages)
+                .Include(m => m.Comments)
                 .SingleOrDefaultAsync(m => m.Id == request.ItemId && m.ShopId == request.ShopId, cancellationToken);
 
             if (item == null)

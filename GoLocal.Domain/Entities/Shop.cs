@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GoLocal.Domain.Entities.Abstracts;
 using GoLocal.Domain.Entities.Identity;
 using GoLocal.Domain.ValueObjects;
 

@@ -36,7 +36,6 @@ namespace GoLocal.Artisan.Application.Queries.Shops.GetShops
 
             IEnumerable<Shop> shops = await _context.Shops
                 .Where(m => m.UserId == user.Id)
-                .ApplySearch(request)
                 .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
 

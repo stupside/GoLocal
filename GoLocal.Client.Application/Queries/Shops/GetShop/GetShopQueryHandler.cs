@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Domain.Entities;
@@ -26,11 +27,16 @@ namespace GoLocal.Client.Application.Queries.Shops.GetShop
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .SingleOrDefaultAsync(m => m.Id == request.ShopId, cancellationToken);
-            
+
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
+
+            GetShopResponse response = shop.Adapt<GetShopResponse>();
+            response.Rate = await _context.Comments
+                .Where(m => m.Item.ShopId == request.ShopId)
+                .AverageAsync(m => m.Rate, cancellationToken);;
             
-            return Ok(shop.Adapt<GetShopResponse>());
+            return Ok(response);
         }
     }
 }

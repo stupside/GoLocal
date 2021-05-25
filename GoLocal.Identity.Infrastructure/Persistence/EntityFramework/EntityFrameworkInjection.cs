@@ -17,6 +17,7 @@ namespace GoLocal.Identity.Infrastructure.Persistence.EntityFramework
 
             services.AddScoped<IContext>(provider => provider.GetService<Context>());
 
+            services.Configure<IdentityOptions>(configuration.GetSection("IdentityConfiguration"));
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();

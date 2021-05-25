@@ -28,7 +28,6 @@ namespace GoLocal.Artisan.Application.Queries.Commands.GetCommands
             var commands = await _context.Commands
                 .Where(m => m.Package.Item.ShopId == request.ShopId)
                 .Include(m => m.Package)
-                .ApplySearch(request)
                 .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
 

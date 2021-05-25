@@ -39,12 +39,10 @@ namespace GoLocal.Artisan.Application.Commands.Shops.CreateShop
             Place place = await _locate.GetPosition(location.Address, location.Street, location.City, location.Zip,
                 location.Country);
             
-            if (place == null)
+            if (place == null || !place.Features.Any())
                 return BadRequest("Something went wrong when we tried to localize your shop");
                 
-            Feature feature = place.Features.FirstOrDefault();
-            if (feature == null)
-                return BadRequest("We didn't found anything at this address");
+            Feature feature = place.Features.First();
             
             Shop shop = new Shop(user, request.Name, request.Contact.Adapt<Contact>(), request.Location.Adapt<Location>());
 

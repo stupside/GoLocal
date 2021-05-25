@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using GoLocal.Artisan.Api.Controllers.Base;
 using GoLocal.Artisan.Application.Commands.Items.CreateItem;

@@ -3,12 +3,10 @@ using System.Threading.Tasks;
 using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Bus.Results.Enums;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers.Base
 {
-    [Authorize]
     [ApiController]
     public abstract class ApiController : ControllerBase
     {

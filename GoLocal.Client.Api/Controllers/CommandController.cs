@@ -4,11 +4,13 @@ using GoLocal.Client.Application.Commands.Commands.ApproveCommandProposal;
 using GoLocal.Client.Application.Commands.Commands.CreateCommand;
 using GoLocal.Client.Application.Commands.Commands.CreateCommandProposal;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Client.Api.Controllers
 {
+    [Authorize]
     [Route("api/commands")]
     public class CommandController : ApiController
     {
