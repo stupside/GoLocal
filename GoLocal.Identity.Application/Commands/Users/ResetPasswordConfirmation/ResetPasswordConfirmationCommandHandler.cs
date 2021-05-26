@@ -19,14 +19,11 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
 
         public override async Task<Result> Handle(ResetPasswordConfirmationCommand request, CancellationToken cancellationToken)
         {
-            User user = await _user.FindByEmailAsync(request.Email);
+            User user = await _user.FindByIdAsync(request.Uid);
             if (user == null)
                 return Ok();
 
-            if (await _user.CheckPasswordAsync(user, request.OldPassword))
-                return Ok();
-
-            var result = await _user.ResetPasswordAsync(user, WebUtility.UrlDecode(request.Token), request.NewPassword);
+            var result = await _user.ResetPasswordAsync(user, WebUtility.UrlDecode(request.Token), request.Password);
 
             return result.Succeeded ? Ok() : BadRequest("Password reset failed");
         }

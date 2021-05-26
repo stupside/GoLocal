@@ -18,18 +18,18 @@ namespace GoLocal.Identity.Api.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserCommand command)
-            => await this.Handle(command.SetCallback("https://localhost:3000/account/register/confirmation"));
+            => await this.Handle(command.WithCallback("https://localhost:3000/account/register/confirmation"));
         
         [HttpPost("register/confirmation")]
-        public async Task<IActionResult> RegisterConfirmation(string token, string uid)
-            => await Handle(new CreateUserConfirmationCommand(token, uid));
+        public async Task<IActionResult> RegisterConfirmation(CreateUserConfirmationCommand command)
+            => await Handle(command);
         
         [HttpPost("password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
-            => await Handle(command.SetCallback("https://localhost:3000/account/password/confirmation"));
+            => await Handle(command.WithCallback("https://localhost:3000/account/password/confirmation"));
 
         [HttpPost("password/confirmation")]
-        public async Task<IActionResult> ResetPasswordConfirmation(string token, string email, ResetPasswordConfirmationCommand command)
-            => await Handle(command.WithToken(token).WithEmail(email));
+        public async Task<IActionResult> ResetPasswordConfirmation(ResetPasswordConfirmationCommand command)
+            => await Handle(command);
     }
 }

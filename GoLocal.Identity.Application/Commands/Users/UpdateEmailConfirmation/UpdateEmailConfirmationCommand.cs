@@ -7,16 +7,5 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation
         public string Uid { get; init; }
         public string Email { get; init; }
         public string Token { get; init; }
-
-        public UpdateEmailConfirmationCommand()
-        {
-        }
-
-        public UpdateEmailConfirmationCommand(string uid, string email, string token)
-        {
-            Uid = uid;
-            Email = email;
-            Token = token;
-        }
     }
 }

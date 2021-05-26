@@ -6,12 +6,11 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
     {
         public ResetPasswordConfirmationValidator()
         {
-            RuleFor(m => m.Email).NotEmpty().EmailAddress();
             RuleFor(m => m.Token).NotEmpty();
             
-            RuleFor(m => m.OldPassword).NotEmpty();
-            RuleFor(m => m.NewPassword).NotEmpty();
-            RuleFor(m => m.NewPassword).Equal(m => m.NewPasswordConfirmation);
+            RuleFor(m => m.Uid).NotEmpty();
+            RuleFor(m => m.Password).NotEmpty();
+            RuleFor(m => m.Password).Equal(m => m.PasswordConfirmation);
         }
     }
 }

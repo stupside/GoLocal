@@ -5,14 +5,8 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPassword
     public class ResetPasswordCommand : AbstractRequest
     {
         public string Email { get; init; }
-
-        public ResetPasswordCommand(string email)
-        {
-            Email = email;
-        }
-        
         public string Callback { get; private set; }
-        public ResetPasswordCommand SetCallback(string url)
+        public ResetPasswordCommand WithCallback(string url)
         {
             Callback = url;
             return this;

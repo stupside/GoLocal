@@ -23,11 +23,11 @@ namespace GoLocal.Identity.Api.Controllers
 
         [HttpPatch("email")]
         public async Task<IActionResult> UpdateEmail(UpdateEmailCommand command)
-            => await Handle(command.SetCallback("https://localhost:3000/security/email/confirmation"));
+            => await Handle(command.WithCallback("https://localhost:3000/security/email/confirmation"));
 
         [AllowAnonymous]
         [HttpPost("email/confirmation")]
-        public async Task<IActionResult> UpdateEmailConfirmation(string uid, string email, string token)
-            => await Handle(new UpdateEmailConfirmationCommand(uid, email, token));
+        public async Task<IActionResult> UpdateEmailConfirmation(UpdateEmailConfirmationCommand command)
+            => await Handle(command);
     }
 }
