@@ -1,6 +1,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
@@ -23,7 +24,7 @@ namespace GoLocal.Identity.Application.Commands.Users.ResetPasswordConfirmation
             if (user == null)
                 return Ok();
 
-            var result = await _user.ResetPasswordAsync(user, WebUtility.UrlDecode(request.Token), request.Password);
+            var result = await _user.ResetPasswordAsync(user, HttpUtility.UrlDecode(request.Token), request.Password);
 
             return result.Succeeded ? Ok() : BadRequest("Password reset failed");
         }

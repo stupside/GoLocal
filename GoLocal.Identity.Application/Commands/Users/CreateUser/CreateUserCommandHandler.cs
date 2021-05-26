@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
@@ -31,7 +32,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
                 return BadRequest(string.Join(',', result.Errors.Select(m => m.Description)));
             
             var token = await _user.GenerateEmailConfirmationTokenAsync(user);
-            token = WebUtility.UrlEncode(token);
+            token = HttpUtility.UrlEncode(token);
             
             await _email.SendAsync(new EmailMessage(user.Email, "Email Confirmation", 
                 $"Welcome {user.UserName},\nTo complete your registration, please click : {request.Callback}?token={token}&uid={user.Id}"), cancellationToken);

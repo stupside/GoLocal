@@ -1,6 +1,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
@@ -23,7 +24,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation
             if (user == null)
                 return Ok();
             
-            var result = await _user.ChangeEmailAsync(user, request.Email, WebUtility.UrlDecode(request.Token));
+            var result = await _user.ChangeEmailAsync(user, request.Email, HttpUtility.UrlDecode(request.Token));
 
             return result.Succeeded ? Ok() : BadRequest("Email confirmation failed");
         }

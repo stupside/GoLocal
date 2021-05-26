@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using GoLocal.Identity.Domain.Entities;
 using GoLocal.Shared.Bus.Commons.Mediator;
 using GoLocal.Shared.Bus.Results;
@@ -26,7 +27,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation
             if (user.EmailConfirmed)
                 return BadRequest("Email already validated");
             
-            var result = await _user.ConfirmEmailAsync(user, WebUtility.UrlDecode(request.Token));
+            var result = await _user.ConfirmEmailAsync(user, HttpUtility.UrlDecode(request.Token));
             return result.Succeeded ? Ok() : BadRequest("Email confirmation failed");
         }
     }
