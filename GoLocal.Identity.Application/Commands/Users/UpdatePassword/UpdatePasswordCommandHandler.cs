@@ -27,8 +27,6 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdatePassword
             if (!result.Succeeded)
                 return BadRequest(string.Join(',', result.Errors.SelectMany(m => m.Description)));
             
-            await _user.Manager.UpdateSecurityStampAsync(user);
-            
             return Ok();
         }
     }
