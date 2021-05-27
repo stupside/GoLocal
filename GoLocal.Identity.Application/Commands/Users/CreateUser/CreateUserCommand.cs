@@ -1,4 +1,4 @@
-﻿using GoLocal.Shared.Bus.Commons.Mediator;
+﻿using GoLocal.Bus.Commons.Mediator;
 
 namespace GoLocal.Identity.Application.Commands.Users.CreateUser
 {

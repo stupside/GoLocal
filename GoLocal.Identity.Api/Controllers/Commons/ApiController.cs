@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using GoLocal.Shared.Bus.Results;
-using GoLocal.Shared.Bus.Results.Enums;
+using GoLocal.Bus.Results;
+using GoLocal.Bus.Results.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

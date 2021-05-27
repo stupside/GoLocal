@@ -14,33 +14,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3F506960-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{855D90DE-4A4F-47AF-AE10-02798BDA7B6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Shared.Bus", "GoLocal.Shared.Bus\GoLocal.Shared.Bus.csproj", "{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Artisan.Application", "GoLocal.Core.Artisan.Application\GoLocal.Core.Artisan.Application.csproj", "{4567834C-9C37-404E-9A8D-2FF8AF58CF19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Artisan.Application", "GoLocal.Artisan.Application\GoLocal.Artisan.Application.csproj", "{4567834C-9C37-404E-9A8D-2FF8AF58CF19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Artisan.Infrastructure", "GoLocal.Core.Artisan.Infrastructure\GoLocal.Core.Artisan.Infrastructure.csproj", "{FA68399D-3FCD-4676-B348-DDEAA5E62391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Artisan.Infrastructure", "GoLocal.Artisan.Infrastructure\GoLocal.Artisan.Infrastructure.csproj", "{FA68399D-3FCD-4676-B348-DDEAA5E62391}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Artisan.Api", "GoLocal.Artisan.Api\GoLocal.Artisan.Api.csproj", "{DBF13BD7-18A3-4C55-961A-A2520791EF7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Artisan.Api", "GoLocal.Core.Artisan.Api\GoLocal.Core.Artisan.Api.csproj", "{DBF13BD7-18A3-4C55-961A-A2520791EF7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Shared.Mailing", "GoLocal.Shared.Mailing\GoLocal.Shared.Mailing.csproj", "{3636E36D-60B7-4711-97D5-27CFCB56AFC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Domain", "GoLocal.Domain\GoLocal.Domain.csproj", "{74C5788C-785E-41FC-9BE6-EB1F1E2F62A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Domain", "GoLocal.Core.Domain\GoLocal.Core.Domain.csproj", "{74C5788C-785E-41FC-9BE6-EB1F1E2F62A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Persistence", "GoLocal.Persistence\GoLocal.Persistence.csproj", "{7DF94DA3-4C92-498F-B308-86BCC7BE3E70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Shared.Accessor", "GoLocal.Shared.Accessor\GoLocal.Shared.Accessor.csproj", "{03750141-BFD6-4343-92E0-6331E3BB3195}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Persistence", "GoLocal.Core.Persistence\GoLocal.Core.Persistence.csproj", "{7DF94DA3-4C92-498F-B308-86BCC7BE3E70}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artisan", "Artisan", "{09BD9D4B-5545-4222-9794-A24B8B84C5E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{4E8750E4-BD2A-4033-9472-D63727B853E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Client.Application", "GoLocal.Client.Application\GoLocal.Client.Application.csproj", "{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Client.Application", "GoLocal.Core.Client.Application\GoLocal.Core.Client.Application.csproj", "{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Client.Infrastructure", "GoLocal.Client.Infrastructure\GoLocal.Client.Infrastructure.csproj", "{F1782B68-BD82-4380-8691-9C73D71047BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Client.Infrastructure", "GoLocal.Core.Client.Infrastructure\GoLocal.Core.Client.Infrastructure.csproj", "{F1782B68-BD82-4380-8691-9C73D71047BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Client.Api", "GoLocal.Client.Api\GoLocal.Client.Api.csproj", "{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Core.Client.Api", "GoLocal.Core.Client.Api\GoLocal.Core.Client.Api.csproj", "{4CA274AF-A905-4B7C-90C2-27456F1BCDF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Shared.Locate", "GoLocal.Shared.Locate\GoLocal.Shared.Locate.csproj", "{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Bus.Authorizer", "GoLocal.Bus.Authorizer\GoLocal.Bus.Authorizer.csproj", "{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{ED05378E-0CB2-4331-A644-C3D2EDC15CE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLocal.Bus", "GoLocal.Bus\GoLocal.Bus.csproj", "{824BC3AA-65C2-4B77-ABB3-330420B8C610}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,11 +52,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3B5E6BDB-A2DB-4FF6-B637-8DA6E8895615} = {036FC82D-C58C-4306-9177-C2FF4241A86E}
 		{B5D83150-2C50-4DE5-B58B-2C52338C485F} = {036FC82D-C58C-4306-9177-C2FF4241A86E}
-		{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA} = {855D90DE-4A4F-47AF-AE10-02798BDA7B6E}
 		{FE47B743-B13D-42A1-B2F7-82097C09B896} = {036FC82D-C58C-4306-9177-C2FF4241A86E}
 		{91F13DC5-9D68-4341-83BA-D664F469D848} = {036FC82D-C58C-4306-9177-C2FF4241A86E}
 		{3636E36D-60B7-4711-97D5-27CFCB56AFC1} = {855D90DE-4A4F-47AF-AE10-02798BDA7B6E}
-		{03750141-BFD6-4343-92E0-6331E3BB3195} = {855D90DE-4A4F-47AF-AE10-02798BDA7B6E}
 		{09BD9D4B-5545-4222-9794-A24B8B84C5E7} = {3F506960-BCD1-4B7F-851C-97AC9C391A2E}
 		{DBF13BD7-18A3-4C55-961A-A2520791EF7A} = {09BD9D4B-5545-4222-9794-A24B8B84C5E7}
 		{4567834C-9C37-404E-9A8D-2FF8AF58CF19} = {09BD9D4B-5545-4222-9794-A24B8B84C5E7}
@@ -66,6 +66,8 @@ Global
 		{F1782B68-BD82-4380-8691-9C73D71047BC} = {4E8750E4-BD2A-4033-9472-D63727B853E6}
 		{4CA274AF-A905-4B7C-90C2-27456F1BCDF5} = {4E8750E4-BD2A-4033-9472-D63727B853E6}
 		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4} = {855D90DE-4A4F-47AF-AE10-02798BDA7B6E}
+		{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B} = {ED05378E-0CB2-4331-A644-C3D2EDC15CE8}
+		{824BC3AA-65C2-4B77-ABB3-330420B8C610} = {ED05378E-0CB2-4331-A644-C3D2EDC15CE8}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE47B743-B13D-42A1-B2F7-82097C09B896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -84,10 +86,6 @@ Global
 		{91F13DC5-9D68-4341-83BA-D664F469D848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91F13DC5-9D68-4341-83BA-D664F469D848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91F13DC5-9D68-4341-83BA-D664F469D848}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AD0F3E3-5676-49F9-AF6D-4E16BA7C61DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4567834C-9C37-404E-9A8D-2FF8AF58CF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4567834C-9C37-404E-9A8D-2FF8AF58CF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4567834C-9C37-404E-9A8D-2FF8AF58CF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -112,10 +110,6 @@ Global
 		{7DF94DA3-4C92-498F-B308-86BCC7BE3E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DF94DA3-4C92-498F-B308-86BCC7BE3E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DF94DA3-4C92-498F-B308-86BCC7BE3E70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03750141-BFD6-4343-92E0-6331E3BB3195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03750141-BFD6-4343-92E0-6331E3BB3195}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03750141-BFD6-4343-92E0-6331E3BB3195}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03750141-BFD6-4343-92E0-6331E3BB3195}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2B00A09-CF4D-4C99-9EE4-FBC4E2DBC518}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -132,5 +126,13 @@ Global
 		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01EF0EA0-EEE7-4FB1-82AB-85BCB5A0E8F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF3EF226-DF8C-4CD0-8594-1FD6D6C7018B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{824BC3AA-65C2-4B77-ABB3-330420B8C610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824BC3AA-65C2-4B77-ABB3-330420B8C610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824BC3AA-65C2-4B77-ABB3-330420B8C610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824BC3AA-65C2-4B77-ABB3-330420B8C610}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,7 @@ echo
 read -r -p "option > " option
 echo
 if [ "$option" -eq 1 ]; then
-  read -r -p "init (y/n) > " -n 1 first
+  read -r -p "init (y/n) > " first
   echo
   if [ "$first" = 'y' ]; then
     read -r -p "username > " username

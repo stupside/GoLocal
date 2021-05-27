@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Web;
 using GoLocal.Shared.Locate.Configuration;
 using GoLocal.Shared.Locate.Interfaces;
-using GoLocal.Shared.Locate.Models;
 using GoLocal.Shared.Locate.Models.Search;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -28,14 +27,17 @@ namespace GoLocal.Shared.Locate.Implementations
 
         public async Task<Place> GetPosition(params string[] query)
         {
-            string url = $"mapbox.places/{HttpUtility.HtmlEncode(string.Join(' ', query))}.json?access_token={_configuration.Token}&limit={1}";
+            string url = $"mapbox.places/{HttpUtility.UrlEncode(string.Join(' ', query))}.json?access_token={_configuration.Token}&limit={1}";
             
             var response = await _client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
                 return null;
 
             string body = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Place>(body);
+            
+            Place place = JsonConvert.DeserializeObject<Place>(body);
+            
+            return place;
         }
     }
 }

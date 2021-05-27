@@ -1,4 +1,4 @@
-using GoLocal.Shared.Bus;
+using GoLocal.Bus;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GoLocal.Identity.Application

@@ -1,10 +1,9 @@
-﻿using System.Net;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using GoLocal.Bus.Commons.Mediator;
+using GoLocal.Bus.Results;
 using GoLocal.Identity.Domain.Entities;
-using GoLocal.Shared.Bus.Commons.Mediator;
-using GoLocal.Shared.Bus.Results;
 using Microsoft.AspNetCore.Identity;
 
 namespace GoLocal.Identity.Application.Commands.Users.CreateUserConfirmation

@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using GoLocal.Bus.Commons.Mediator;
+using GoLocal.Bus.Results;
 using GoLocal.Identity.Domain.Entities;
-using GoLocal.Shared.Bus.Commons.Mediator;
-using GoLocal.Shared.Bus.Results;
 using GoLocal.Shared.Mailing.Commons.Models;
 using GoLocal.Shared.Mailing.Interfaces;
 using Microsoft.AspNetCore.Identity;

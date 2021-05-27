@@ -1,4 +1,3 @@
-using System.ComponentModel.Design;
 using GoLocal.Identity.Application;
 using GoLocal.Identity.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +32,6 @@ namespace GoLocal.Identity.Api
             });
             
             services.AddControllers();
-            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,7 +60,6 @@ namespace GoLocal.Identity.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapRazorPages();
             });
         }
     }

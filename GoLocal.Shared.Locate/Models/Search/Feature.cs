@@ -11,7 +11,7 @@ namespace GoLocal.Shared.Locate.Models.Search
         public string Id { get; init; }
         
         [JsonProperty("relevance")]
-        public int Relevance { get; init; }
+        public string Relevance { get; init; }
         [JsonProperty("place_name")]
         public string PlaceName { get; init; }
         [JsonProperty("matching_text")]
@@ -27,16 +27,18 @@ namespace GoLocal.Shared.Locate.Models.Search
         
         [JsonProperty("context")]
         public List<Context> Contexts { private get; init; }
-        public string PostCode => Contexts.SingleOrDefault(m => m.Id == Features.PostCode)?.Text;
-        public string Country => Contexts.SingleOrDefault(m => m.Id == Features.Country)?.Text;
-        public string Region => Contexts.SingleOrDefault(m => m.Id == Features.Region)?.Text;
-        public string City => Contexts.SingleOrDefault(m => m.Id == Features.Place)?.Text;
-        public string NeighborHood => Contexts.SingleOrDefault(m => m.Id == Features.NeighborHood)?.Text;
+        public string PostCode => Contexts.SingleOrDefault(m => m.Id.Contains(Features.PostCode))?.Text;
+        public string Country => Contexts.SingleOrDefault(m => m.Id.Contains(Features.Country))?.Text;
+        public string Region => Contexts.SingleOrDefault(m => m.Id.Contains(Features.Region))?.Text;
+        public string City => Contexts.SingleOrDefault(m => m.Id.Contains(Features.Place))?.Text;
+        public string NeighborHood => Contexts.SingleOrDefault(m => m.Id.Contains(Features.NeighborHood))?.Text;
         
         
         [JsonProperty("center")]
         public List<double> Coordinates { private get; init; }
         public double Longitude => Coordinates[0];
         public double Latitude => Coordinates[1];
+
+        public bool IsValid => Relevance == "1" && PostCode != Country && Country != Region && Region != City && !string.IsNullOrEmpty(PostCode);
     }
 }

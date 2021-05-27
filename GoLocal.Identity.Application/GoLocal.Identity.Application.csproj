@@ -5,9 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GoLocal.Bus\GoLocal.Bus.csproj" />
       <ProjectReference Include="..\GoLocal.Identity.Domain\GoLocal.Identity.Domain.csproj" />
-      <ProjectReference Include="..\GoLocal.Shared.Accessor\GoLocal.Shared.Accessor.csproj" />
-      <ProjectReference Include="..\GoLocal.Shared.Bus\GoLocal.Shared.Bus.csproj" />
       <ProjectReference Include="..\GoLocal.Shared.Mailing\GoLocal.Shared.Mailing.csproj" />
     </ItemGroup>
     

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GoLocal.Bus\GoLocal.Bus.csproj" />
+        <ProjectReference Include="..\GoLocal.Core.Domain\GoLocal.Core.Domain.csproj" />
+        <ProjectReference Include="..\GoLocal.Core.Persistence\GoLocal.Core.Persistence.csproj" />
+        <ProjectReference Include="..\GoLocal.Shared.Locate\GoLocal.Shared.Locate.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mapster" Version="7.2.0" />
+    </ItemGroup>
+    
+</Project>
