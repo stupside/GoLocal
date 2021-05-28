@@ -8,6 +8,7 @@ using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopContact;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopImage;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopLocation;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopOpening;
+using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopVisibility;
 using GoLocal.Core.Artisan.Application.Queries.Shops.GetShops;
 using GoLocal.Core.Artisan.Application.Queries.Shops.GetShops.Models;
 using MediatR;
@@ -81,6 +82,15 @@ namespace GoLocal.Core.Artisan.Api.Controllers
             => await Handle(command);
         
         /// <summary>
+        /// Update the visibility of the desired shop
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPatch("visibility")]
+        public async Task<IActionResult> UpdateShopVisibility(UpdateShopVisibilityCommand command)
+            => await Handle(command);
+        
+        /// <summary>
         /// Update an opening for the desired shop
         /// </summary>
         /// <param name="command"></param>
@@ -88,14 +98,15 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         [HttpPatch("openings")]
         public async Task<IActionResult> UpdateOpening(UpdateShopOpeningCommand command)
             => await Handle(command);
-        
+
         /// <summary>
         /// Delete the desired shop
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="sid"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteShopCommand command)
-            => await Handle(command);
+        [HttpDelete("{name}")]
+        public async Task<IActionResult> Delete(int sid, string name)
+            => await Handle(new DeleteShopCommand(sid, name));
     }
 }

@@ -27,7 +27,6 @@ namespace GoLocal.Core.Artisan.Application.Commands.Shops.DeleteShop
             if(shop.Name != request.Name)
                 return BadRequest("Name doesn't match");
 
-            shop.UserId = Context.DefaultUser.Id;
             shop.Visibility = Visibility.Deleted;
             
             _context.Shops.Update(shop);

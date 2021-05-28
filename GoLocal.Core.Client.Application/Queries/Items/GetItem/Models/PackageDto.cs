@@ -8,7 +8,5 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem.Models
         public int Stocks { get; init; }
         public bool AsStocks => Stocks > 0;
         public float Price { get; init; }
-        public bool Hidden { get; init; }
-        public bool Available { get; init; }
     }
 }

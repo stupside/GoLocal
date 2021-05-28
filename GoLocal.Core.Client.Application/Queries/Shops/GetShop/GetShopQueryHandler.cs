@@ -32,8 +32,6 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
 
-            shop.BuildAdapter().ForkConfig(m => m.ForType<byte[], string>().MapWith(r => Convert.ToBase64String(r)));
-
             var rate = (await _context.Comments.Where(m => m.Item.ShopId == request.ShopId).Select(m => m.Rate)
                     .ToListAsync(cancellationToken)).DefaultIfEmpty().Average();
 

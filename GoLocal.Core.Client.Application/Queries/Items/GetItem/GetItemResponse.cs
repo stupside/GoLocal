@@ -10,8 +10,6 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
         public int Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
-        public bool Hidden { get; init; }
-        public bool Available { get; init; }
         public DateTime Creation { get; init; }
 
         public double Rate => Rates.Average();

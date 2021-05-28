@@ -11,5 +11,12 @@ namespace GoLocal.Core.Artisan.Application.Commands.Items.DeleteItem
         public int ShopId { get; init; }
         public int ItemId { get; init; }
         public string Name { get; init; }
+
+        public DeleteItemCommand(int shopId, int itemId, string name)
+        {
+            ShopId = shopId;
+            ItemId = itemId;
+            Name = name;
+        }
     }
 }

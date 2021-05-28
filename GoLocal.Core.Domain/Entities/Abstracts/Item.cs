@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GoLocal.Core.Domain.Enums;
 
 namespace GoLocal.Core.Domain.Entities.Abstracts
 {
@@ -12,13 +13,13 @@ namespace GoLocal.Core.Domain.Entities.Abstracts
         
         public byte[] Image { get; set; }
         
-        public bool Hidden { get; set; }
-        public bool Available { get; set; }
+        public Visibility Visibility { get; set; }
         
         public DateTime Creation { get; }
 
         public Item()
         {
+            Visibility = Visibility.Public;
             Creation = DateTime.UtcNow;
         }
 
@@ -29,8 +30,6 @@ namespace GoLocal.Core.Domain.Entities.Abstracts
             
             Name = name;
             Description = description;
-            Hidden = hidden;
-            Available = available;
         }
         
         public int ShopId { get; }

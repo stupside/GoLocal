@@ -53,6 +53,12 @@ namespace GoLocal.Core.Artisan.Api.Controllers
             return await Handle(command);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("{cid}/invoices")]
         public async Task<IActionResult> GenerateInvoice(string cid, GenerateCommandInvoiceCommand command)
         {

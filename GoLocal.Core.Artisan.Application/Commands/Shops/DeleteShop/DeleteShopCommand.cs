@@ -10,5 +10,11 @@ namespace GoLocal.Core.Artisan.Application.Commands.Shops.DeleteShop
         [AuthorizedEntityId]
         public int ShopId { get; init; }
         public string Name { get; init; }
+
+        public DeleteShopCommand(int shopId, string name)
+        {
+            ShopId = shopId;
+            Name = name;
+        }
     }
 }

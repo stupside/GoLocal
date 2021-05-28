@@ -87,18 +87,10 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// </summary>
         /// <param name="sid"></param>
         /// <param name="iid"></param>
-        /// <param name="command"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        [HttpDelete("{iid:int}")]
-        public async Task<IActionResult> Delete(int sid, int iid, DeleteItemCommand command)
-        {
-            if (sid != command.ShopId)
-                return BadRequest();
-
-            if (iid != command.ItemId)
-                return BadRequest();
-
-            return await Handle(command);
-        }
+        [HttpDelete("{iid:int}/{name}")]
+        public async Task<IActionResult> Delete(int sid, int iid, string name)
+            => await Handle(new DeleteItemCommand(sid, iid, name));
     }
 }

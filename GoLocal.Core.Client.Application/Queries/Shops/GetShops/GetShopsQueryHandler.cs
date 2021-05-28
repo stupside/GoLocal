@@ -35,7 +35,11 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
             
             Feature feature = place.Feature;
             
-            int count = await _context.Shops.Where(m => Math.Pow(m.Location.Latitude - feature.Latitude, 2) + Math.Pow(m.Location.Longitude - feature.Longitude, 2) <= Math.Pow(request.Range, 2))
+            int count = await _context.Shops.Where(m => 
+                    Math.Acos(
+                        Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
+                        Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
+                        ) <= request.Range)
                 .CountAsync(cancellationToken);
             
             _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
@@ -44,7 +48,10 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
             List<ShopDto> shops = await _context.Shops
                 .Where(m =>
                     (m.Name.Contains(request.Name) || m.Services.Any(r => r.Name.Contains(request.Name)) || m.Services.Any(r => r.Name.Contains(request.Name))) &&
-                    Math.Pow(m.Location.Latitude - feature.Latitude, 2) + Math.Pow(m.Location.Longitude - feature.Longitude, 2) <= Math.Pow(request.Range, 2))
+                    Math.Acos(
+                        Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
+                        Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
+                    ) <= request.Range)
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .ProjectToType<ShopDto>()

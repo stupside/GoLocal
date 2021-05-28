@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using GoLocal.Core.Artisan.Api.Controllers.Base;
 using GoLocal.Core.Artisan.Application.Commands.Packages.CreatePackage;
+using GoLocal.Core.Artisan.Application.Commands.Packages.DeletePackage;
 using GoLocal.Core.Artisan.Application.Commands.Packages.UpdatePackageStocks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -57,5 +58,17 @@ namespace GoLocal.Core.Artisan.Api.Controllers
             
             return await Handle(command);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="iid"></param>
+        /// <param name="pid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpDelete("{pid:int}")]
+        public async Task<IActionResult> DeletePackage(int sid, int iid, int pid)
+            => await Handle(new DeletePackageCommand(sid, iid, pid));
     }
 }
