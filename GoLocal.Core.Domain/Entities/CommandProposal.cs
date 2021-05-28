@@ -30,5 +30,6 @@ namespace GoLocal.Core.Domain.Entities
         public virtual User User { get; }
         
         public string CommandId { get; }
+        public virtual Command Command { get; }
     }
 }

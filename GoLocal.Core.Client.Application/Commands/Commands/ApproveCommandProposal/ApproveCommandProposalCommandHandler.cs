@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
@@ -23,20 +24,25 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.ApproveCommandPropos
 
         public override async Task<Result> Handle(ApproveCommandProposalCommand request, CancellationToken cancellationToken)
         {
-            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
-                cancellationToken))
-                return BadRequest("You can't change the specifications, One proposal have been validated");
+            CommandProposal proposal = await _context.CommandProposals
+                .Include(m => m.Command)
+                .SingleOrDefaultAsync(m => m.Id == request.CommandProposalId && m.CommandId == request.CommandId, cancellationToken);
             
-            CommandProposal proposal = await _context.CommandProposals.SingleOrDefaultAsync(
-                m => m.Id == request.CommandProposalId && m.CommandId == request.CommandId, cancellationToken);
-
             if (proposal == null)
                 return NotFound<CommandProposal>(request.CommandProposalId);
 
+            User user = await _user.GetUserAsync(); // TODO: IMPROVE
+            string uid = await _context.Shops.Where(m => m.Id == proposal.Command.ShopId)
+                .Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
+            if (proposal.Command.UserId != user.Id || proposal.Command.UserId != uid)
+                return Unauthorized();
+            
+            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
+                cancellationToken))
+                return BadRequest("You can't change the specifications, One proposal have been validated");
+
             if (proposal.Approved)
                 return BadRequest("This specification is already accepted");
-
-            User user = await _user.GetUserAsync();
 
             if (proposal.UserId == user.Id)
                 return BadRequest("You can't approve your own proposal");

@@ -21,20 +21,26 @@ namespace GoLocal.Core.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public Command(User user, Package package, float price, string specification)
+        public Command(User user, Package package, int shopId, float price, string specification)
             : this()
         {
             UserId = user.Id;
             PackageId = package.Id;
+            ShopId = shopId;
 
-            CommandProposals = new List<CommandProposal>();
-            CommandProposals.Add(new CommandProposal(this, user, price, specification));
-            
+            CommandProposals = new List<CommandProposal>
+            {
+                new (this, user, price, specification)
+            };
+
             Status = CommandStatus.Pending;
         }
 
         public string UserId { get; }
         public virtual User User { get; }
+        
+        public int ShopId { get; }
+        public virtual Shop Shop { get; }
         
         public int PackageId { get; }
         public virtual Package Package { get; }

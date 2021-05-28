@@ -32,7 +32,7 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(m => m.CommandProposals)
-                .WithOne()
+                .WithOne(m => m.Command)
                 .HasForeignKey(m => m.CommandId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

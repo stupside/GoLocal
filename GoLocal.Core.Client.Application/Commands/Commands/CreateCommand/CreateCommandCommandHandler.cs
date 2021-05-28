@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
@@ -34,7 +35,9 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommand
 
             User user = await _user.GetUserAsync();
 
-            Command command = new Command(user, package, request.Price, request.Specifications);
+            int sid = await _context.Items.Where(m => m.Id == package.ItemId).Select(m => m.ShopId)
+                .SingleOrDefaultAsync(cancellationToken);
+            Command command = new Command(user, package, sid, request.Price, request.Specifications);
 
             await _context.Commands.AddAsync(command, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
