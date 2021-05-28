@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
+using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Api.Controllers.Base;
 using GoLocal.Core.Client.Application.Commands.Commands.ApproveCommandProposal;
 using GoLocal.Core.Client.Application.Commands.Commands.CreateCommand;
 using GoLocal.Core.Client.Application.Commands.Commands.CreateCommandProposal;
+using GoLocal.Core.Client.Application.Queries.Commands.GetCommands;
+using GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +20,16 @@ namespace GoLocal.Core.Client.Api.Controllers
         public CommandController(IMediator mediator) : base(mediator)
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Page<CommandDto>), StatusCodes.Status200OK)]
+        [HttpPost]
+        public async Task<IActionResult> Get(GetCommandsQuery query)
+            => await Handle(query);
 
         /// <summary>
         /// 

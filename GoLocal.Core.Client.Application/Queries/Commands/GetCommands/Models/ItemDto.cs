@@ -1,10 +1,9 @@
-using System;
-
 namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models
 {
-    public class InvoiceDto
+    public class ItemDto
     {
         public int Id { get; init; }
-        public DateTime Creation { get; init; }
+        public string Name { get; init; }
+        public ItemDto Item { get; init; }
     }
 }

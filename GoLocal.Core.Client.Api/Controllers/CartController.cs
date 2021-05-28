@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
+using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Api.Controllers.Base;
 using GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage;
 using GoLocal.Core.Client.Application.Commands.Carts.GenerateCartInvoice;
 using GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage;
+using GoLocal.Core.Client.Application.Queries.Carts.GetCarts;
+using GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoLocal.Core.Client.Api.Controllers
 {
     [Authorize]
-    [Route("api/shops/{sid:int}/carts")]
+    [Route("api/carts")]
     public class CartController : ApiController
     {
         public CartController(IMediator mediator) : base(mediator)
@@ -21,18 +24,12 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sid"></param>
-        /// <param name="command"></param>
+        /// <param name="query"></param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        [HttpPost("{cid}/invoices")]
-        public async Task<IActionResult> GenerateInvoice(int sid, GenerateCartInvoiceCommand command)
-        {
-            if (sid != command.ShopId)
-                return BadRequest();
-            
-            return await Handle(command);
-        }
+        [ProducesResponseType(typeof(Page<CartDto>), StatusCodes.Status200OK)]
+        [HttpPost("invoices")]
+        public async Task<IActionResult> Get(GetCartsQuery query)
+            => await Handle(query);
         
         /// <summary>
         /// 
@@ -41,7 +38,23 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        [HttpPut("packages")]
+        [HttpPost("shops/{sid:int}")]
+        public async Task<IActionResult> GenerateInvoice(int sid, GenerateCartInvoiceCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [HttpPut("shops/{sid:int}")]
         public async Task<IActionResult> Add(int sid, AddCartPackageCommand command)
         {
             if (sid != command.ShopId)
@@ -56,7 +69,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete("packages")]
+        [HttpDelete("shops/{sid:int}")]
         public async Task<IActionResult> Remove(int sid, RemoveCartPackageCommand command)
         {
             if (sid != command.ShopId)

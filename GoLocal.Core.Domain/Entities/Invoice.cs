@@ -35,7 +35,6 @@ namespace GoLocal.Core.Domain.Entities
             {
                 new(this, command.PackageId, 1, proposal.Price, proposal.Specification)
             };
-
         }
 
         public string UserId { get; }

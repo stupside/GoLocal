@@ -30,14 +30,20 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
         public override async Task<Result<Page<CommandDto>>> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
+            
             int count = await _context.Commands.CountAsync(m => m.UserId == user.Id, cancellationToken);
             
-            List<Command> commands = await _context.Commands
+            List<CommandDto> commands = await _context.Commands
+                .Include(m => m.Invoice)
+                .Include(m => m.Package)
+                .ThenInclude(m => m.Item)
+                .ThenInclude(m => m.Shop)
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
+                .ProjectToType<CommandDto>()
                 .ToListAsync(cancellationToken);
             
-            return Ok(commands.Adapt<List<CommandDto>>(), count);      
+            return Ok(commands, count);      
         }
     }
 }
