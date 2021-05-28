@@ -6,6 +6,7 @@ using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Client.Infrastructure.Accessors
 {
@@ -28,26 +29,41 @@ namespace GoLocal.Core.Client.Infrastructure.Accessors
             if (!_http.HttpContext.User.Identity.IsAuthenticated)
                 throw new InvalidConstraintException();
 
-            string uid = _http.HttpContext.User.Claims.First(m => m.Type == "sub").Value;
+            string uid = _http.HttpContext.User.Claims.SingleOrDefault(m => m.Type == "sub")?.Value;
             if (string.IsNullOrEmpty(uid))
                 throw new ArgumentNullException(nameof(uid));
-
-            User user =  await _context.Users.FindAsync(uid);
-            if (user != null) return user;
-
-            string email = _http.HttpContext.User.Claims.First(m => m.Type == "email").Value;
+            
+            string email = _http.HttpContext.User.Claims.SingleOrDefault(m => m.Type == "email")?.Value;
             if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(email))
                 throw new ArgumentNullException();
+            
+            User user =  await _context.Users.SingleOrDefaultAsync(m => m.Id == uid);
+            if (user != null)
+            {
+                if (user.Email != email)
+                    user.Email = email;
+
+                if (user.UserName != _http.HttpContext.User.Identity.Name)
+                    user.UserName = _http.HttpContext.User.Identity.Name;
+                
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                
+                return user;
+            }
 
             user = new User(uid, _http.HttpContext.User.Identity.Name, email);
-
+            
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-
+            
             return user;
         }
 
         public async Task<string> GetUserIdAsync()
-            => (await GetUserAsync()).Id;
+        {
+            User user = await GetUserAsync();
+            return user.Id;
+        }
     }
 }

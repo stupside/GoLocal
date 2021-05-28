@@ -23,6 +23,12 @@ namespace GoLocal.Shared.Locate.Implementations
             {
                 BaseAddress = new Uri(_configuration.Url)
             };
+
+            if (string.IsNullOrEmpty(_configuration.Token))
+                throw new Exception(nameof(_configuration.Token));
+            
+            if (string.IsNullOrEmpty(_configuration.Url))
+                throw new Exception(nameof(_configuration.Url));
         }
 
         public async Task<Place> GetPosition(params string[] query)

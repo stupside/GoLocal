@@ -9,10 +9,12 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations.Identity
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(m => m.Id);
+            builder.Property(m => m.Id).ValueGeneratedNever();
 
             builder.HasIndex(m => new {m.UserName, m.Email}).IsUnique();
 
             builder.Property(m => m.Email).IsRequired();
+            builder.Property(m => m.UserName).IsRequired();
 
             builder.HasMany(m => m.Invoices)
                 .WithOne(m => m.User)

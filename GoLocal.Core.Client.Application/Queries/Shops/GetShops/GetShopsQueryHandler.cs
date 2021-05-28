@@ -29,12 +29,11 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
 
         public override async Task<Result<Page<ShopDto>>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
         {
-
             Place place = await _locate.GetPosition(request.Location);
-            if (place == null || !place.Features.Any())
+            if (place is not {Any: true})
                 return BadRequest("Something went wrong when we tried to localize your shop");
             
-            Feature feature = place.Features.First();
+            Feature feature = place.Feature;
             
             int count = await _context.Shops.Where(m => Math.Pow(m.Location.Latitude - feature.Latitude, 2) + Math.Pow(m.Location.Longitude - feature.Longitude, 2) <= Math.Pow(request.Range, 2))
                 .CountAsync(cancellationToken);
