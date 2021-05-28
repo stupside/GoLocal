@@ -33,7 +33,9 @@ namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts
             List<CartDto> carts = await _context.Carts
                 .Include(m => m.Shop)
                 .Include(m => m.CartPackages).ThenInclude(m => m.Package)
-                .Where(m => m.UserId == user.Id).ProjectToType<CartDto>().ToListAsync(cancellationToken);
+                .Where(m => m.UserId == user.Id)
+                .ProjectToType<CartDto>()
+                .ToListAsync(cancellationToken);
 
             return Ok(carts, count);
         }

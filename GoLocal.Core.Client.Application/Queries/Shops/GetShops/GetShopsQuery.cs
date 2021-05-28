@@ -7,7 +7,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
 {
     public class GetShopsQuery : AbstractPagedRequest<Shop, ShopDto>
     {
-        public int Range { get; init; }
+        public double Range { get; init; }
         public string Location { get; init; }
         public string Name { get; init; }
         

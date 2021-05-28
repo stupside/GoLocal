@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Commons.Mediator;
@@ -21,18 +22,20 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
 
         public override async Task<Result<GetItemResponse>> Handle(GetItemQuery request, CancellationToken cancellationToken)
         {
-            Item item = await _context.Items
+            _ = TypeAdapterConfig<Item, GetItemResponse>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
+            
+            GetItemResponse item = await _context.Items
                 .Include(m => m.Packages)
                 .Include(m => m.Comments)
-                .SingleOrDefaultAsync(m => m.Id == request.ItemId && m.ShopId == request.ShopId, cancellationToken);
+                .Where(m => m.Id == request.ItemId && m.ShopId == request.ShopId)
+                .ProjectToType<GetItemResponse>()
+                .SingleOrDefaultAsync(cancellationToken);
 
             if (item == null)
                 return NotFound<Item>(request.ItemId);
 
-            _ = TypeAdapterConfig<Item, GetItemResponse>.NewConfig()
-                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
-
-            return Ok(item.Adapt<GetItemResponse>());
+            return Ok(item);
         }
     }
 }

@@ -34,15 +34,16 @@ namespace GoLocal.Core.Artisan.Application.Queries.Shops.GetShops
             int count = await _context.Shops
                 .CountAsync(m => m.UserId == user.Id, cancellationToken);
 
-            IEnumerable<Shop> shops = await _context.Shops
-                .Where(m => m.UserId == user.Id)
-                .ApplyLimit(request)
-                .ToListAsync(cancellationToken);
-            
             _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
                 .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
+            
+            List<ShopDto> shops = await _context.Shops
+                .Where(m => m.UserId == user.Id)
+                .ApplyLimit(request)
+                .ProjectToType<ShopDto>()
+                .ToListAsync(cancellationToken);
 
-            return Ok(shops.Adapt<List<ShopDto>>(), count);
+            return Ok(shops, count);
         }
     }
 }

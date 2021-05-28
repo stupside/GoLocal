@@ -25,13 +25,15 @@ namespace GoLocal.Core.Artisan.Application.Queries.Commands.GetCommands
         public override async Task<Result<Page<CommandDto>>> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
         {
             var count = await _context.Commands.CountAsync(m => m.Package.Item.ShopId == request.ShopId, cancellationToken);
-            var commands = await _context.Commands
+            
+            List<CommandDto> commands = await _context.Commands
                 .Where(m => m.Package.Item.ShopId == request.ShopId)
                 .Include(m => m.Package)
                 .ApplyLimit(request)
+                .ProjectToType<CommandDto>()
                 .ToListAsync(cancellationToken);
 
-            return Ok(commands.Adapt<List<CommandDto>>(), count);
+            return Ok(commands, count);
         }
     }
 }

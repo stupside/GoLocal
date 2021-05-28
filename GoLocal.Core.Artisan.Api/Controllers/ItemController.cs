@@ -3,6 +3,7 @@ using GoLocal.Core.Artisan.Api.Controllers.Base;
 using GoLocal.Core.Artisan.Application.Commands.Items.CreateItem;
 using GoLocal.Core.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItem;
+using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemImage;
 using GoLocal.Core.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -69,6 +70,17 @@ namespace GoLocal.Core.Artisan.Api.Controllers
             
             return await Handle(command);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="iid"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPatch("{iid:int}/image")]
+        public async Task<IActionResult> UpdateImage(int sid, int iid, IFormFile file)
+            => await Handle(new UpdateItemImageCommand(sid, iid, file));
 
         /// <summary>
         /// 

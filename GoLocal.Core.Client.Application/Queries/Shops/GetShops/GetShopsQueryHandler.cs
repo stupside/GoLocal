@@ -37,19 +37,20 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
             
             int count = await _context.Shops.Where(m => Math.Pow(m.Location.Latitude - feature.Latitude, 2) + Math.Pow(m.Location.Longitude - feature.Longitude, 2) <= Math.Pow(request.Range, 2))
                 .CountAsync(cancellationToken);
+            
+            _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
-            IEnumerable<Shop> shops = await _context.Shops
-                .Where(m => 
+            List<ShopDto> shops = await _context.Shops
+                .Where(m =>
                     (m.Name.Contains(request.Name) || m.Services.Any(r => r.Name.Contains(request.Name)) || m.Services.Any(r => r.Name.Contains(request.Name))) &&
                     Math.Pow(m.Location.Latitude - feature.Latitude, 2) + Math.Pow(m.Location.Longitude - feature.Longitude, 2) <= Math.Pow(request.Range, 2))
                 .Include(m => m.Openings)
                 .Include(m => m.User)
+                .ProjectToType<ShopDto>()
                 .ToListAsync(cancellationToken);
 
-            _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
-                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
-
-            return Ok(shops.Adapt<List<ShopDto>>(), count);        
+            return Ok(shops, count);        
         }
     }
 }
