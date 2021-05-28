@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
+using OpenIddict.Validation.AspNetCore;
 
 namespace GoLocal.Identity.Infrastructure.IoC
 {
@@ -15,8 +16,8 @@ namespace GoLocal.Identity.Infrastructure.IoC
     {
         internal static void SetupOidc(this IServiceCollection services, IConfiguration configuration)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-                        
+            services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+            
             services.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
@@ -25,9 +26,6 @@ namespace GoLocal.Identity.Infrastructure.IoC
                 options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
-            
             services.AddOpenIddict()
                 .AddCore(options =>
                 {
@@ -62,10 +60,12 @@ namespace GoLocal.Identity.Infrastructure.IoC
                     
                 })
                 .AddValidation(m => {
-                    //m.EnableAuthorizationEntryValidation();
+                    m.SetIssuer("https://localhost:5000");
+                    m.AddAudiences("account.api");
+
+                    m.UseAspNetCore();
+                    m.UseSystemNetHttp();
                 });
-            
-            services.AddAuthentication();
 
             services.AddHostedService<Worker>();
         }

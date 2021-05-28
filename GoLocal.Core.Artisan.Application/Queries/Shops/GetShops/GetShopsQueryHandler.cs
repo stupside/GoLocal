@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,6 +38,9 @@ namespace GoLocal.Core.Artisan.Application.Queries.Shops.GetShops
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
                 .ToListAsync(cancellationToken);
+            
+            _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
             return Ok(shops.Adapt<List<ShopDto>>(), count);
         }

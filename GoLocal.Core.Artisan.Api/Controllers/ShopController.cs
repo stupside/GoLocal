@@ -5,6 +5,7 @@ using GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.DeleteShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopContact;
+using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopImage;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopLocation;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopOpening;
 using GoLocal.Core.Artisan.Application.Queries.Shops.GetShops;
@@ -59,6 +60,16 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         [HttpPatch("contact")]
         public async Task<IActionResult> UpdateContact(UpdateShopContactCommand command)
             => await Handle(command);
+
+        /// <summary>
+        /// Update image for the desired shop
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPatch("{sid:int}/image")]
+        public async Task<IActionResult> UpdateImage(int sid, IFormFile file)
+            => await Handle(new UpdateShopImageCommand(sid, file));
         
         /// <summary>
         /// Update the location of the desired shop

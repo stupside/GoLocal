@@ -32,7 +32,7 @@ namespace GoLocal.Identity.Application.Commands.Users.CreateUser
             
             var token = await _user.GenerateEmailConfirmationTokenAsync(user);
             token = HttpUtility.UrlEncode(token);
-            
+
             await _email.SendAsync(new EmailMessage(user.Email, "Email Confirmation", 
                 $"Welcome {user.UserName},\nTo complete your registration, please click : {request.Callback}?token={token}&uid={user.Id}"), cancellationToken);
             

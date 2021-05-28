@@ -46,6 +46,9 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
                 .Include(m => m.User)
                 .ToListAsync(cancellationToken);
 
+            _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
+
             return Ok(shops.Adapt<List<ShopDto>>(), count);        
         }
     }

@@ -19,6 +19,8 @@ namespace GoLocal.Identity.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            
             services.AddOptions();
             
             services.SetupApplication();
@@ -29,9 +31,31 @@ namespace GoLocal.Identity.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Identity.Api", Version = "v1"});
+                c.CustomSchemaIds(x => x.FullName);
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer",
+                    Description = "Insert your authorization token"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
-            
-            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,6 +65,7 @@ namespace GoLocal.Identity.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GoLocal.Identity.Api v1"));
+
             }
 
             app.UseHttpsRedirection();
@@ -51,7 +76,7 @@ namespace GoLocal.Identity.Api
             {
                 builder.AllowAnyHeader();
                 builder.AllowAnyMethod();
-                builder.WithOrigins("https://localhost:5002", "https://localhost:5001", "https://localhost:3000", "https://localhost:3001", "https://localhost:3002");
+                builder.WithOrigins("https://localhost:5002", "https://localhost:5001", "https://localhost:3000", "https://localhost:3001", "https://localhost:3002", "https://localhost:5000");
             });
             
             app.UseAuthorization();

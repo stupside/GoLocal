@@ -32,7 +32,7 @@ if [ "$option" -eq 1 ]; then
 elif [ "$option" -eq 2 ]; then
     dotnet ef database update --context Context --project "../GoLocal.Core.Persistence"
 elif [ "$option" -eq 3 ]; then
-    dotnet ef database update --context Context --project "../GoLocal.Core.Persistence"
+    dotnet ef database update --context Context --project "../GoLocal.Core.Persistence" --output-dir "../GoLocal.Core.Persistence/EntityFramework/Migrations"
 fi
 
 read -r -p "press a key to exit > "

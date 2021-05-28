@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Commons.Mediator;
@@ -27,6 +28,9 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
 
             if (item == null)
                 return NotFound<Item>(request.ItemId);
+
+            _ = TypeAdapterConfig<Item, GetItemResponse>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
             return Ok(item.Adapt<GetItemResponse>());
         }

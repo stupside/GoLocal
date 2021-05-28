@@ -32,7 +32,7 @@ if [ "$option" -eq 1 ]; then
 elif [ "$option" -eq 2 ]; then
     dotnet ef database update --context Context --project "../GoLocal.Identity.Infrastructure"
 elif [ "$option" -eq 3 ]; then
-  dotnet ef migrations remove --context Context --project "../GoLocal.Identity.Infrastructure"
+  dotnet ef migrations remove --context Context --project "../GoLocal.Identity.Infrastructure"  --output-dir "../GoLocal.Identity.Infrastructure/Persistence/EntityFramework/Migrations"
 fi
 
 read -r -p "press a key to exit > "

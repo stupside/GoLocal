@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,13 +32,16 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);
 
-            GetShopResponse response = shop.Adapt<GetShopResponse>();
-            
-            response.Rate = (await _context.Comments
-                .Where(m => m.Item.ShopId == request.ShopId).Select(m => m.Rate)
-                .ToListAsync(cancellationToken)).DefaultIfEmpty().Average();
-            
-            return Ok(response);
+            shop.BuildAdapter().ForkConfig(m => m.ForType<byte[], string>().MapWith(r => Convert.ToBase64String(r)));
+
+            var rate = (await _context.Comments.Where(m => m.Item.ShopId == request.ShopId).Select(m => m.Rate)
+                    .ToListAsync(cancellationToken)).DefaultIfEmpty().Average();
+
+            _ = TypeAdapterConfig<Shop, GetShopResponse>.NewConfig()
+                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image))
+                .Map(dest => dest.Rate, src => rate);
+
+            return Ok(shop.Adapt<GetShopResponse>());
         }
     }
 }

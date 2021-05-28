@@ -10,6 +10,8 @@ namespace GoLocal.Core.Domain.Entities.Abstracts
         public string Name { get; set; }
         public string Description { get; set; }
         
+        public byte[] Image { get; set; }
+        
         public bool Hidden { get; set; }
         public bool Available { get; set; }
         
