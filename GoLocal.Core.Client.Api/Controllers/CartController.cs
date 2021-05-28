@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GoLocal.Core.Client.Api.Controllers.Base;
 using GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage;
+using GoLocal.Core.Client.Application.Commands.Carts.GenerateCartInvoice;
 using GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,22 @@ namespace GoLocal.Core.Client.Api.Controllers
     {
         public CartController(IMediator mediator) : base(mediator)
         {
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [HttpPost("{cid}/invoices")]
+        public async Task<IActionResult> GenerateInvoice(int sid, GenerateCartInvoiceCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+            
+            return await Handle(command);
         }
         
         /// <summary>
