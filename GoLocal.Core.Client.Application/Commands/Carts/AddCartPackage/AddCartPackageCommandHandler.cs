@@ -31,7 +31,6 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage
             
             Package package = await _context.Packages
                 .Include(m => m.Item)
-                .ThenInclude(m => m.Shop)
                 .SingleOrDefaultAsync(m => m.Id == request.PackageId && m.ItemId == request.ItemId &&
                 m.Item.ShopId == request.ShopId, cancellationToken);
             
@@ -46,7 +45,7 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage
 
             if (cart == null)
             {
-                cart = new Cart(user, package.Item.Shop);
+                cart = new Cart(user, package.Item.ShopId);
                 await _context.Carts.AddAsync(cart, cancellationToken);
             }
             

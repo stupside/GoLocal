@@ -9,7 +9,8 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
             builder.HasKey(m => m.Id);
-
+            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            
             builder.HasIndex(m => new {m.UserId, m.ShopId}).IsUnique();
 
             builder.HasOne(m => m.Shop)

@@ -15,11 +15,11 @@ namespace GoLocal.Core.Domain.Entities
             Creation = DateTime.UtcNow;
         }
         
-        public Cart(User user, Shop shop)
+        public Cart(User user, int shopId)
             : this()
         {
             UserId = user.Id;
-            ShopId = shop.Id;
+            ShopId = shopId;
         }
         
         public string UserId { get; }
