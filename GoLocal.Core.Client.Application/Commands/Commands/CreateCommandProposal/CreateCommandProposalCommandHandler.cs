@@ -30,8 +30,7 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommandProposa
                 return NotFound<Command>(request.CommandId);
             
             User user = await _accessor.GetUserAsync(); // TODO: IMPROVE
-            string uid = await _context.Shops.Where(m => m.Id == command.ShopId)
-                .Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
+            string uid = await _context.Shops.Where(m => m.Id == command.ShopId).Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
             if (command.UserId != user.Id || command.UserId != uid)
                 return Unauthorized();
             

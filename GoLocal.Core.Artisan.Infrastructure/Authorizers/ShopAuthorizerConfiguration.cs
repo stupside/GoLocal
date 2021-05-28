@@ -1,6 +1,7 @@
 using GoLocal.Bus.Authorizer.Commons.Requirement.Must;
 using GoLocal.Bus.Authorizer.Configurations;
 using GoLocal.Core.Domain.Entities;
+using GoLocal.Core.Domain.Enums;
 
 namespace GoLocal.Core.Artisan.Infrastructure.Authorizers
 {
@@ -9,6 +10,7 @@ namespace GoLocal.Core.Artisan.Infrastructure.Authorizers
         public ShopAuthorizerConfiguration()
         {
             this.With(m => m.UserId).Owner();
+            this.With(m => m.Visibility).NotEqualTo(Visibility.Private);
         }
     }
 }

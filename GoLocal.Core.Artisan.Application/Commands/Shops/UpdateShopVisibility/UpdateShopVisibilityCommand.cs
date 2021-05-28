@@ -2,14 +2,13 @@ using GoLocal.Bus.Authorizer.Authorizers.Attributes;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Core.Domain.Entities;
 
-namespace GoLocal.Core.Artisan.Application.Commands.Commands.AcceptCommand
+namespace GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopVisibility
 {
     [AuthorizedEntity(typeof(Shop))]
-    public class AcceptCommandCommand : AbstractRequest
+    public class UpdateShopVisibilityCommand : AbstractRequest
     {
         [AuthorizedEntityId]
         public int ShopId { get; init; }
-        public string CommandId { get; init; }
-        public bool Accept { get; init; }
+        public bool Public { get; init; }
     }
 }

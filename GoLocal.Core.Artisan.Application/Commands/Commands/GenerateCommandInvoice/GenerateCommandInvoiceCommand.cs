@@ -4,10 +4,11 @@ using GoLocal.Core.Domain.Entities;
 
 namespace GoLocal.Core.Artisan.Application.Commands.Commands.GenerateCommandInvoice
 {
-    [AuthorizedEntity(typeof(Command))]
+    [AuthorizedEntity(typeof(Shop))]
     public class GenerateCommandInvoiceCommand : AbstractRequest<int>
     {
         [AuthorizedEntityId]
+        public int ShopId { get; init; }
         public string CommandId { get; init; }
     }
 }

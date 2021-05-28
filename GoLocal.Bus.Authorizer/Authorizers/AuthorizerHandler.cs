@@ -48,8 +48,7 @@ namespace GoLocal.Bus.Authorizer.Authorizers
                 bool validated = configuration.MustType switch
                 {
                     MustType.Owner => configuration.IsValidConstraint(entity, await _accessor.GetUserIdAsync()),
-                    MustType.Equal => configuration.IsValidConstraint(entity),
-                    _ => false
+                    _ => configuration.IsValidConstraint(entity),
                 };
 
                 if (!validated)

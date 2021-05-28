@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Domain.ValueObjects;
 
 namespace GoLocal.Core.Domain.Entities
@@ -11,13 +12,17 @@ namespace GoLocal.Core.Domain.Entities
         
         public string Name { get; set; }
         public byte[] Image { get; set; }
+        
         public Location Location { get; }
         public Contact Contact { get; }
+        
+        public Visibility Visibility { get; set; }
         
         public DateTime Creation { get; }
 
         public Shop()
         {
+            Visibility = Visibility.Public;
             Creation = DateTime.UtcNow;
         }
 
@@ -31,7 +36,7 @@ namespace GoLocal.Core.Domain.Entities
             Location = location;
         }
         
-        public string UserId { get; init; }
+        public string UserId { get; set; }
         public virtual User User { get; }
         
         public virtual ICollection<Employee> Employees { get; }

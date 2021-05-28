@@ -7,29 +7,27 @@ using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Core.Artisan.Application.Commands.Shops.DeleteShop
+namespace GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopVisibility
 {
-    public class DeleteShopCommandHandler : AbstractRequestHandler<DeleteShopCommand>
+    public class UpdateShopVisibilityCommandHandler : AbstractRequestHandler<UpdateShopVisibilityCommand>
     {
         private readonly Context _context;
 
-        public DeleteShopCommandHandler(Context context)
+        public UpdateShopVisibilityCommandHandler(Context context)
         {
             _context = context;
         }
-        
-        public override async Task<Result> Handle(DeleteShopCommand request, CancellationToken cancellationToken)
+
+        public override async Task<Result> Handle(UpdateShopVisibilityCommand request, CancellationToken cancellationToken)
         {
             Shop shop = await _context.Shops.SingleOrDefaultAsync(m => m.Id == request.ShopId, cancellationToken);
             if (shop == null)
-                return NotFound<Shop>(request.ShopId);
-            
-            if(shop.Name != request.Name)
-                return BadRequest("Name doesn't match");
+                return NotFound<Shop>();
 
-            shop.UserId = Context.DefaultUser.Id;
-            shop.Visibility = Visibility.Deleted;
-            
+            if (shop.Visibility == Visibility.Public && request.Public || shop.Visibility == Visibility.Private && !request.Public)
+                return Ok();
+
+            shop.Visibility = request.Public ? Visibility.Public : Visibility.Private;
             _context.Shops.Update(shop);
             await _context.SaveChangesAsync(cancellationToken);
 

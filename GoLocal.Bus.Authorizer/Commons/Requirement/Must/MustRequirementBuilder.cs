@@ -15,6 +15,9 @@ namespace GoLocal.Bus.Authorizer.Commons.Requirement.Must
 
         public static void EqualTo(this MustRequirement requirement, object constraint)
             => requirement.WithMustType(MustType.Equal).WithConstraint(constraint);
+        
+        public static void NotEqualTo(this MustRequirement requirement, object constraint)
+            => requirement.WithMustType(MustType.NotEqual).WithConstraint(constraint);
 
         public static void Owner(this MustRequirement configuration)
             => configuration.WithMustType(MustType.Owner);

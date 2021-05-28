@@ -35,9 +35,13 @@ namespace GoLocal.Bus.Authorizer.Commons.Requirement.Must
 
             var value = MustDelegate.DynamicInvoke(entity);
 
-            var ok = value?.Equals(constraint);
-            
-            return ok ?? false;
+            return MustType switch
+            {
+                MustType.Equal => value?.Equals(constraint) ?? false,
+                MustType.NotEqual => !value?.Equals(constraint) ?? false,
+                MustType.Owner => value?.Equals(constraint) ?? false,
+                _ => false
+            };
         }
 
         public bool IsValidConstraint(object entity)

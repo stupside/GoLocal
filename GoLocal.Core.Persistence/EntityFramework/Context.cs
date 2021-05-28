@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Abstracts;
 using GoLocal.Core.Domain.Entities.Identity;
@@ -7,6 +8,8 @@ namespace GoLocal.Core.Persistence.EntityFramework
 {
     public class Context : DbContext
     {
+        public readonly static User DefaultUser = new User("golocal", "golocal", "golocal@golocal.golocal");
+        
         public DbSet<User> Users { get; set; }
         
         public DbSet<Shop> Shops { get; set; }
@@ -41,6 +44,13 @@ namespace GoLocal.Core.Persistence.EntityFramework
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
-            => builder.ApplyConfigurationsFromAssembly(typeof(Context).Assembly);
+        {
+            builder.ApplyConfigurationsFromAssembly(typeof(Context).Assembly);
+
+            builder.Entity<User>().HasData(new List<User>
+            {
+                DefaultUser
+            });
+        }
     }
 }
