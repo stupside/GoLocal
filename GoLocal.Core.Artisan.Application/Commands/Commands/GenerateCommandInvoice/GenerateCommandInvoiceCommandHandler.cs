@@ -25,7 +25,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Commands.GenerateCommandInvo
             if (command == null)
                 return NotFound<Command>(request.CommandId);
 
-            if (command.InvoiceId != 0)
+            if (command.InvoiceId != null)
                 return BadRequest("An invoice already exists for this command");
 
             CommandProposal proposal =
