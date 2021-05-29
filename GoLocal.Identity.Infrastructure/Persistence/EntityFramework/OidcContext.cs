@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Identity.Infrastructure.Persistence.EntityFramework
 {
-    internal class OidcContext : DbContext
+    public class OidcContext : DbContext
     {
         public OidcContext(DbContextOptions<OidcContext> options)
             : base(options)

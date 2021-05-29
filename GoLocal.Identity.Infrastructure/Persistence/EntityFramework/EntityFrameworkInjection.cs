@@ -22,7 +22,7 @@ namespace GoLocal.Identity.Infrastructure.Persistence.EntityFramework
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
             
-            services.AddDbContextPool<OidcContext>(m =>
+            services.AddDbContext<OidcContext>(m =>
             {
                 m.UseInMemoryDatabase(nameof(OidcContext));
                 m.UseOpenIddict();

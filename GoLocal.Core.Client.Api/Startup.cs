@@ -50,8 +50,7 @@ namespace GoLocal.Core.Client.Api
 
             services.AddCors();
 
-            services.AddSwaggerGen(c =>
-            {
+            services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GoLocal.Core.Client.Api", Version = "v1"});
                 c.CustomSchemaIds(x => x.FullName);
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

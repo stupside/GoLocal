@@ -8,14 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoLocal.Identity.Api.Controllers.Commons
 {
     [ApiController]
-    public class ApiController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ApiController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        protected ApiController(IMediator mediator)
+            => _mediator = mediator;
 
         protected async Task<IActionResult> Handle<TResponse>(IRequest<TResponse> request)
             where TResponse : AbstractResult

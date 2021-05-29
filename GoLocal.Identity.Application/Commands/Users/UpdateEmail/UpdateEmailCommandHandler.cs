@@ -31,7 +31,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmail
             token = HttpUtility.UrlEncode(token);
             
             await _email.SendAsync(new EmailMessage(request.Email, "Email reset", 
-                $"Welcome {user.UserName},\nYou tried to change your email.\nTo complete, please click : {request.Callback}?token={token}&uid={user.Id}"), cancellationToken);
+                $"Welcome {user.UserName},\nYou tried to change your email.\nTo complete, please click : {request.Callback}?token={token}&uid={user.Id}&email={request.Email}"), cancellationToken);
 
             return Ok();
         }
