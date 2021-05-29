@@ -2,6 +2,7 @@
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Api.Controllers.Base;
 using GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage;
+using GoLocal.Core.Client.Application.Commands.Carts.DeleteCart;
 using GoLocal.Core.Client.Application.Commands.Carts.GenerateCartInvoice;
 using GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage;
 using GoLocal.Core.Client.Application.Queries.Carts.GetCarts;
@@ -69,7 +70,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete("shops/{sid:int}")]
+        [HttpPost("shops/{sid:int}")]
         public async Task<IActionResult> Remove(int sid, RemoveCartPackageCommand command)
         {
             if (sid != command.ShopId)
@@ -77,5 +78,14 @@ namespace GoLocal.Core.Client.Api.Controllers
             
             return await Handle(command);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        [HttpDelete("shops/{sid:int}")]
+        public async Task<IActionResult> Delete(int sid)
+            => await Handle(new DeleteCartCommand(sid));
     }
 }
