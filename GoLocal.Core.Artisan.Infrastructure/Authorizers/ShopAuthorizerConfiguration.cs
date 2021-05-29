@@ -10,7 +10,6 @@ namespace GoLocal.Core.Artisan.Infrastructure.Authorizers
         public ShopAuthorizerConfiguration()
         {
             this.With(m => m.UserId).Owner();
-            this.With(m => m.Visibility).NotEqualTo(Visibility.Private);
         }
     }
 }

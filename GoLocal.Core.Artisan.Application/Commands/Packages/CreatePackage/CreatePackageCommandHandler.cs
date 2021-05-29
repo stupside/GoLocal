@@ -21,7 +21,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Packages.CreatePackage
 
         public override async Task<Result<int>> Handle(CreatePackageCommand request, CancellationToken cancellationToken)
         {
-            Item item = await _context.Items.SingleOrDefaultAsync(m => m.Id == request.ItemId && m.ShopId == request.ShopId && m.Visibility != Visibility.Deleted, cancellationToken);
+            Item item = await _context.Items.SingleOrDefaultAsync(m => m.Id == request.ItemId && m.ShopId == request.ShopId, cancellationToken);
             if (item == null)
                 return NotFound<Item>(request.ItemId);
             

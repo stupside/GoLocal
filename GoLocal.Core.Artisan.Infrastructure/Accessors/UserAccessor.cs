@@ -23,11 +23,8 @@ namespace GoLocal.Core.Artisan.Infrastructure.Accessors
 
         public async Task<User> GetUserAsync()
         {
-            if (_http.HttpContext.User.Identity == null)
-                throw new NullReferenceException();
-
-            if (!_http.HttpContext.User.Identity.IsAuthenticated)
-                throw new InvalidConstraintException();
+            if (_http.HttpContext.User.Identity is not {IsAuthenticated: true})
+                return null;
 
             string uid = _http.HttpContext.User.Claims.SingleOrDefault(m => m.Type == "sub")?.Value;
             if (string.IsNullOrEmpty(uid))

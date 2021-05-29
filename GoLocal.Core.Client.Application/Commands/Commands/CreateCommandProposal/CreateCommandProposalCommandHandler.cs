@@ -29,17 +29,20 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommandProposa
             if (command == null)
                 return NotFound<Command>(request.CommandId);
             
-            User user = await _accessor.GetUserAsync(); // TODO: IMPROVE
-            string uid = await _context.Shops.Where(m => m.Id == command.ShopId).Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
+            User user = await _accessor.GetUserAsync();
+            
+            string uid = await _context.Shops.Where(m => m.Id == command.ShopId)
+                .Select(m => m.UserId)
+                .SingleOrDefaultAsync(cancellationToken);
+            
             if (command.UserId != user.Id || command.UserId != uid)
                 return Unauthorized();
             
-            if (command.Status != CommandStatus.Accepted)
-                return BadRequest($"The status of the command was {command.Status}");
+            if (command.Status is not CommandStatus.Accepted)
+                return BadRequest($"The status of the command was {command.Status}, you can't create any proposals");
             
-            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
-                cancellationToken))
-                return BadRequest("You can't change the specifications, One proposal have been validated");
+            if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId, cancellationToken))
+                return BadRequest("You can't change the specifications, one proposal has been already approved");
 
             CommandProposal proposal = new CommandProposal(command, user, request.Price, request.Specification);
 

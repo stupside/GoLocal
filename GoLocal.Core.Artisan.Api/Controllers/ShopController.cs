@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Artisan.Api.Controllers.Base;
 using GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop;
-using GoLocal.Core.Artisan.Application.Commands.Shops.DeleteShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopContact;
 using GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopImage;
@@ -98,15 +97,5 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         [HttpPatch("openings")]
         public async Task<IActionResult> UpdateOpening(UpdateShopOpeningCommand command)
             => await Handle(command);
-
-        /// <summary>
-        /// Delete the desired shop
-        /// </summary>
-        /// <param name="sid"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [HttpDelete("{name}")]
-        public async Task<IActionResult> Delete(int sid, string name)
-            => await Handle(new DeleteShopCommand(sid, name));
     }
 }

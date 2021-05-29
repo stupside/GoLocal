@@ -46,8 +46,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                        ) <= request.Range &&
-                    m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.UserId == user.Id))
+                        ) <= request.Range && (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id))
                 .CountAsync(cancellationToken);
             
             _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
@@ -59,8 +58,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                    ) <= request.Range &&
-                    m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.UserId == user.Id))
+                    ) <= request.Range && (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id))
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .ProjectToType<ShopDto>()

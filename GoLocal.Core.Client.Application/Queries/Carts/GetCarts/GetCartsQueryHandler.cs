@@ -8,6 +8,7 @@ using GoLocal.Bus.Results;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts
         public override async Task<Result<Page<CartDto>>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
             User user = await _accessor.GetUserAsync();
+            
             int count = await _context.Carts.CountAsync(m => m.UserId == user.Id, cancellationToken);
 
             List<CartDto> carts = await _context.Carts

@@ -35,7 +35,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .SingleOrDefaultAsync(m => m.Id == request.ShopId && 
-                                           m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.UserId == user.Id), cancellationToken);
+                                           (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id), cancellationToken);
 
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);

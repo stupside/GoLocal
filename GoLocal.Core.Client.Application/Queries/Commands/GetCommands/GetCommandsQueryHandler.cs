@@ -10,6 +10,7 @@ using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Mapster;
 using Microsoft.EntityFrameworkCore;

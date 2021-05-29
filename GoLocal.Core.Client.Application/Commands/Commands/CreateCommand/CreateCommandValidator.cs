@@ -6,6 +6,7 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommand
     {
         public CreateCommandValidator()
         {
+            RuleFor(m => m.ShopId).NotEmpty();
             RuleFor(m => m.ServiceId).NotEmpty();
             RuleFor(m => m.PackageId).NotEmpty();
             RuleFor(m => m.Specifications).NotEmpty();

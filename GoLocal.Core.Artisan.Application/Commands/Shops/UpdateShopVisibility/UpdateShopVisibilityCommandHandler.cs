@@ -24,10 +24,11 @@ namespace GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopVisibility
             if (shop == null)
                 return NotFound<Shop>();
 
-            if (shop.Visibility == Visibility.Public && request.Public || shop.Visibility == Visibility.Private && !request.Public)
+            if (shop.Visibility == request.Visibility)
                 return Ok();
 
-            shop.Visibility = request.Public ? Visibility.Public : Visibility.Private;
+            shop.Visibility = request.Visibility;
+            
             _context.Shops.Update(shop);
             await _context.SaveChangesAsync(cancellationToken);
 

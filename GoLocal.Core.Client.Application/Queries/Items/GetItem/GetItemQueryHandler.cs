@@ -36,7 +36,7 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
                 .Include(m => m.Packages)
                 .Include(m => m.Comments)
                 .Where(m => m.Id == request.ItemId && m.ShopId == request.ShopId && 
-                            m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.Shop.UserId == user.Id))
+                            (m.Visibility == Visibility.Public || user == null && m.Shop.UserId == user.Id))
                 .ProjectToType<GetItemResponse>()
                 .SingleOrDefaultAsync(cancellationToken);
 

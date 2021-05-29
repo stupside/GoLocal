@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using GoLocal.Core.Artisan.Api.Controllers.Base;
 using GoLocal.Core.Artisan.Application.Commands.Packages.CreatePackage;
-using GoLocal.Core.Artisan.Application.Commands.Packages.DeletePackage;
 using GoLocal.Core.Artisan.Application.Commands.Packages.UpdatePackageStocks;
+using GoLocal.Core.Artisan.Application.Commands.Packages.UpdatePackageVisibility;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,19 +41,15 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// </summary>
         /// <param name="sid"></param>
         /// <param name="iid"></param>
-        /// <param name="pid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPatch("{pid:int}/stocks")]
-        public async Task<IActionResult> UpdateStocks(int sid, int iid, int pid, UpdatePackageStocksCommand command)
+        [HttpPatch("stocks")]
+        public async Task<IActionResult> UpdateStocks(int sid, int iid, UpdatePackageStocksCommand command)
         {
             if (sid != command.ShopId)
                 return BadRequest();
 
             if (iid != command.ItemId)
-                return BadRequest();
-            
-            if (pid != command.PackageId)
                 return BadRequest();
             
             return await Handle(command);
@@ -64,11 +60,18 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// </summary>
         /// <param name="sid"></param>
         /// <param name="iid"></param>
-        /// <param name="pid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete("{pid:int}")]
-        public async Task<IActionResult> DeletePackage(int sid, int iid, int pid)
-            => await Handle(new DeletePackageCommand(sid, iid, pid));
+        [HttpPatch("visibility")]
+        public async Task<IActionResult> UpdateVisibility(int sid, int iid, UpdatePackageVisibilityCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+
+            if (iid != command.ItemId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
     }
 }

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 
 namespace GoLocal.Core.Domain.Entities
 {
     public class Invoice
     {
         public int Id { get; set; }
-        
+        public InvoiceStatus Status { get; set; }
         public DateTime Creation { get; }
 
         public Invoice()

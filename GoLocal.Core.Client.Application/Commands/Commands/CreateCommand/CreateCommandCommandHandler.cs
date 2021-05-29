@@ -6,6 +6,7 @@ using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,20 +25,25 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommand
 
         public override async Task<Result<string>> Handle(CreateCommandCommand request, CancellationToken cancellationToken)
         {
-            if (!await _context.Services.AnyAsync(m => m.Id == request.ServiceId, cancellationToken))
+            if (!await _context.Services.AnyAsync(m => m.Id == request.ServiceId && 
+                                                       m.ShopId == request.ShopId && 
+                                                       m.Visibility == Visibility.Public, cancellationToken)
+            )
                 return NotFound<Service>(request.ServiceId);
             
             Package package = await _context.Packages
-                .SingleOrDefaultAsync(m => m.Id == request.PackageId && m.ItemId == request.ServiceId, cancellationToken);
+                .SingleOrDefaultAsync(m => m.Id == request.PackageId &&
+                                           m.ItemId == request.ServiceId && 
+                                           m.Item.ShopId == request.ShopId &&
+                                           m.Visibility == Visibility.Public &&
+                                           m.Item.Shop.Visibility == Visibility.Public, cancellationToken);
 
             if (package == null)
                 return NotFound<Package>(request.PackageId);
 
             User user = await _user.GetUserAsync();
-
-            int sid = await _context.Items.Where(m => m.Id == package.ItemId).Select(m => m.ShopId)
-                .SingleOrDefaultAsync(cancellationToken);
-            Command command = new Command(user, package, sid, request.Price, request.Specifications);
+            
+            Command command = new Command(user, package, request.ShopId, request.Price, request.Specifications);
 
             await _context.Commands.AddAsync(command, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);

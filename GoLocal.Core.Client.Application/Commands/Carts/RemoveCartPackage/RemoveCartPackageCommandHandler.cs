@@ -41,7 +41,7 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage
             if (cartPackage == null)
                 return NotFound<CartPackage>();
 
-            // 5. We check if the we are removing everything
+            // 5. We check if we are removing everything
             if (cartPackage.Quantity <= request.Quantity)
             {
                 // 5.1 If 100% of the quantity the remove cart package

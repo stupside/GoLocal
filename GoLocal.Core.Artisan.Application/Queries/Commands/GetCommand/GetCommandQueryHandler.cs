@@ -16,7 +16,7 @@ namespace GoLocal.Core.Artisan.Application.Queries.Commands.GetCommand
             _context = context;
         }
 
-        public override  Task<Result> Handle(GetCommandQuery request, CancellationToken cancellationToken)
+        public override Task<Result> Handle(GetCommandQuery request, CancellationToken cancellationToken)
         {
              throw new NotImplementedException();
         }

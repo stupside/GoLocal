@@ -7,28 +7,28 @@ using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Core.Artisan.Application.Commands.Items.DeleteItem
+namespace GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemVisibility
 {
-    public class DeleteItemCommandHandler : AbstractRequestHandler<DeleteItemCommand>
+    public class UpdateItemVisibilityCommandHandler : AbstractRequestHandler<UpdateItemVisibilityCommand>
     {
         private readonly Context _context;
 
-        public DeleteItemCommandHandler(Context context)
+        public UpdateItemVisibilityCommandHandler(Context context)
         {
             _context = context;
         }
 
-        public override async Task<Result> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateItemVisibilityCommand request, CancellationToken cancellationToken)
         {
             Item item = await _context.Items.SingleOrDefaultAsync(
-                m => m.Id == request.ItemId && m.ShopId == request.ShopId && m.Visibility != Visibility.Deleted, cancellationToken);
+                m => m.Id == request.ItemId && m.ShopId == request.ShopId, cancellationToken);
             if (item == null)
                 return NotFound<Item>(request.ItemId);
             
-            if (item.Name != request.Name)
-                return BadRequest("Name doesn't match");
+            if (item.Visibility == request.Visibility)
+                return Ok();
 
-            item.Visibility = Visibility.Deleted;
+            item.Visibility = request.Visibility;
             
             _context.Items.Update(item);
             await _context.SaveChangesAsync(cancellationToken);

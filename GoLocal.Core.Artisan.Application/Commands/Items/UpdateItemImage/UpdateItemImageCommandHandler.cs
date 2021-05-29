@@ -22,7 +22,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemImage
         public override async Task<Result> Handle(UpdateItemImageCommand request, CancellationToken cancellationToken)
         {
             Item item = await _context.Items.SingleOrDefaultAsync(
-                m => m.Id == request.ItemId && m.ShopId == request.ShopId && m.Visibility != Visibility.Deleted, cancellationToken);
+                m => m.Id == request.ItemId && m.ShopId == request.ShopId, cancellationToken);
             if (item == null)
                 return NotFound<Item>(request.ItemId);
 

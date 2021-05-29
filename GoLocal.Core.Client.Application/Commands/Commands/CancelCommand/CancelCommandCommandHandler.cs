@@ -31,11 +31,13 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CancelCommand
             if (command == null)
                 return NotFound<Command>(request.CommandId);
 
-            if (command.Status is CommandStatus.Rejected or CommandStatus.Accepted or CommandStatus.Canceled)
+            if (command.Status is not CommandStatus.Accepted)
                 return BadRequest($"You can't cancel this command. The status of the command was '{command.Status}'");
             
-            User user = await _accessor.GetUserAsync(); // TODO: IMPROVE
-            string uid = await _context.Shops.Where(m => m.Id == command.ShopId).Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
+            User user = await _accessor.GetUserAsync();
+            string uid = await _context.Shops
+                .Where(m => m.Id == command.ShopId)
+                .Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
             if (command.UserId != user.Id || command.UserId != uid)
                 return Unauthorized();
 

@@ -2,7 +2,7 @@ using GoLocal.Core.Domain.Enums;
 
 namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models
 {
-    public class ShopDto
+    public class ItemDto
     {
         public int Id { get; init; }
         public string Name { get; init; }

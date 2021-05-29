@@ -12,7 +12,7 @@ namespace GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoice.Models
         public float Total => Quantity * Price;
         
         public string Description { get; init; }
-        public InvoiceItemStatus Status { get; init; }
+        public InvoiceStatus Status { get; init; }
 
         public PackageDto Package { get; init; }
         

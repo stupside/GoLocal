@@ -1,3 +1,5 @@
+using GoLocal.Core.Domain.Enums;
+
 namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models
 {
     public class PackageDto
@@ -8,6 +10,8 @@ namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models
         public int Stocks { get; init; }
         public bool AsStocks => Stocks > 0;
         public float Price { get; init; }
-        public int ShopId { get; init; }
+        public Visibility Visibility { get; init; }
+        public string VisibilityText => Visibility.ToString();
+        public ItemDto Item { get; init; }
     }
 }

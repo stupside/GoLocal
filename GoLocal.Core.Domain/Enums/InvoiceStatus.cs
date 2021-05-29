@@ -1,6 +1,6 @@
 namespace GoLocal.Core.Domain.Enums
 {
-    public enum InvoiceItemStatus
+    public enum InvoiceStatus
     {
         Pending,
         Ready,

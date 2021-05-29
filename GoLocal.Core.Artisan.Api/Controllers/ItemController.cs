@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using GoLocal.Core.Artisan.Api.Controllers.Base;
 using GoLocal.Core.Artisan.Application.Commands.Items.CreateItem;
-using GoLocal.Core.Artisan.Application.Commands.Items.DeleteItem;
 using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItem;
 using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemDescription;
 using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemImage;
+using GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemVisibility;
 using GoLocal.Core.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -57,16 +57,12 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// 
         /// </summary>
         /// <param name="sid"></param>
-        /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPatch("{iid:int}")]
-        public async Task<IActionResult> Update(int sid, int iid, UpdateItemCommand command)
+        public async Task<IActionResult> Update(int sid, UpdateItemCommand command)
         {
             if (sid != command.ShopId)
-                return BadRequest();
-
-            if (iid != command.ItemId)
                 return BadRequest();
             
             return await Handle(command);
@@ -76,16 +72,12 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// 
         /// </summary>
         /// <param name="sid"></param>
-        /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPatch("{iid:int}/description")]
-        public async Task<IActionResult> UpdateDescription(int sid, int iid, UpdateItemDescriptionCommand command)
+        [HttpPatch("description")]
+        public async Task<IActionResult> UpdateDescription(int sid, UpdateItemDescriptionCommand command)
         {
             if (sid != command.ShopId)
-                return BadRequest();
-
-            if (iid != command.ItemId)
                 return BadRequest();
             
             return await Handle(command);
@@ -106,11 +98,15 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// 
         /// </summary>
         /// <param name="sid"></param>
-        /// <param name="iid"></param>
-        /// <param name="name"></param>
+        /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete("{iid:int}/{name}")]
-        public async Task<IActionResult> Delete(int sid, int iid, string name)
-            => await Handle(new DeleteItemCommand(sid, iid, name));
+        [HttpPatch("visibility")]
+        public async Task<IActionResult> UpdateVisibility(int sid, UpdateItemVisibilityCommand command)
+        {
+            if (sid != command.ShopId)
+                return BadRequest();
+            
+            return await Handle(command);
+        }
     }
 }
