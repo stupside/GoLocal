@@ -12,6 +12,5 @@ namespace GoLocal.Core.Artisan.Application.Commands.Items.UpdateItem
         public int ItemId { get; init; }
         public string OldName { get; init; }
         public string NewName { get; init; }
-        public string Description { get; init; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
@@ -7,35 +7,26 @@ using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoLocal.Core.Artisan.Application.Commands.Items.UpdateItem
+namespace GoLocal.Core.Artisan.Application.Commands.Items.UpdateItemDescription
 {
-    public class UpdateItemCommandHandler : AbstractRequestHandler<UpdateItemCommand>
+    public class UpdateItemDescriptionCommandHandler : AbstractRequestHandler<UpdateItemDescriptionCommand>
     {
         private readonly Context _context;
 
-        public UpdateItemCommandHandler(Context context)
+        public UpdateItemDescriptionCommandHandler(Context context)
         {
             _context = context;
         }
 
-        public override async Task<Result> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(UpdateItemDescriptionCommand request, CancellationToken cancellationToken)
         {
             Item item = await _context.Items.SingleOrDefaultAsync(
                 m => m.Id == request.ItemId && m.ShopId == request.ShopId && m.Visibility != Visibility.Deleted, cancellationToken);
             if (item == null)
                 return NotFound<Item>(request.ItemId);
+
+            item.Description = request.Description;
             
-            if (item.Name != request.OldName)
-                return BadRequest("Old name doesn't match");
-
-            if (item.Name == request.NewName)
-                return Ok();
-            
-            if (await _context.Items.AnyAsync(m => m.Name == request.NewName && m.ShopId == request.ShopId, cancellationToken))
-                return BadRequest($"An item named {request.NewName} already exists");
-
-            item.Name = request.NewName;
-
             _context.Items.Update(item);
             await _context.SaveChangesAsync(cancellationToken);
 
