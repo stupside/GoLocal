@@ -45,7 +45,7 @@ namespace GoLocal.Core.Domain.Entities
         public int PackageId { get; }
         public virtual Package Package { get; }
         
-        public int InvoiceId { get; set; }
+        public int? InvoiceId { get; set; }
         public virtual Invoice Invoice { get; }
         
         public virtual ICollection<Message> Messages { get; }

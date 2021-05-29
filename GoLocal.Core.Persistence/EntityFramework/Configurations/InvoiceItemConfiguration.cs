@@ -9,9 +9,10 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<InvoiceItem> builder)
         {
             builder.HasKey(m => m.Id);
-
+            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            
             builder.HasIndex(m => new {m.InvoiceId, m.PackageId}).IsUnique();
-
+            
             builder.Property(m => m.Quantity).IsRequired();
             builder.Property(m => m.Description).IsRequired();
             builder.Property(m => m.Price).IsRequired();
