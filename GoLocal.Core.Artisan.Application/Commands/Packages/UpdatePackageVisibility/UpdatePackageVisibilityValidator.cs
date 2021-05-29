@@ -9,7 +9,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Packages.UpdatePackageVisibi
             RuleFor(m => m.ItemId).NotEmpty();
             RuleFor(m => m.PackageId).NotEmpty();
             RuleFor(m => m.ShopId).NotEmpty();
-            RuleFor(m => m.Visibility).NotEmpty().IsInEnum();
+            RuleFor(m => m.Visibility).IsInEnum();
         }
     }
 }

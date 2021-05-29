@@ -7,7 +7,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Shops.UpdateShopVisibility
         public UpdateShopVisibilityValidator()
         {
             RuleFor(m => m.ShopId).NotEmpty();
-            RuleFor(m => m.Visibility).NotEmpty().IsInEnum();
+            RuleFor(m => m.Visibility).IsInEnum();
         }
     }
 }

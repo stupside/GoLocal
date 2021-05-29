@@ -6,5 +6,6 @@ namespace GoLocal.Bus.Authorizer.Accessors
     {
         Task<TUser> GetUserAsync();
         Task<string> GetUserIdAsync();
+        bool IsAuthenticated();
     }
 }

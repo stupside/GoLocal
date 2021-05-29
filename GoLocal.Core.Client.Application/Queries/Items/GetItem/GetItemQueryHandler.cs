@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
+using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Abstracts;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Domain.Enums;
@@ -30,21 +31,32 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
             _ = TypeAdapterConfig<Item, GetItemResponse>.NewConfig()
                 .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
+            // TODO: Since Item->Shop throw unmapped we have to query it first to check the status
+            var shop = await _context.Shops
+                .Where(m => m.Id == request.ShopId)
+                .Select(m => new {m.Visibility , m.UserId}).SingleOrDefaultAsync(cancellationToken);
+            
+            if (shop == null)
+                return NotFound<Product>(request.ShopId);
+            
             User user = await _accessor.GetUserAsync();
             var logged = user != null;
+            var owner = logged && shop.UserId == user.Id; // TODO: Fix Item->Shop navigation
             
-            GetItemResponse item = await _context.Items
-                .Include(m => m.Packages)
+            if(shop.Visibility == Visibility.Private && !owner)
+                return NotFound<Product>(request.ShopId);
+
+            var item = await _context.Items
                 .Include(m => m.Comments)
-                .Where(m => m.Id == request.ItemId && m.ShopId == request.ShopId && 
-                            (m.Visibility == Visibility.Public || logged && m.Shop.UserId == user.Id))
-                .ProjectToType<GetItemResponse>()
+                .Include(m => m.Packages.Where(r => r.Visibility == Visibility.Public || owner))
+                .Where(m => m.Id == request.ItemId && m.ShopId == request.ShopId &&
+                            (m.Visibility == Visibility.Public || owner))
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (item == null)
                 return NotFound<Item>(request.ItemId);
 
-            return Ok(item);
+            return Ok(item.Adapt<GetItemResponse>());
         }
     }
 }

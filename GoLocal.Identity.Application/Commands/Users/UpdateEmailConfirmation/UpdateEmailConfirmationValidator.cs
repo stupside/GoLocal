@@ -7,6 +7,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation
         public UpdateEmailConfirmationValidator()
         {
             RuleFor(m => m.Token).NotEmpty();
+            RuleFor(m => m.Uid).NotEmpty();
             RuleFor(m => m.Email).NotEmpty().EmailAddress();
         }
     }

@@ -23,5 +23,8 @@ namespace GoLocal.Identity.Infrastructure.Commons.Accessors
 
         public async Task<string> GetUserIdAsync()
             => (await GetUserAsync()).Id;
+
+        public bool IsAuthenticated()
+            => _http.HttpContext?.User.Identity is {IsAuthenticated: true};
     }
 }

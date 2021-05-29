@@ -31,6 +31,7 @@ namespace GoLocal.Core.Artisan.Application.Queries.Shops.GetShops
         public override async Task<Result<Page<ShopDto>>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
         {
             User user = await _user.GetUserAsync();
+            
             int count = await _context.Shops
                 .CountAsync(m => m.UserId == user.Id, cancellationToken);
 

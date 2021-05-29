@@ -23,7 +23,7 @@ namespace GoLocal.Identity.Application.Commands.Users.UpdateEmailConfirmation
             if (user == null)
                 return Ok();
             
-            var result = await _user.ChangeEmailAsync(user, request.Email, HttpUtility.UrlDecode(request.Token));
+            var result = await _user.ChangeEmailAsync(user, HttpUtility.UrlDecode(request.Email), HttpUtility.UrlDecode(request.Token));
 
             return result.Succeeded ? Ok() : BadRequest("Email confirmation failed");
         }

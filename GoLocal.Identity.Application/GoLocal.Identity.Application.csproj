@@ -9,5 +9,9 @@
       <ProjectReference Include="..\GoLocal.Identity.Domain\GoLocal.Identity.Domain.csproj" />
       <ProjectReference Include="..\GoLocal.Shared.Mailing\GoLocal.Shared.Mailing.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+    </ItemGroup>
     
 </Project>

@@ -23,7 +23,7 @@ namespace GoLocal.Core.Artisan.Infrastructure.Accessors
 
         public async Task<User> GetUserAsync()
         {
-            if (_http.HttpContext.User.Identity is not {IsAuthenticated: true})
+            if (!IsAuthenticated())
                 return null;
 
             string uid = _http.HttpContext.User.Claims.SingleOrDefault(m => m.Type == "sub")?.Value;
@@ -40,7 +40,7 @@ namespace GoLocal.Core.Artisan.Infrastructure.Accessors
                 if (user.Email != email)
                     user.Email = email;
 
-                if (user.UserName != _http.HttpContext.User.Identity.Name)
+                if (user.UserName != _http.HttpContext.User.Identity!.Name)
                     user.UserName = _http.HttpContext.User.Identity.Name;
                 
                 _context.Users.Update(user);
@@ -49,7 +49,7 @@ namespace GoLocal.Core.Artisan.Infrastructure.Accessors
                 return user;
             }
 
-            user = new User(uid, _http.HttpContext.User.Identity.Name, email);
+            user = new User(uid, _http.HttpContext.User.Identity!.Name, email);
             
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -60,7 +60,12 @@ namespace GoLocal.Core.Artisan.Infrastructure.Accessors
         public async Task<string> GetUserIdAsync()
         {
             User user = await GetUserAsync();
+            if (user == null)
+                return string.Empty;
             return user.Id;
         }
+
+        public bool IsAuthenticated()
+            => _http.HttpContext.User.Identity is {IsAuthenticated: true};
     }
 }

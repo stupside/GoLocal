@@ -4,7 +4,7 @@ namespace GoLocal.Identity.Domain.Entities
 {
     public sealed class User : IdentityUser
     {
-        public string Avatar { get; set; }
+        public byte[] Avatar { get; set; }
         
         public User(){}
 
