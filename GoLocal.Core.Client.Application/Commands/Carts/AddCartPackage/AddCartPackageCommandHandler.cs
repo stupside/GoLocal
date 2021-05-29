@@ -66,7 +66,7 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.AddCartPackage
             {
                 // 5.2 This package is already in the cart, so we check if the total quantity is still valid
                 if (package.Stocks < cartPackage.Quantity + request.Quantity)
-                    return BadRequest($"Invalid quantity. Only {package.Stocks - cartPackage.Quantity} stocks were available");
+                    return BadRequest($"Invalid quantity. Only {package.Stocks - cartPackage.Quantity} stocks can be added to your cart");
                 
                 cartPackage.Quantity += request.Quantity;
                 _context.CartPackages.Update(cartPackage);
