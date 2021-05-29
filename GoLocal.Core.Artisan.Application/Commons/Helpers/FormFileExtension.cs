@@ -9,7 +9,7 @@ namespace GoLocal.Core.Artisan.Application.Commons.Helpers
 {
     public static class FormFileExtension
     {
-        public static async Task<byte[]> ResizeAsync(this IFormFile file, int width = 256, int lenght = 256)
+        public static async Task<byte[]> ResizeAsync(this IFormFile file, int width = 512, int lenght = 512)
         {
             if (!file.IsImage())
                 return null;
@@ -23,7 +23,7 @@ namespace GoLocal.Core.Artisan.Application.Commons.Helpers
                 Size = new Size(width, lenght),
                 Sampler = KnownResamplers.Lanczos3,
                 Compand = true,
-                Mode =  ResizeMode.BoxPad
+                Mode =  ResizeMode.Crop
             }));
 
             var after = image.Size();
@@ -32,7 +32,7 @@ namespace GoLocal.Core.Artisan.Application.Commons.Helpers
             
             await image.SaveAsync(stream, new JpegEncoder()
             {
-                Quality = 30,
+                Quality = 80,
             });
 
             return stream.GetBuffer();
