@@ -28,6 +28,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
         public override async Task<Result<GetShopResponse>> Handle(GetShopQuery request, CancellationToken cancellationToken)
         {
             User user = await _accessor.GetUserAsync();
+            var logged = user != null;
             
             Shop shop = await _context.Shops
                 .Include(m => m.Services)
@@ -35,7 +36,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .SingleOrDefaultAsync(m => m.Id == request.ShopId && 
-                                           (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id), cancellationToken);
+                                           (m.Visibility == Visibility.Public || logged && m.UserId == user.Id), cancellationToken);
 
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);

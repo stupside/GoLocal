@@ -41,12 +41,13 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
             Feature feature = place.Feature;
             
             User user = await _accessor.GetUserAsync();
+            var logged = user != null;
             
             int count = await _context.Shops.Where(m => 
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                        ) <= request.Range && (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id))
+                        ) <= request.Range && (m.Visibility == Visibility.Public || logged && m.UserId == user.Id))
                 .CountAsync(cancellationToken);
             
             _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
@@ -58,7 +59,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                    ) <= request.Range && (m.Visibility == Visibility.Public || user == null && m.UserId == user.Id))
+                    ) <= request.Range && (m.Visibility == Visibility.Public || logged && m.UserId == user.Id))
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .ProjectToType<ShopDto>()

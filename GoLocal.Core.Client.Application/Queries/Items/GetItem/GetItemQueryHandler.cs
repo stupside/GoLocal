@@ -31,12 +31,13 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
                 .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
             User user = await _accessor.GetUserAsync();
+            var logged = user != null;
             
             GetItemResponse item = await _context.Items
                 .Include(m => m.Packages)
                 .Include(m => m.Comments)
                 .Where(m => m.Id == request.ItemId && m.ShopId == request.ShopId && 
-                            (m.Visibility == Visibility.Public || user == null && m.Shop.UserId == user.Id))
+                            (m.Visibility == Visibility.Public || logged && m.Shop.UserId == user.Id))
                 .ProjectToType<GetItemResponse>()
                 .SingleOrDefaultAsync(cancellationToken);
 

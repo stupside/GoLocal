@@ -16,8 +16,4 @@
       <ProjectReference Include="..\GoLocal.Core.Domain\GoLocal.Core.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="EntityFramework\Migrations" />
-    </ItemGroup>
-
 </Project>
