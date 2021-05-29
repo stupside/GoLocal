@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Shops.GetShops.Models;
 using GoLocal.Core.Domain.Entities;
+using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Domain.Enums;
 using GoLocal.Shared.Locate.Interfaces;
 using GoLocal.Shared.Locate.Models.Search;
 using Mapster;
@@ -18,13 +21,15 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
 {
     public class GetShopsQueryHandler : AbstractPagedRequestHandler<GetShopsQuery, ShopDto>
     {
+        private readonly IUserAccessor<User> _accessor;
         private readonly ILocateService _locate;
         private readonly Context _context;
 
-        public GetShopsQueryHandler(Context context, ILocateService locate)
+        public GetShopsQueryHandler(Context context, ILocateService locate, IUserAccessor<User> accessor)
         {
             _context = context;
             _locate = locate;
+            _accessor = accessor;
         }
 
         public override async Task<Result<Page<ShopDto>>> Handle(GetShopsQuery request, CancellationToken cancellationToken)
@@ -35,11 +40,14 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
             
             Feature feature = place.Feature;
             
+            User user = await _accessor.GetUserAsync();
+            
             int count = await _context.Shops.Where(m => 
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                        ) <= request.Range)
+                        ) <= request.Range &&
+                    m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.UserId == user.Id))
                 .CountAsync(cancellationToken);
             
             _ = TypeAdapterConfig<Shop, ShopDto>.NewConfig()
@@ -51,7 +59,8 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops
                     Math.Acos(
                         Math.Sin(m.Location.Latitude) * Math.Sin(feature.Latitude) + 
                         Math.Cos(m.Location.Latitude)*Math.Cos(feature.Latitude)*Math.Cos(feature.Longitude-m.Location.Longitude)
-                    ) <= request.Range)
+                    ) <= request.Range &&
+                    m.Visibility != Visibility.Deleted && (m.Visibility != Visibility.Private || m.UserId == user.Id))
                 .Include(m => m.Openings)
                 .Include(m => m.User)
                 .ProjectToType<ShopDto>()

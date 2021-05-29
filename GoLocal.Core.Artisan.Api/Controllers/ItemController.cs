@@ -60,7 +60,7 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("{iid:int}")]
+        [HttpPatch("{iid:int}")]
         public async Task<IActionResult> Update(int sid, int iid, UpdateItemCommand command)
         {
             if (sid != command.ShopId)
@@ -79,7 +79,7 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// <param name="iid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("{iid:int}")]
+        [HttpPatch("{iid:int}/description")]
         public async Task<IActionResult> UpdateDescription(int sid, int iid, UpdateItemDescriptionCommand command)
         {
             if (sid != command.ShopId)
