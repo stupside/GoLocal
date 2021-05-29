@@ -55,7 +55,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        [HttpPut("shops/{sid:int}")]
+        [HttpPatch("shops/{sid:int}/add")]
         public async Task<IActionResult> Add(int sid, AddCartPackageCommand command)
         {
             if (sid != command.ShopId)
@@ -70,7 +70,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("shops/{sid:int}")]
+        [HttpPatch("shops/{sid:int}/remove")]
         public async Task<IActionResult> Remove(int sid, RemoveCartPackageCommand command)
         {
             if (sid != command.ShopId)
