@@ -8,8 +8,6 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
     {
         public int Id { get; init; }
         public string Name { get; init; }
-        
-        public string Image { get; init; }
         public double Rate { get; init; }
         
         public LocationDto Location { get; init; }
@@ -23,5 +21,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
         public UserDto User { get; init; }
         
         public DateTime Creation { get; init; }
+        
+        public string Image { get; init; }
     }
 }

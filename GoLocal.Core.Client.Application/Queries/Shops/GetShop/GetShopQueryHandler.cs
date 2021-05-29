@@ -44,8 +44,8 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
                     .ToListAsync(cancellationToken)).DefaultIfEmpty().Average();
 
             _ = TypeAdapterConfig<Shop, GetShopResponse>.NewConfig()
-                .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image))
-                .Map(dest => dest.Rate, src => rate);
+                    .Map(dest => dest.Rate, src => rate)
+                    .Map(dest => dest.Image, src => src.Image == null ? null : Convert.ToBase64String(src.Image));
 
             return Ok(shop.Adapt<GetShopResponse>());
         }
