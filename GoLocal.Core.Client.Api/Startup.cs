@@ -1,4 +1,6 @@
+using System;
 using GoLocal.Core.Client.Application;
+using GoLocal.Core.Client.Application.Hubs.Clients;
 using GoLocal.Core.Client.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,6 +79,11 @@ namespace GoLocal.Core.Client.Api
                     }
                 });
             });
+            
+            services.AddSignalR(m =>
+            {
+                m.KeepAliveInterval = TimeSpan.FromSeconds(60);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,7 +110,11 @@ namespace GoLocal.Core.Client.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<CommandHub>("hubs/commands");
+            });
         }
     }
 }

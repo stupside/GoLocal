@@ -16,11 +16,11 @@ namespace GoLocal.Core.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public Message(Command command, User user, string message)
+        public Message(string commandId, string userId, string message)
             : this()
         {
-            CommandId = command.Id;
-            UserId = user.Id;
+            CommandId = commandId;
+            UserId = userId;
             
             Body = message;
         }

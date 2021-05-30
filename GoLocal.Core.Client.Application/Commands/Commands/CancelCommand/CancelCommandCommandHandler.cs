@@ -31,7 +31,7 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CancelCommand
             if (command == null)
                 return NotFound<Command>(request.CommandId);
 
-            if (command.Status is not CommandStatus.Accepted)
+            if (command.Status is not CommandStatus.Accepted or CommandStatus.Pending)
                 return BadRequest($"You can't cancel this command. The status of the command was '{command.Status}'");
             
             User user = await _accessor.GetUserAsync();

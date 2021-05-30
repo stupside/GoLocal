@@ -38,7 +38,6 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
                 .Include(m => m.Invoice)
                 .Include(m => m.Package)
                 .ThenInclude(m => m.Item)
-                .ThenInclude(m => m.Shop)
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
                 .ProjectToType<CommandDto>()

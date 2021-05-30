@@ -36,7 +36,7 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.CreateCommand
                                            m.ItemId == request.ServiceId && 
                                            m.Item.ShopId == request.ShopId &&
                                            m.Visibility == Visibility.Public &&
-                                           m.Item.Shop.Visibility == Visibility.Public, cancellationToken);
+                                           (m.Item as Service).Shop.Visibility == Visibility.Public, cancellationToken);
 
             if (package == null)
                 return NotFound<Package>(request.PackageId);
