@@ -20,6 +20,7 @@ namespace GoLocal.Core.Domain.Entities
             : this()
         {
             UserId = cart.UserId;
+            ShopId = cart.ShopId;
 
             InvoiceItems = new List<InvoiceItem>();
             
@@ -31,6 +32,7 @@ namespace GoLocal.Core.Domain.Entities
             : this()
         {
             UserId = command.UserId;
+            ShopId = command.ShopId;
 
             InvoiceItems = new List<InvoiceItem>
             {
@@ -40,6 +42,9 @@ namespace GoLocal.Core.Domain.Entities
 
         public string UserId { get; }
         public virtual User User { get; }
+        
+        public int ShopId { get; }
+        public virtual Shop Shop { get; }
         
         public virtual ICollection<InvoiceItem> InvoiceItems { get; }
     }

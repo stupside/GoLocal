@@ -16,7 +16,6 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations
             builder.Property(m => m.Quantity).IsRequired();
             builder.Property(m => m.Description).IsRequired();
             builder.Property(m => m.Price).IsRequired();
-            builder.Property(m => m.Status).IsRequired();
 
             builder.HasOne(m => m.Package)
                 .WithMany(m => m.InvoiceItems)

@@ -11,7 +11,6 @@ namespace GoLocal.Core.Domain.Entities
         public float Price { get; }
         
         public string Description { get; }
-        public InvoiceStatus Status { get; set; } // TODO: Remove
         
         public DateTime Creation { get; }
 
@@ -20,7 +19,7 @@ namespace GoLocal.Core.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description = null, InvoiceStatus status = InvoiceStatus.Pending)
+        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description = null)
             : this()
         {
             InvoiceId = invoice.Id;
@@ -29,7 +28,6 @@ namespace GoLocal.Core.Domain.Entities
             Quantity = quantity;
             Price = price;
             Description = description;
-            Status = status;
         }
         
         public InvoiceItem(Invoice invoice, Package package, int quantity, float price, string description = null)

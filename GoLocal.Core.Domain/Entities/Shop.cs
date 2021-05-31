@@ -49,5 +49,6 @@ namespace GoLocal.Core.Domain.Entities
         public virtual ICollection<ShopCategory> ShopCategories { get; }
         
         public virtual ICollection<Command> Commands { get; }
+        public virtual ICollection<Invoice> Invoices { get; }
     }
 }
