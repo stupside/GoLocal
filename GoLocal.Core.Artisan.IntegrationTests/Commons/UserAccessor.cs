@@ -2,9 +2,9 @@
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Domain.Entities.Identity;
 
-namespace GoLocal.Core.Artisan.IntegrationTests.Common
+namespace GoLocal.Core.Artisan.IntegrationTests.Commons
 {
-    public class UserAccesor : IUserAccessor<User>
+    public class UserAccessor : IUserAccessor<User>
     {
         public Task<User> GetUserAsync()
         {

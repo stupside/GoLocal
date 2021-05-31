@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace GoLocal.Core.Artisan.IntegrationTests.Common
+namespace GoLocal.Core.Artisan.IntegrationTests.Commons
 {
     public class Fixture
     {
@@ -36,7 +36,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Common
             services.AddSingleton<ILoggerFactory, LoggerFactory>();
             services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
             
-            services.AddTransient<IUserAccessor<User>, UserAccesor>();
+            services.AddTransient<IUserAccessor<User>, UserAccessor>();
             
             ServiceProvider provider = services.BuildServiceProvider();
             

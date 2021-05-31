@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop;
 using GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop.Models;
-using GoLocal.Core.Artisan.IntegrationTests.Common;
+using GoLocal.Core.Artisan.IntegrationTests.Commons;
 using NUnit.Framework;
 
 namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
