@@ -4,7 +4,6 @@ namespace GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.SendMessag
 {
     public class SendMessageCommand : INotification
     {
-        public int ShopId { get; init; }
         public string CommandId { get; init; }
         public string Body { get; init; }
 
@@ -12,9 +11,8 @@ namespace GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.SendMessag
         {
         }
 
-        public SendMessageCommand(int shopId, string commandId, string body)
+        public SendMessageCommand(string commandId, string body)
         {
-            ShopId = shopId;
             CommandId = commandId;
             Body = body;
         }

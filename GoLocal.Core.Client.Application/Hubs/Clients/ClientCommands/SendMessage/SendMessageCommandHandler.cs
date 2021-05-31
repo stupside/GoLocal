@@ -30,33 +30,19 @@ namespace GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.SendMessag
             User user = await _accessor.GetUserAsync();
             
             var command = await _context.Commands
-                .Include(m => m.Invoice)
-                .Where(m => m.Id == notification.CommandId && m.ShopId == notification.ShopId)
-                .Select(m => new { m.Id, m.UserId, m.ShopId, OwnerId = m.Shop.UserId, m.Invoice.Status })
+                .Where(m => m.Id == notification.CommandId)
+                .Select(m => new { m.Id, m.UserId, m.ShopId, OwnerId = m.Shop.UserId, m.Status  })
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if(command == null || command.Status is InvoiceStatus.Picked)
+            if(command?.Status is not CommandStatus.Accepted)
                 return;
-            
-            _hub.Clients.All?.ReceiveMessage(notification.ShopId, notification.CommandId, notification.Body);
-            
-            if (command.UserId == user.Id)
-            {
-                _hub.Clients.User(command.OwnerId)?.ReceiveMessage(notification.ShopId, notification.CommandId, notification.Body);
-            }
-            else if (command.OwnerId == user.Id)
-            {
-                _hub.Clients.User(command.UserId)?.ReceiveMessage(notification.ShopId, notification.CommandId, notification.Body);
-            }
-            else
-            {
-                return;
-            }
 
             Message message = new Message(command.Id, user.Id, notification.Body);
             
             await _context.Messages.AddAsync(message, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+            
+            await _hub.Clients.Users(command.UserId, command.OwnerId).ReceiveMessage(notification.CommandId, notification.Body);
         }
     }
 }
