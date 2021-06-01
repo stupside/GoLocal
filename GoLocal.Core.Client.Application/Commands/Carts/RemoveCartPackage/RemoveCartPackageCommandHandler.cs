@@ -48,7 +48,7 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage
                 _context.Remove(cartPackage);
 
                 // 5.2 If we don't have any cart packages in the cart anymore, then we can delete the cart
-                if (await _context.CartPackages.AnyAsync(m => m.CartId == cart.Id, cancellationToken))
+                if (!await _context.CartPackages.AnyAsync(m => m.CartId == cart.Id, cancellationToken))
                     _context.Remove(cart);
             }
             else if(cartPackage.Quantity > request.Quantity)
