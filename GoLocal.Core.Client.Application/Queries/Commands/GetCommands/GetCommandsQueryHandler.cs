@@ -33,7 +33,7 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
             
             List<CommandDto> commands = await _context.Commands
                 .Include(m => m.Shop)
-                .Include(m => m.CommandProposals.Where(r => r.Approved))
+                .Include(m => m.CommandProposals)
                 .Include(m => m.Invoice)
                 .Include(m => m.Package).ThenInclude(m => m.Item)
                 .Where(m => m.UserId == user.Id)
@@ -42,8 +42,8 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
                 {
                     Id = m.Id,
                     Status = m.Status,
-                    Price = m.CommandProposals.FirstOrDefault().Price,
-                    Specification = m.CommandProposals.FirstOrDefault().Specification,
+                    Price = m.CommandProposals.FirstOrDefault(r => r.Approved).Price,
+                    Specification = m.CommandProposals.FirstOrDefault(r => r.Approved).Specification,
                     Item = new ItemDto
                     {
                         Id = m.Package.Item.Id,
