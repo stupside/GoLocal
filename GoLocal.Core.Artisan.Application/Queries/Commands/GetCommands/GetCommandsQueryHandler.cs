@@ -29,15 +29,15 @@ namespace GoLocal.Core.Artisan.Application.Queries.Commands.GetCommands
                 .Where(m => m.Package.Item.ShopId == request.ShopId)
                 .Include(m => m.User)
                 .Include(m => m.Package).ThenInclude(m => m.Item)
-                .Include(m => m.CommandProposals)
+                .Include(m => m.CommandProposals.Where(r => r.Approved))
                 .ApplyLimit(request)
                 .Select(m => new CommandDto
                 {
                     Id = m.Id,
                     Creation = m.Creation,
                     Status = m.Status,
-                    Price = m.CommandProposals.FirstOrDefault(r => r.Approved).Price,
-                    Specification = m.CommandProposals.FirstOrDefault(r => r.Approved).Specification,
+                    Price = m.CommandProposals.FirstOrDefault().Price,
+                    Specification = m.CommandProposals.FirstOrDefault().Specification,
                     Item = new ItemDto
                     {
                         Id = m.Package.Item.Id,

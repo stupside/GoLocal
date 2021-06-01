@@ -18,7 +18,7 @@ namespace GoLocal.Core.Domain.Entities
             Creation = DateTime.UtcNow;
         }
 
-        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description = null)
+        public InvoiceItem(Invoice invoice, int packageId, int quantity, float price, string description)
             : this()
         {
             InvoiceId = invoice.Id;

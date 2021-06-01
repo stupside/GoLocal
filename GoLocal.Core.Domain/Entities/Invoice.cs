@@ -26,7 +26,7 @@ namespace GoLocal.Core.Domain.Entities
             InvoiceItems = new List<InvoiceItem>();
             
             foreach (CartPackage package in cart.CartPackages)
-                InvoiceItems.Add(new InvoiceItem(this, package.PackageId, package.Quantity, package.Price*package.Quantity));
+                InvoiceItems.Add(new InvoiceItem(this, package.PackageId, package.Quantity, package.Price*package.Quantity, package.Package.Name));
         }
 
         public Invoice(Command command, CommandProposal proposal)
