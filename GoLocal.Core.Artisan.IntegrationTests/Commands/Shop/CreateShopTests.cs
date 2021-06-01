@@ -63,7 +63,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
                 Contact = new ContactDto
                 {
                     Phone = "test",
-                    Email = "test@test.com",
+                    Email = "test@test.com"
                 }
             };
             
@@ -92,7 +92,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
                 Contact = new ContactDto
                 {
                     Phone = "test",
-                    Email = "test@test.com",
+                    Email = "test@test.com"
                 }
             };
 
@@ -108,7 +108,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
         {
             var command = new CreateShopCommand
             {
-                Name = "UniqueName",
+                Name = Guid.NewGuid().ToString(),
                 
                 Location = new LocationDto
                 {
@@ -123,7 +123,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
                 Contact = new ContactDto
                 {
                     Phone = "test",
-                    Email = "test@test.com",
+                    Email = "test@test.com"
                 }
             };
 
