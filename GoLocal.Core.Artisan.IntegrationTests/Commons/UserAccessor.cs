@@ -1,26 +1,28 @@
 ﻿using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Domain.Entities.Identity;
+using GoLocal.Core.Persistence.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Artisan.IntegrationTests.Commons
 {
     public class UserAccessor : IUserAccessor<User>
     {
-        public Task<User> GetUserAsync()
+        private readonly Context _context;
+
+        public UserAccessor(Context context)
         {
-            return Task.FromResult(new User
-            {
-                Id = "Test",
-                UserName = "Test",
-                Email = "test@test.com",
-                Phone = "test",
-                Avatar = null,
-            });
+            _context = context;
         }
 
-        public Task<string> GetUserIdAsync()
+        public async Task<User> GetUserAsync()
         {
-            return Task.FromResult("Test");
+            return await _context.Users.FirstOrDefaultAsync();
+        }
+
+        public async Task<string> GetUserIdAsync()
+        {
+            return (await GetUserAsync()).Id;
         }
 
         public bool IsAuthenticated()

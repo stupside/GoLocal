@@ -16,19 +16,20 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
         }
 
         [Test]
-        public async Task CreateShopWithoutLocation_Test()
+        public async Task CreateShop_ShouldFail_WithInvalidLocation_Test()
         {
-            var result = await Mediator.Send(new CreateShopCommand
+            var command = new CreateShopCommand
             {
-                Name = "Test",
+                Name = Guid.NewGuid().ToString(),
+                
                 Location = new LocationDto
                 {
-                    Street = null,
-                    PostCode = null,
-                    Country = null,
-                    City = null,
-                    Address = null,
-                    Region = null
+                    Street = "FakeStreet",
+                    PostCode = "FakeCode",
+                    Country = "FakeCountry",
+                    City = "FakeCity",
+                    Address = "FakeAddress",
+                    Region = "FakeRegion"
                 },
 
                 Contact = new ContactDto
@@ -36,32 +37,98 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
                     Phone = "test",
                     Email = "test@test.com"
                 }
-            });
+            };
+
+            var result = await Mediator.Send(command);
             result.Status.Should().Be(ResultStatus.BadRequest);
         }
+        
+        [Test]
+        public async Task CreateShop_ShouldSucceed_WithValidLocation_Test()
+        {
+            var command = new CreateShopCommand
+            {
+                Name = Guid.NewGuid().ToString(),
+                
+                Location = new LocationDto
+                {
+                    Street = "Place Doyen Gosse",
+                    PostCode = "38000",
+                    Country = "France",
+                    City = "Grenoble",
+                    Address = "2",
+                    Region = "Isère"
+                },
 
+                Contact = new ContactDto
+                {
+                    Phone = "test",
+                    Email = "test@test.com",
+                }
+            };
+            
+            var result = await Mediator.Send(command);
+            result.Status.Should().Be(ResultStatus.Ok);
+        }
+        
+     
         [Test]
-        public async Task CreateShopWithEmailInvalid_Test()
+        public async Task CreateShop_ShouldFail_WithNameAlreadyExist_Test()
         {
-            throw new NotImplementedException();
+            var command = new CreateShopCommand 
+            {
+                Name = Guid.NewGuid().ToString(),
+                
+                Location = new LocationDto
+                {
+                    Street = "Place Doyen Gosse",
+                    PostCode = "38000",
+                    Country = "France",
+                    City = "Grenoble",
+                    Address = "2",
+                    Region = "Rhone Alpes"
+                },
+
+                Contact = new ContactDto
+                {
+                    Phone = "test",
+                    Email = "test@test.com",
+                }
+            };
+
+            var result = await Mediator.Send(command);
+            result.Status.Should().Be(ResultStatus.Ok);
+            
+            var failed = await Mediator.Send(command);
+            failed.Status.Should().Be(ResultStatus.BadRequest);
         }
         
         [Test]
-        public async Task CreateShopWithEmailValid_Test()
+        public async Task CreateShop_ShouldSucceed_WithUniqueName_Test()
         {
-            throw new NotImplementedException();
-        }
-        
-        [Test]
-        public async Task CreateShopWithLocationInvalid_Test()
-        {
-            throw new NotImplementedException();
-        }
-        
-        [Test]
-        public async Task CreateShopWithLocationValid_Test()
-        {
-            throw new NotImplementedException();
+            var command = new CreateShopCommand
+            {
+                Name = "UniqueName",
+                
+                Location = new LocationDto
+                {
+                    Street = "Place Doyen Gosse",
+                    PostCode = "38000",
+                    Country = "France",
+                    City = "Grenoble",
+                    Address = "2",
+                    Region = "Rhone Alpes"
+                },
+
+                Contact = new ContactDto
+                {
+                    Phone = "test",
+                    Email = "test@test.com",
+                }
+            };
+
+            var result = await Mediator.Send(command);
+            result.Status.Should().Be(ResultStatus.Ok);
         }
     }
 }
