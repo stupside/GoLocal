@@ -1,5 +1,4 @@
 using System;
-using GoLocal.Core.Domain.Enums;
 
 namespace GoLocal.Core.Client.Application.Queries.Shops.GetShops.Models
 {

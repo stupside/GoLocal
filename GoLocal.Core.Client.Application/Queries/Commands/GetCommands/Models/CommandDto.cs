@@ -5,6 +5,8 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models
     public class CommandDto
     {
         public string Id { get; init; }
+        public float Price { get; init; }
+        public string Specification { get; init; }
         public CommandStatus Status { get; init; }
         public string StatusText => Status.ToString();
         public ItemDto Item { get; init; }

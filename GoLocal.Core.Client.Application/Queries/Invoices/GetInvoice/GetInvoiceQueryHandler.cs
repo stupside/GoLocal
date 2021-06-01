@@ -1,13 +1,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoice.Models;
 using GoLocal.Core.Domain.Entities;
-using GoLocal.Core.Domain.Entities.Identity;
-using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,26 +12,20 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoice
 {
     public class GetInvoiceQueryHandler : AbstractRequestHandler<GetInvoiceQuery, GetInvoiceResponse>
     {
-        private readonly IUserAccessor<User> _accessor;
         private readonly Context _context;
 
-        public GetInvoiceQueryHandler(Context context, IUserAccessor<User> accessor)
+        public GetInvoiceQueryHandler(Context context)
         {
             _context = context;
-            _accessor = accessor;
         }
 
         public override async Task<Result<GetInvoiceResponse>> Handle(GetInvoiceQuery request, CancellationToken cancellationToken)
         {
-            User user = await _accessor.GetUserAsync();
-
             GetInvoiceResponse invoice = await _context.Invoices
                 .Include(m => m.Shop)
-                .Include(m => m.InvoiceItems)
-                .ThenInclude(m => m.Package)
-                .ThenInclude(m => m.Item)
-                .Where(m => m.Id == request.InvoiceId && m.UserId == user.Id)
-                .Select(m => new GetInvoiceResponse(){
+                .Include(m => m.InvoiceItems).ThenInclude(m => m.Package).ThenInclude(m => m.Item)
+                .Where(m => m.Id == request.InvoiceId)
+                .Select(m => new GetInvoiceResponse{
                     Id = m.Id,
                     Status = m.Status,
                     Shop = new ShopDto
@@ -45,6 +36,7 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoice
                     InvoiceItems = m.InvoiceItems.Select(r => new InvoiceItemDto
                     {
                         Id = r.Id,
+                        Quantity = r.Quantity,
                         Price = r.Price,
                         Description = r.Description,
                         Creation = r.Creation,
@@ -60,14 +52,12 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoice
                         }
                     }),
                     Creation = m.Creation
-                }).SingleOrDefaultAsync(cancellationToken);
+                }).AsNoTracking().SingleOrDefaultAsync(cancellationToken);
 
             if (invoice == null)
                 return NotFound<Invoice>(request.InvoiceId);
-            
-            
-            
-            throw new System.NotImplementedException();
+
+            return Ok(invoice);
         }
     }
 }

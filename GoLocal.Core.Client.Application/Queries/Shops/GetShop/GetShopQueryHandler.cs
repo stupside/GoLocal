@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
-using GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models;
 using GoLocal.Core.Client.Application.Queries.Shops.GetShop.Models;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 using ItemDto = GoLocal.Core.Client.Application.Queries.Shops.GetShop.Models.ItemDto;
 
@@ -93,7 +91,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
                     },
                     Creation = m.Creation,
                     Image = m.Image == null ? null : Convert.ToBase64String(m.Image)
-                }).SingleOrDefaultAsync(cancellationToken);
+                }).AsNoTracking().SingleOrDefaultAsync(cancellationToken);
 
             if (shop == null)
                 return NotFound<Shop>(request.ShopId);

@@ -8,10 +8,7 @@ namespace GoLocal.Core.Domain.Entities
     public class Command
     {
         public string Id { get; set; }
-        
-        public string Specification { get; set; }
-        public float Price { get; set; }
-        
+
         public CommandStatus Status { get; set; }
 
         public DateTime Creation { get; }

@@ -8,6 +8,7 @@ namespace GoLocal.Core.Domain.Entities
     public class Invoice
     {
         public int Id { get; set; }
+        public string Code { get; init; }
         public InvoiceStatus Status { get; set; }
         public DateTime Creation { get; }
 

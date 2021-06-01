@@ -8,11 +8,8 @@ using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models;
-using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
-using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
@@ -36,15 +33,17 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
             
             List<CommandDto> commands = await _context.Commands
                 .Include(m => m.Shop)
+                .Include(m => m.CommandProposals.Where(r => r.Approved))
                 .Include(m => m.Invoice)
-                .Include(m => m.Package)
-                .ThenInclude(m => m.Item)
+                .Include(m => m.Package).ThenInclude(m => m.Item)
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
                 .Select(m => new CommandDto
                 {
                     Id = m.Id,
                     Status = m.Status,
+                    Price = m.CommandProposals.FirstOrDefault().Price,
+                    Specification = m.CommandProposals.FirstOrDefault().Specification,
                     Item = new ItemDto
                     {
                         Id = m.Package.Item.Id,
@@ -62,12 +61,11 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
                     },
                     Shop = new ShopDto
                     {
-                        Id = m.Package.Item.ShopId,
-                        Name = m.Package.Item.Shop.Name,
-                        Visibility = m.Package.Item.Shop.Visibility
+                        Id = m.Shop.Id,
+                        Name = m.Shop.Name,
+                        Visibility = m.Shop.Visibility
                     }
-                })
-                .ToListAsync(cancellationToken);
+                }).AsNoTracking().ToListAsync(cancellationToken);
             
             return Ok(commands, count);      
         }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
-using GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop.Models;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Domain.ValueObjects;

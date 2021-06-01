@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Abstracts;
 using GoLocal.Core.Domain.Entities.Identity;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using GoLocal.Core.Domain.Entities.Abstracts;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
@@ -72,7 +70,7 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
                         Price = r.Price
                     }),
                     Image = m.Image == null ? null : Convert.ToBase64String(m.Image)
-                }).SingleOrDefaultAsync(cancellationToken);
+                }).AsNoTracking().SingleOrDefaultAsync(cancellationToken);
 
             if (item == null)
                 return NotFound<Item>(request.ItemId);

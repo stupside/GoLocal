@@ -1,5 +1,4 @@
 using GoLocal.Bus.Authorizer;
-using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Artisan.Infrastructure.Accessors;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Persistence;

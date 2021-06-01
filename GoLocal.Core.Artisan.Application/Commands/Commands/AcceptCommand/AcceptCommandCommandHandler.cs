@@ -20,7 +20,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Commands.AcceptCommand
 
         public override async Task<Result> Handle(AcceptCommandCommand request, CancellationToken cancellationToken)
         {
-            Command command = await _context.Commands.SingleOrDefaultAsync(m => m.Id == request.CommandId, cancellationToken);
+            Command command = await _context.Commands.SingleOrDefaultAsync(m => m.Id == request.CommandId && m.ShopId == request.ShopId, cancellationToken);
 
             if (command == null)
                 return NotFound<Command>(request.CommandId);

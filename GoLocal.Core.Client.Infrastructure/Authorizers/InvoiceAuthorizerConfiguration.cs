@@ -2,11 +2,11 @@ using GoLocal.Bus.Authorizer.Commons.Requirement.Must;
 using GoLocal.Bus.Authorizer.Configurations;
 using GoLocal.Core.Domain.Entities;
 
-namespace GoLocal.Core.Artisan.Infrastructure.Authorizers
+namespace GoLocal.Core.Client.Infrastructure.Authorizers
 {
-    public class ShopAuthorizerConfiguration : AbstractAuthorizerConfiguration<Shop>
+    public class InvoiceAuthorizerConfiguration : AbstractAuthorizerConfiguration<Invoice>
     {
-        public ShopAuthorizerConfiguration()
+        public InvoiceAuthorizerConfiguration()
         {
             this.With(m => m.UserId).Owner();
         }

@@ -11,8 +11,10 @@ namespace GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoices
     {
         [AuthorizedEntityId]
         public int ShopId { get; init; }
+        
         protected override void ConfigurePaging(PageRequestConfiguration<Invoice> paging)
         {
+            paging.MapFor("status", m => m.Status);
         }
     }
 }

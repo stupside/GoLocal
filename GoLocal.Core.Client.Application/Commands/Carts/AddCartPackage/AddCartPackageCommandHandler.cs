@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Bus.Commons.Mediator;

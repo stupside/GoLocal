@@ -1,4 +1,3 @@
-using System.IO;
 using System.Threading;
 using GoLocal.Bus.Results;
 using System.Threading.Tasks;

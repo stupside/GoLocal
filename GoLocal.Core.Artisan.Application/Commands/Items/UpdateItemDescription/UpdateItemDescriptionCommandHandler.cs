@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Core.Domain.Entities.Abstracts;
-using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 

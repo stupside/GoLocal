@@ -8,9 +8,7 @@ using GoLocal.Bus.Results;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Carts.GetCarts.Models;
 using GoLocal.Core.Domain.Entities.Identity;
-using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts
@@ -34,10 +32,38 @@ namespace GoLocal.Core.Client.Application.Queries.Carts.GetCarts
 
             List<CartDto> carts = await _context.Carts
                 .Include(m => m.Shop)
-                .Include(m => m.CartPackages).ThenInclude(m => m.Package)
+                .Include(m => m.CartPackages).ThenInclude(m => m.Package).ThenInclude(m => m.Item)
                 .Where(m => m.UserId == user.Id)
-                .ProjectToType<CartDto>()
-                .ToListAsync(cancellationToken);
+                .Select(m => new CartDto
+                {
+                    Shop = new ShopDto
+                    {
+                        Id = m.Shop.Id,
+                        Name = m.Shop.Name,
+                        Visibility = m.Shop.Visibility
+                    },
+                    CartPackages = m.CartPackages.Select(r => new CartPackageDto
+                    {
+                        Quantity = r.Quantity,
+                        Price = r.Price,
+                        Package = new PackageDto
+                        {
+                            Id = r.Package.Id,
+                            Name = r.Package.Name,
+                            Description = r.Package.Description,
+                            Stocks = r.Package.Stocks,
+                            Price = r.Package.Price,
+                            Visibility = r.Package.Visibility,
+                            Item = new ItemDto
+                            {
+                                Id = r.Package.Item.Id,
+                                Name = r.Package.Item.Name,
+                                Visibility =  r.Package.Item.Visibility
+                            }
+                        }
+                    }),
+                    Creation = m.Creation
+                }).AsNoTracking().ToListAsync(cancellationToken);
 
             return Ok(carts, count);
         }

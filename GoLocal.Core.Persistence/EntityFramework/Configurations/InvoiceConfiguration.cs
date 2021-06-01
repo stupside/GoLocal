@@ -9,6 +9,7 @@ namespace GoLocal.Core.Persistence.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
             builder.HasKey(m => m.Id);
+            builder.Property(m => m.Code).ValueGeneratedOnAdd();
 
             builder.HasMany(m => m.InvoiceItems)
                 .WithOne(m => m.Invoice)

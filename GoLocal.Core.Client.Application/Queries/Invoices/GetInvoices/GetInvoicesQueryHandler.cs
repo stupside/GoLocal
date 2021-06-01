@@ -10,7 +10,6 @@ using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices.Models;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Persistence.EntityFramework;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices
@@ -37,7 +36,7 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices
                 .Include(m => m.InvoiceItems)
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
-                .Select(m => new InvoiceDto()
+                .Select(m => new InvoiceDto
                 {
                     Id = m.Id,
                     Status = m.Status,
@@ -53,9 +52,9 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices
                         Price = r.Price,
                         Description = r.Description,
                         Creation = r.Creation
-                    })
-                })
-                .ToListAsync(cancellationToken);
+                    }),
+                    Creation = m.Creation
+                }).AsNoTracking().ToListAsync(cancellationToken);
 
             return Ok(invoices, count);
         }

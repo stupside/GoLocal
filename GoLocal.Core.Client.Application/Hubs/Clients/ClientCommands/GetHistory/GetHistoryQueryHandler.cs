@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.GetHistory.Models;
-using GoLocal.Core.Domain.Entities;
 using GoLocal.Core.Domain.Entities.Identity;
 using GoLocal.Core.Persistence.EntityFramework;
 using Mapster;

@@ -4,7 +4,6 @@ using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Core.Artisan.Application.Commons.Helpers;
 using GoLocal.Core.Domain.Entities.Abstracts;
-using GoLocal.Core.Domain.Enums;
 using GoLocal.Core.Persistence.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 

@@ -12,7 +12,7 @@ namespace GoLocal.Core.Artisan.Application.Queries.Commands.GetCommands.Models
         public float Price { get; init; }
         public string Specification { get; init; }
         
-        public PackageDto Package { get; init; }
+        public ItemDto Item { get; init; }
         public UserDto User { get; init; }
         
     }

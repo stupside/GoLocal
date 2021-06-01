@@ -41,8 +41,26 @@ namespace GoLocal.Core.Artisan.Application.Queries.Shops.GetShops
             List<ShopDto> shops = await _context.Shops
                 .Where(m => m.UserId == user.Id)
                 .ApplyLimit(request)
-                .ProjectToType<ShopDto>()
-                .ToListAsync(cancellationToken);
+                .Select(m => new ShopDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Visibility = m.Visibility,
+                    Image = m.Image == null ? null : Convert.ToBase64String(m.Image),
+                    Location = new LocationDto
+                    {
+                        PostCode = m.Location.PostCode,
+                        Country = m.Location.Country,
+                        Region = m.Location.Region,
+                        City = m.Location.City,
+                        NeighborHood = m.Location.NeighborHood,
+                        Street = m.Location.Street,
+                        Address = m.Location.Address,
+                        Longitude = m.Location.Longitude,
+                        Latitude = m.Location.Latitude
+                    },
+                    Creation = m.Creation
+                }).AsNoTracking().ToListAsync(cancellationToken);
 
             return Ok(shops, count);
         }

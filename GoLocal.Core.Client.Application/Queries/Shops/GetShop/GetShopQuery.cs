@@ -1,6 +1,4 @@
-using GoLocal.Bus.Authorizer.Authorizers.Attributes;
 using GoLocal.Bus.Commons.Mediator;
-using GoLocal.Core.Domain.Entities;
 
 namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
 {

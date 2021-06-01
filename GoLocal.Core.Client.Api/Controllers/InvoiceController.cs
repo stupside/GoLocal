@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Azure;
 using GoLocal.Core.Client.Api.Controllers.Base;
 using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoice;
+using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoiceIdentifier;
 using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices;
 using GoLocal.Core.Client.Application.Queries.Invoices.GetInvoices.Models;
 using MediatR;
@@ -38,5 +39,15 @@ namespace GoLocal.Core.Client.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Get(GetInvoicesQuery query)
             => await Handle(query);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="iid"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(GetInvoiceIdentifierResponse), StatusCodes.Status200OK)]
+        [HttpGet("{iid:int}/identifier")]
+        public async Task<IActionResult> GetIdentifier(int iid)
+            => await Handle(new GetInvoiceIdentifierQuery(iid));
     }
 }

@@ -1,10 +1,6 @@
-using System;
 using System.Threading.Tasks;
-using GoLocal.Bus.Authorizer.Accessors;
 using GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.GetHistory;
 using GoLocal.Core.Client.Application.Hubs.Clients.ClientCommands.SendMessage;
-using GoLocal.Core.Domain.Entities.Identity;
-using GoLocal.Core.Persistence.EntityFramework;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;

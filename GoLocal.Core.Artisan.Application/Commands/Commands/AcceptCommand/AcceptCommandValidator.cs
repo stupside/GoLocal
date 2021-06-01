@@ -6,6 +6,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Commands.AcceptCommand
     {
         public RejectCommandValidator()
         {
+            RuleFor(m => m.ShopId).NotEmpty();
             RuleFor(m => m.CommandId).NotEmpty();
         }
     }

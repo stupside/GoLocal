@@ -1,6 +1,6 @@
 using System;
 
-namespace GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoice.Models
+namespace GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoices.Models
 {
     public class InvoiceItemDto
     {
@@ -8,8 +8,9 @@ namespace GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoice.Models
         
         public int Quantity { get; init; }
         public float Price { get; init; }
+        
         public string Description { get; init; }
-        public ItemDto Item { get; init; }
+        
         public DateTime Creation { get; init; }
     }
 }
