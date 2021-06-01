@@ -35,7 +35,7 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
                 .ToListAsync(cancellationToken)).DefaultIfEmpty().Average();
             
             GetShopResponse shop = await _context.Shops
-                .Include(m => m.Services)
+                .Include(m => m.Services)// TODO: Filter Visibility
                 .Include(m => m.Products)
                 .Include(m => m.Openings)
                 .Include(m => m.User)

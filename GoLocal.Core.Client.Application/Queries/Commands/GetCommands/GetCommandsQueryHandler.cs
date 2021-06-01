@@ -54,7 +54,7 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
                             Name = m.Package.Name,
                         },
                     },
-                    Invoice = new InvoiceDto
+                    Invoice = m.Invoice == null ? null : new InvoiceDto
                     {
                         Id = m.Invoice.Id,
                         Creation = m.Invoice.Creation

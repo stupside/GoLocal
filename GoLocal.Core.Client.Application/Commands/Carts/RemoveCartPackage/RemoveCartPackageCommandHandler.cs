@@ -55,7 +55,7 @@ namespace GoLocal.Core.Client.Application.Commands.Carts.RemoveCartPackage
             {
                 // 5.1 If not 100% of the quantity, then  we are safe and we can decrease the quantity in cart package
                 cartPackage.Quantity -= request.Quantity;
-                _context.Update(cartPackage.Quantity);
+                _context.Update(cartPackage);
             }
             
             await _context.SaveChangesAsync(cancellationToken);
