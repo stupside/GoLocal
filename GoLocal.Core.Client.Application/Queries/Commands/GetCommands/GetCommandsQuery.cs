@@ -7,7 +7,6 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands
 {
     public class GetCommandsQuery : AbstractPagedRequest<Command, CommandDto>
     {
-        
         protected override void ConfigurePaging(PageRequestConfiguration<Command> paging)
         {
             paging.MapFor("sid", m => m.Package.Item.ShopId);

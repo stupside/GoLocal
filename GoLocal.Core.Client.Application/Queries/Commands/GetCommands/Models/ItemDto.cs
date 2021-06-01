@@ -4,6 +4,6 @@ namespace GoLocal.Core.Client.Application.Queries.Commands.GetCommands.Models
     {
         public int Id { get; init; }
         public string Name { get; init; }
-        public int ShopId { get; init; }
+        public PackageDto Package { get; init; }
     }
 }

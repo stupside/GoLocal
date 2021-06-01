@@ -13,10 +13,10 @@ namespace GoLocal.Core.Client.Application.Queries.Shops.GetShop
         public LocationDto Location { get; init; }
         public ContactDto Contact { get; init; }
         
-        public ICollection<ItemDto> Products { get; init; }
-        public ICollection<ItemDto> Services { get; init; }
+        public IEnumerable<ItemDto> Products { get; init; }
+        public IEnumerable<ItemDto> Services { get; init; }
         
-        public ICollection<OpeningDto> Openings { get; init; }
+        public IEnumerable<OpeningDto> Openings { get; init; }
         
         public UserDto User { get; init; }
         

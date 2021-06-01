@@ -22,8 +22,8 @@ namespace GoLocal.Core.Client.Application.Queries.Items.GetItem
         public double PriceAverage => Prices.Average();
         private IEnumerable<float> Prices => Packages.Select(m => m.Price).DefaultIfEmpty();
         
-        public HashSet<CommentDto> Comments { get; init; }
-        public HashSet<PackageDto> Packages { get; init; }
+        public IEnumerable<CommentDto> Comments { get; init; }
+        public IEnumerable<PackageDto> Packages { get; init; }
         
         public string Image { get; init; }
     }
