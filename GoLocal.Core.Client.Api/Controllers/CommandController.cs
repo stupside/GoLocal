@@ -63,7 +63,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="cid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPatch("{cid}/proposals")]
+        [HttpPatch("{cid}/proposals/approve")]
         public async Task<IActionResult> ApproveProposal(string cid, ApproveCommandProposalCommand command)
         {
             if (cid != command.CommandId)

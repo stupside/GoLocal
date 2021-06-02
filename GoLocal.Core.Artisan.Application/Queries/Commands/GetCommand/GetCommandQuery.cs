@@ -9,12 +9,12 @@ namespace GoLocal.Core.Artisan.Application.Queries.Commands.GetCommand
     {
         [AuthorizedEntityId]
         public int ShopId { get; init; }
-        public string UserId { get; init; }
+        public string CommandId { get; init; }
 
-        public GetCommandQuery(int shopId, string userId)
+        public GetCommandQuery(int shopId, string commandId)
         {
             ShopId = shopId;
-            UserId = userId;
+            CommandId = commandId;
         }
     }
 }

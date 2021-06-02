@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoLocal.Core.Artisan.Api.Controllers
 {
-    [Route("api/commands")]
+    [Route("api/shops/{sid:int}/commands")]
     public class CommandController : ApiController
     {
         public CommandController(IMediator mediator) : base(mediator)
@@ -21,33 +21,34 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// 
         /// </summary>
         /// <param name="sid"></param>
-        /// <param name="uid"></param>
+        /// <param name="cid"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        [HttpGet("shops/{sid:int}/users/{uid}")]
-        public async Task<IActionResult> Get(int sid, string uid)
-            => await Handle(new GetCommandQuery(sid, uid));
+        [HttpGet("{cid}")]
+        public async Task<IActionResult> Get(int sid, string cid)
+            => await Handle(new GetCommandQuery(sid, cid));
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sid"></param>
         /// <param name="query"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [HttpPost]
-        public async Task<IActionResult> Get(GetCommandsQuery query)
+        public async Task<IActionResult> Get(int sid, GetCommandsQuery query)
             => await Handle(query);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="cid"></param>
+        /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("{cid}")]
-        public async Task<IActionResult> Accept(string cid, AcceptCommandCommand command)
+        [HttpPost("accept")]
+        public async Task<IActionResult> Accept(int sid, AcceptCommandCommand command)
         {
-            if (cid != command.CommandId)
+            if (sid != command.ShopId)
                 return BadRequest();
             
             return await Handle(command);
@@ -56,13 +57,13 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="cid"></param>
+        /// <param name="sid"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("{cid}/invoices")]
-        public async Task<IActionResult> GenerateInvoice(string cid, GenerateCommandInvoiceCommand command)
+        [HttpPost("invoice")]
+        public async Task<IActionResult> GenerateInvoice(int sid, GenerateCommandInvoiceCommand command)
         {
-            if (cid != command.CommandId)
+            if (sid != command.ShopId)
                 return BadRequest();
             
             return await Handle(command);

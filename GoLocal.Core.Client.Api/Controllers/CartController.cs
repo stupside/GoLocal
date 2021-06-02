@@ -39,7 +39,7 @@ namespace GoLocal.Core.Client.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        [HttpPost("shops/{sid:int}")]
+        [HttpPost("shops/{sid:int}/invoice")]
         public async Task<IActionResult> GenerateInvoice(int sid, GenerateCartInvoiceCommand command)
         {
             if (sid != command.ShopId)

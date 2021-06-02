@@ -6,6 +6,7 @@ namespace GoLocal.Core.Artisan.Application.Commands.Commands.GenerateCommandInvo
     {
         public GenerateCommandInvoiceValidator()
         {
+            RuleFor(m => m.ShopId).NotEmpty();
             RuleFor(m => m.CommandId).NotEmpty();
         }
     }
