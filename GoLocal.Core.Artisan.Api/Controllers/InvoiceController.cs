@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using GoLocal.Bus.Results.Pages;
 using GoLocal.Core.Artisan.Api.Controllers.Base;
+using GoLocal.Core.Artisan.Application.Commands.Invoices.MakeInvoicePicked;
 using GoLocal.Core.Artisan.Application.Commands.Invoices.MakeInvoiceReady;
 using GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoice;
 using GoLocal.Core.Artisan.Application.Queries.Invoices.GetInvoices;
@@ -54,5 +55,15 @@ namespace GoLocal.Core.Artisan.Api.Controllers
         [HttpPatch("{iid:int}/ready")]
         public async Task<IActionResult> MakeReady(int sid, int iid)
             => await Handle(new MakeInvoiceReadyCommand(sid, iid));
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        [HttpPatch("picked/{identifier}")]
+        public async Task<IActionResult> MakePicked(int sid, string identifier)
+            => await Handle(new MakeInvoicePickedCommand(sid, identifier));
     }
 }

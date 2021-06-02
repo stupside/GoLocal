@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using GoLocal.Bus.Commons.Mediator;
 using GoLocal.Bus.Results;
 using GoLocal.Core.Domain.Enums;
@@ -32,8 +33,9 @@ namespace GoLocal.Core.Client.Application.Queries.Invoices.GetInvoiceIdentifier
             if (invoice.Status is not InvoiceStatus.Ready)
                 return BadRequest(
                     "You can't get your invoice identifier yet. Please wait the artisan to update the status of your invoice");
-            
-            var code = new QRCodeGenerator().CreateQrCode(invoice.Code, QRCodeGenerator.ECCLevel.Q);
+
+            string identifier = HttpUtility.UrlEncode(string.Join(':', invoice.Id, invoice.Code));
+            var code = new QRCodeGenerator().CreateQrCode(identifier, QRCodeGenerator.ECCLevel.Q);
             GetInvoiceIdentifierResponse response = new GetInvoiceIdentifierResponse
             {
                 Code = invoice.Code,
