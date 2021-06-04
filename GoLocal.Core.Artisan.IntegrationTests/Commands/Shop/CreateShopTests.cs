@@ -40,6 +40,7 @@ namespace GoLocal.Core.Artisan.IntegrationTests.Commands.Shop
             };
 
             var result = await Mediator.Send(command);
+            
             result.Status.Should().Be(ResultStatus.BadRequest);
         }
         

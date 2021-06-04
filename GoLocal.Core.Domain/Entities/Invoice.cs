@@ -15,6 +15,7 @@ namespace GoLocal.Core.Domain.Entities
         public Invoice()
         {
             Creation = DateTime.UtcNow;
+            Code = Guid.NewGuid().ToString();
         }
 
         public Invoice(Cart cart)

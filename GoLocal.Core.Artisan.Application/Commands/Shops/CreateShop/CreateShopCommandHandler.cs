@@ -34,7 +34,8 @@ namespace GoLocal.Core.Artisan.Application.Commands.Shops.CreateShop
             if (await _context.Shops.AnyAsync(m => m.Name == request.Name, cancellationToken))
                 return BadRequest($"A shop named {request.Name} already exists");
             
-            Place place = await _locate.GetPosition(request.Location.Address, request.Location.Street, request.Location.PostCode, request.Location.City,
+            Place place = await _locate.GetPosition(request.Location.Address,
+                request.Location.Street, request.Location.PostCode, request.Location.City,
                 request.Location.Country);
             
             if (place is not {Any: true})

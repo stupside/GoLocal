@@ -24,6 +24,9 @@ namespace GoLocal.Core.Artisan.Application.Commands.Invoices.MakeInvoiceReady
                 await _context.Invoices.SingleOrDefaultAsync(m =>
                     m.ShopId == request.ShopId && m.Id == request.InvoiceId, cancellationToken);
 
+            if (invoice == null)
+                return NotFound<Invoice>(request.InvoiceId);
+
             if (invoice.Status is not InvoiceStatus.Pending)
                 return BadRequest(
                     $"You can't change the status of this invoice because the status is set to {invoice.Status}");

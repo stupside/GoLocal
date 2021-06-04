@@ -37,7 +37,7 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.ApproveCommandPropos
 
             User user = await _user.GetUserAsync();
             string uid = await _context.Shops.Where(m => m.Id == proposal.Command.ShopId).Select(m => m.UserId).SingleOrDefaultAsync(cancellationToken);
-            if (proposal.Command.UserId != user.Id || proposal.Command.UserId != uid)
+            if (proposal.Command.UserId != user.Id && proposal.Command.UserId != uid)
                 return Unauthorized();
             
             if (await _context.CommandProposals.AnyAsync(m => m.Approved && m.CommandId == request.CommandId,
@@ -51,8 +51,13 @@ namespace GoLocal.Core.Client.Application.Commands.Commands.ApproveCommandPropos
                 return BadRequest("You can't approve your own proposal");
 
             proposal.Approved = true;
+            Invoice invoice = new Invoice(proposal.Command, proposal);
+            await _context.Invoices.AddAsync(invoice, cancellationToken);
+
+            proposal.Command.InvoiceId = invoice.Id;
             
-            _context.Update(proposal);
+            _context.CommandProposals.Update(proposal);
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return Ok();
