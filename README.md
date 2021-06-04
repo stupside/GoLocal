@@ -42,11 +42,19 @@ https://www.pgadmin.org/
 - Go to Golocal.Core.Artisan.Api and run the migration script.
 ```
 > migration.sh
+> 1
+> y
+ Type your pgsql password and username ...
+> y
 ```
 
 - Go to Golocal.Identity.Api and run the migration script.
 ```
 > migration.sh
+> 1
+> y
+ Type your pgsql password and username ...
+> y
 ```
 
 ## Run
