@@ -1,5 +1,15 @@
 # GoLocal - Backend
 
+#### Applications:
+- Identity : https://localhost:5000
+- Client : https://localhost:5001
+- Artisan : https://localhost:5002
+
+#### Documentations:
+- Identity : https://localhost:5000/swagger/index.html
+- Client : https://localhost:5001/swagger/index.html
+- Artisan : https://localhost:5002/swagger/index.html
+
 ## Installation
 
 #### Asp.net Core
